@@ -1,12 +1,16 @@
 {
   "name": "Winter Arc 2026",
   "short_name": "Winter Arc",
-  "description": "Personal Winter Arc tracker for fitness, nutrition, career, finance, wellness and reviews.",
+  "description": "A simple 92-day personal tracker for fitness, nutrition, career, wellness and finance.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#080a0e",
-  "theme_color": "#0b1220",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "background_color": "#061221",
+  "theme_color": "#071426",
   "orientation": "portrait-primary",
   "icons": [
     {

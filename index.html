@@ -2,647 +2,160 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Winter Arc 2026 — Personal Command Center</title>
-<style>
-:root{--bg:#080a0e;--panel:#11151c;--panel2:#171c25;--line:#252c37;--text:#f6f8fb;--muted:#8993a3;--lime:#d9ff57;--cyan:#7fe7ff;--red:#ff7382;--orange:#ffbd69;--r:18px}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,#202c12,transparent 30%),radial-gradient(circle at 100% 10%,#102a32,transparent 28%),var(--bg);color:var(--text);font:14px Inter,system-ui,-apple-system,Segoe UI,sans-serif}
-button,input,select,textarea{font:inherit}.app{display:flex;min-height:100vh}.side{width:240px;background:rgba(10,12,17,.94);border-right:1px solid var(--line);padding:24px 15px;position:sticky;top:0;height:100vh}.brand{padding:8px 10px 25px}.brand b{font-size:18px}.brand small{display:block;color:var(--muted);margin-top:5px}.nav{display:grid;gap:6px}.nav button{background:none;border:0;color:#9da6b5;text-align:left;padding:12px;border-radius:12px;cursor:pointer}.nav button.active,.nav button:hover{background:#1b212a;color:var(--text)}.nav button.active{box-shadow:inset 3px 0 var(--lime);color:var(--lime)}
-.main{flex:1;padding:25px;max-width:1400px;margin:auto;width:100%}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.eyebrow{color:var(--lime);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.top h1{font-size:34px;letter-spacing:-.04em;margin:5px 0}.date{color:var(--muted);font-size:13px}
-.tab{display:none}.tab.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:15px}.c12{grid-column:span 12}.c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}.c5{grid-column:span 5}.c4{grid-column:span 4}.card{background:linear-gradient(145deg,#141921,#0e1117);border:1px solid var(--line);border-radius:var(--r);padding:19px;box-shadow:0 15px 45px #0005}.card h2{margin:0 0 4px;font-size:17px}.sub{color:var(--muted);font-size:12px}.heroNum{font-size:54px;font-weight:800;letter-spacing:-.06em;margin:10px 0}.progress{height:9px;background:#252c35;border-radius:99px;overflow:hidden;margin:12px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--lime),#a7e64b);width:0}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.stat{background:#0b0e13;border:1px solid var(--line);padding:13px;border-radius:14px}.stat b{font-size:24px;display:block}.stat span{font-size:10px;color:var(--muted)}
-.btn{border:1px solid var(--line);background:#1a2029;color:var(--text);padding:9px 12px;border-radius:10px;cursor:pointer}.btn.primary{background:var(--lime);color:#101309;border-color:var(--lime);font-weight:800}.btn.red{color:#ff9da8}.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:13px}.field label{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;background:#0b0e13;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px;outline:none}.field textarea{min-height:80px;resize:vertical}.habitgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:15px}.habit{background:#0b0e13;border:1px solid var(--line);border-radius:13px;padding:12px;display:flex;gap:9px;align-items:center}.habit input,.check input{accent-color:var(--lime)}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:13px}.cal{height:31px;border-radius:7px;background:#202631;color:#788293;font-size:10px;display:flex;align-items:center;justify-content:center}.cal.done{background:#a4dc4d;color:#10140a}.cal.partial{background:#536f32;color:#eaffc5}
-.table{width:100%;border-collapse:collapse;margin-top:12px}.table th,.table td{border-bottom:1px solid var(--line);padding:11px 7px;text-align:left;font-size:12px}.table th{color:var(--muted);font-weight:600}
-.barrow{margin:13px 0}.barhead{display:flex;justify-content:space-between;color:#cbd2dc;font-size:12px}.bar{height:8px;background:#252b35;border-radius:99px;margin-top:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--cyan);width:0}.exercise{display:grid;grid-template-columns:1.5fr .7fr .7fr .7fr;gap:8px;align-items:center;margin-top:8px}.exercise input{background:#0b0e13;border:1px solid var(--line);border-radius:9px;color:var(--text);padding:8px;width:100%}.tag{display:inline-block;padding:5px 8px;border:1px solid var(--line);border-radius:99px;font-size:10px;color:var(--muted)}
-canvas{width:100%;height:210px;background:#0b0e13;border:1px solid var(--line);border-radius:13px;margin-top:12px}.note{padding:12px;background:#0b0e13;border:1px dashed #3a424e;border-radius:12px;color:#a7b0bd;margin-top:12px;line-height:1.5}
-.footer{text-align:center;color:#5f6978;font-size:11px;padding:25px}
-@media(max-width:900px){.side{width:75px;padding:18px 8px}.brand{padding:5px 7px 20px}.brand b{font-size:0}.brand b:after{content:"❄️";font-size:22px}.brand small,.nav button span{display:none}.nav button{text-align:center}.main{padding:18px}.c8,.c7,.c6,.c5,.c4{grid-column:span 12}.habitgrid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){.main{padding:12px}.top h1{font-size:27px}.stats{grid-template-columns:repeat(2,1fr)}.habitgrid,.fields{grid-template-columns:1fr}.side{width:58px}.exercise{grid-template-columns:1.3fr .7fr .7fr .7fr}.heroNum{font-size:42px}}
-</style>
-
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#0b1220">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071426">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Winter Arc">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Winter Arc 2026</title>
+<style>
+:root{--bg:#061221;--panel:#0c1b2e;--panel2:#10243b;--line:#203650;--text:#edf4fb;--muted:#8ea4ba;--accent:#b9ef4a;--accent2:#65d8ff;--danger:#ff7d7d;--shadow:0 18px 45px rgba(0,0,0,.25)}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 20% 0,#102846 0,#061221 42%,#04101c 100%);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit} button{cursor:pointer}.app{display:flex;min-height:100vh}.sidebar{width:235px;padding:24px 16px;border-right:1px solid var(--line);background:rgba(4,15,27,.85);backdrop-filter:blur(16px);position:sticky;top:0;height:100vh}.brand{padding:6px 10px 22px}.brand b{font-size:20px;letter-spacing:.3px}.brand span{display:block;color:var(--muted);font-size:12px;margin-top:3px}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#b9c8d8;text-align:left;padding:11px 12px;border-radius:10px}.nav button:hover,.nav button.active{background:#12263e;color:#fff}.nav button.active{box-shadow:inset 3px 0 var(--accent)}.main{flex:1;max-width:1250px;margin:auto;padding:24px 30px 60px;width:100%}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:22px}.eyebrow{color:var(--accent);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1.4px}.title{font-size:31px;font-weight:800;margin:2px 0}.sub{color:var(--muted)}.datebar{display:flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);padding:6px;border-radius:14px}.datebar button{border:0;background:#12243a;color:#dce8f3;border-radius:9px;padding:8px 11px}.datebar button:hover{background:#19314d}.datevalue{min-width:150px;text-align:center;font-weight:700}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.card,.section{background:linear-gradient(180deg,rgba(15,35,57,.94),rgba(8,25,42,.94));border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.card{padding:17px}.label{font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:1px}.big{font-size:27px;font-weight:800;margin-top:4px}.accent{color:var(--accent)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.section{padding:18px;margin-bottom:16px}.section h2{font-size:17px;margin:0 0 4px}.section p.note{color:var(--muted);margin:0 0 15px;font-size:12px}.progress{height:9px;background:#13273d;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#d9ff83);border-radius:99px}.rows{display:grid;gap:10px}.row{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border:1px solid #1c344e;border-radius:12px;background:#0a1b2d}.row .name{font-weight:650}.status{color:var(--muted);font-size:12px}.score{font-weight:800}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field label{display:block;color:#b9c8d8;font-size:12px;margin:0 0 5px}.field input,.field select,.field textarea{width:100%;background:#08192b;color:#eef5fb;border:1px solid #29415b;border-radius:10px;padding:10px;outline:none}.field textarea{min-height:90px;resize:vertical}.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.check{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid #1c344e;border-radius:11px;background:#0a1b2d}.check input{accent-color:var(--accent);width:17px;height:17px}.actions{display:flex;gap:8px;margin-top:14px}.primary,.secondary{border:0;border-radius:10px;padding:10px 15px;font-weight:750}.primary{background:var(--accent);color:#071426}.secondary{background:#17304a;color:#e8f1f8}.metric{display:flex;justify-content:space-between;gap:10px;margin:10px 0}.barline{height:7px;background:#152b42;border-radius:99px;overflow:hidden;flex:1;margin-top:6px}.barline i{display:block;height:100%;background:var(--accent2)}.pill{display:inline-flex;padding:4px 8px;border-radius:99px;background:#17324c;color:#b9d4e8;font-size:11px}.win{background:#17351e;color:#b9ef4a}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.day{min-height:35px;border-radius:7px;background:#0a1b2d;border:1px solid #1c344e;display:grid;place-items:center;font-size:11px}.day.win{background:#27451f;border-color:#547c38;color:#d9ff9a}.day.partial{background:#2d2a17;border-color:#6b6031;color:#f5df84}.day.future{opacity:.35}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:9px 8px;border-bottom:1px solid #1d344c;text-align:left;font-size:12px}.table th{color:#8ea4ba;font-weight:650}.empty{color:var(--muted);padding:15px 0}.toast{position:fixed;right:20px;bottom:20px;background:#d9ff83;color:#071426;padding:10px 14px;border-radius:10px;font-weight:750;display:none;z-index:20}.mobile-nav{display:none}
+@media(max-width:900px){.sidebar{display:none}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#071426ee;border-top:1px solid var(--line);z-index:10;overflow:auto}.mobile-nav button{flex:1;min-width:78px;background:transparent;color:#9db0c2;border:0;padding:9px 4px;font-size:10px}.mobile-nav button.active{color:var(--accent)}.main{padding:18px 14px 85px}.top{align-items:flex-start;flex-direction:column}.datebar{width:100%;justify-content:center}.cards{grid-template-columns:repeat(2,1fr)}.grid2,.formgrid{grid-template-columns:1fr}.checklist{grid-template-columns:1fr}.title{font-size:26px}}
+</style>
 </head>
 <body>
-
-<div id="installBanner" style="display:none;position:fixed;left:18px;right:18px;bottom:18px;z-index:9999;background:#171f2d;border:1px solid #33445e;border-radius:16px;padding:14px 16px;box-shadow:0 20px 50px #0009">
-  <div style="display:flex;align-items:center;gap:12px">
-    <div style="flex:1"><b>Install Winter Arc</b><div style="color:#98a7bd;font-size:12px;margin-top:3px">Use it like an app on your Mac, phone or desktop.</div></div>
-    <button onclick="installPWA()" style="border:0;background:#d9ff57;color:#111;padding:9px 13px;border-radius:10px;font-weight:800">Install</button>
-    <button onclick="dismissInstall()" style="border:1px solid #33445e;background:transparent;color:#fff;padding:9px 11px;border-radius:10px">×</button>
-  </div>
-</div>
 <div class="app">
-<aside class="side">
-  <div class="brand"><b>WINTER ARC</b><small>2026 Command Center</small></div>
-  <nav class="nav">
-    <button class="active" onclick="tab('dashboard',this)">⌂ <span>Dashboard</span></button>
-    <button onclick="tab('fitness',this)">🏋️ <span>Fitness</span></button>
-    <button onclick="tab('nutrition',this)">🍗 <span>Nutrition</span></button>
-    <button onclick="tab('career',this)">💻 <span>Career</span></button>
-    <button onclick="tab('finance',this)">💰 <span>Finance</span></button>
-    <button onclick="tab('habits',this)">🧠 <span>Habits</span></button>
-    <button onclick="tab('wellness',this)">✨ <span>Wellness</span></button>
-    <button onclick="tab('review',this)">📓 <span>Reviews</span></button>
-  </nav>
-</aside>
+<aside class="sidebar"><div class="brand"><b>WINTER ARC</b><span>2026 · 92 day system</span></div><nav class="nav" id="nav"></nav></aside>
 <main class="main">
-<header class="top"><div><div class="eyebrow">92 DAY PERSONAL UPGRADE</div><h1>Winter Arc <span style="color:var(--lime)">2026</span></h1></div><div class="date" id="date"></div></header>
-<div class="card" style="margin-bottom:16px;padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap">
-  <button class="btn" onclick="changeSelectedDate(-1)">←</button>
-  <input id="globalDate" type="date" onchange="setSelectedDate(this.value)" style="background:#111a29;color:#fff;border:1px solid #33445e;border-radius:10px;padding:9px 12px;font:inherit">
-  <button class="btn primary" onclick="goToday()">Today</button>
-  <button class="btn" onclick="changeSelectedDate(1)">→</button>
-  <span class="sub" id="selectedDateLabel" style="min-width:170px;text-align:center">Today</span>
+<header class="top">
+  <div><div class="eyebrow">Winter Arc 2026</div><div class="title" id="pageTitle">Dashboard</div><div class="sub" id="pageSub"></div></div>
+  <div class="datebar"><button id="prev">‹</button><button id="today">Today</button><div class="datevalue" id="dateLabel"></div><button id="next">›</button></div>
+</header>
+<div id="view"></div>
+</main>
 </div>
+<div class="mobile-nav" id="mobileNav"></div><div class="toast" id="toast"></div>
 
-<!-- DASHBOARD -->
-<section id="dashboard" class="tab active">
-<div class="grid">
-<div class="card c8"><div class="sub">OCT 01 — DEC 31</div><div class="heroNum" id="arcPct">0%</div><div class="progress"><i id="arcBar"></i></div><div class="stats">
-<div class="stat"><b id="dayNo">1</b><span>ARC DAY</span></div><div class="stat"><b id="logged">0</b><span>DAYS LOGGED</span></div><div class="stat"><b id="streak">0</b><span>STREAK</span></div><div class="stat"><b id="score">0</b><span>WEEK SCORE</span></div></div></div>
-<div class="card c4"><h2>Today's mission</h2><div class="heroNum" style="font-size:30px">Win the day.</div><div class="sub">Complete the basics before entertainment.</div><div class="note">🏋️ Train • 🚶 Move • 🍗 Protein • 💻 Learn • 😴 Recover</div></div>
-
-<div class="card c7"><h2>Selected day score</h2><div class="sub">Scores come directly from the individual tabs — no duplicate check-in here.</div>
-<div class="stats" style="margin-top:14px">
-  <div class="stat"><b id="dashFitnessScore">0/2</b><span>FITNESS</span></div>
-  <div class="stat"><b id="dashNutritionScore">0/2</b><span>NUTRITION</span></div>
-  <div class="stat"><b id="dashCareerScore">0/1</b><span>CAREER</span></div>
-  <div class="stat"><b id="dashWellnessScore">0/10</b><span>WELLNESS</span></div>
-</div>
-<div class="stats" style="margin-top:10px">
-  <div class="stat"><b id="dashHabitsScore">0/6</b><span>HABITS</span></div>
-  <div class="stat"><b id="dashDailyScore">0/21</b><span>TODAY SCORE</span></div>
-</div>
-<div class="note" style="margin-top:14px">Open Fitness, Nutrition, Career, Wellness or Habits to update the selected date. The Dashboard reflects those entries automatically.</div>
-<div class="calendar" id="calendar"></div></div>
-
-<div class="card c5"><h2>Phase tracker</h2><div class="barrow"><div class="barhead"><span>October • Build</span><b id="octp">0%</b></div><div class="bar"><i id="octb"></i></div></div><div class="barrow"><div class="barhead"><span>November • Progress</span><b id="novp">0%</b></div><div class="bar"><i id="novb"></i></div></div><div class="barrow"><div class="barhead"><span>December • Prove It</span><b id="decp">0%</b></div><div class="bar"><i id="decb"></i></div></div><div class="note">Rule: <b>Never miss twice.</b> One bad day is data, not failure.</div></div>
-
-<div class="card c12"><h2>90-day scoreboard</h2><table class="table"><tr><th>Area</th><th>Target</th><th>Current</th><th>Status</th></tr>
-<tr><td>Physique</td><td>Reduce waist + build strength</td><td id="phys">—</td><td><span class="tag">TRACKING</span></td></tr>
-<tr><td>Steps</td><td>8–10K/day</td><td id="stepdash">—</td><td><span class="tag">TRACKING</span></td></tr>
-<tr><td>Career</td><td>Interview ready</td><td id="careerAvg">0%</td><td><span class="tag">BUILDING</span></td></tr>
-<tr><td>Consistency</td><td>75%+ weekly</td><td id="consistency">0/147</td><td><span class="tag">LIVE</span></td></tr>
-</table></div>
-</div></section>
-
-<!-- FITNESS -->
-<section id="fitness" class="tab"><div class="grid">
-<div class="card c12" style="padding:0;background:transparent;border:0;box-shadow:none">
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
-    <button class="btn" onclick="changeFitnessDate(-1)" style="font-size:24px;padding:7px 18px">←</button>
-    <div style="text-align:center">
-      <div class="eyebrow">FITNESS CHECK-IN</div>
-      <h2 id="fitnessDate" style="font-size:32px;margin:4px 0">Thursday 1 Oct</h2>
-    </div>
-    <button class="btn" onclick="changeFitnessDate(1)" style="font-size:24px;padding:7px 18px">→</button>
-  </div>
-</div>
-
-<div class="card c4">
-  <div class="heroNum" style="font-size:42px" id="gymWeek">0/4</div>
-  <div class="sub" style="font-size:16px">Gym this week</div>
-</div>
-<div class="card c4">
-  <div class="heroNum" style="font-size:42px" id="avgSteps">—</div>
-  <div class="sub" style="font-size:16px">Avg steps</div>
-</div>
-<div class="card c4">
-  <div class="heroNum" style="font-size:42px" id="avgProtein">—</div>
-  <div class="sub" style="font-size:16px">Avg protein (g)</div>
-</div>
-
-<div class="card c12">
-  <div class="progress" style="margin:0"><i id="fitnessDayProgress"></i></div>
-</div>
-
-<div class="card c12">
-  <div class="fields" style="grid-template-columns:1.2fr 1fr 1fr 1fr">
-    <div class="field">
-      <label>Workout</label>
-      <select id="fitWorkout">
-        <option value="">No workout</option>
-        <option>Upper A</option><option>Lower A</option><option>Upper B</option><option>Lower B</option>
-        <option>Lower / Core</option><option>Cardio / Walk</option>
-      </select>
-    </div>
-    <div class="field"><label>Steps</label><input id="fitSteps" type="number" placeholder="8000"></div>
-    <div class="field"><label>Calories <span class="sub">(goal 2700)</span></label><input id="fitCalories" type="number" placeholder="2700"></div>
-    <div class="field"><label>Protein g <span class="sub">(goal 110–120)</span></label><input id="fitProtein" type="number" placeholder="110"></div>
-    <div class="field"><label>Weight (kg)</label><input id="fitWeight" type="number" step=".1" placeholder="65"></div>
-    <div class="field"><label>Waist (in)</label><input id="fitWaist" type="number" step=".1" placeholder="33"></div>
-    <div class="field" style="grid-column:span 2"><label>Main lift / best set <span class="sub">(optional)</span></label><input id="fitLift" placeholder="e.g. Bench 40kg × 8"></div>
-  </div>
-  <div class="row">
-    <button class="btn primary" onclick="saveFitnessDay()">Save check-in</button>
-    <button class="btn" onclick="clearFitnessDay()">Clear day</button>
-  </div>
-</div>
-
-<div class="card c12">
-  <h2>Trends</h2>
-  <div id="fitnessTrendWrap" class="grid" style="margin-top:12px">
-    <div class="card c6" style="box-shadow:none"><div class="sub">Weight</div><div id="weightTrend" style="margin-top:10px;color:#a7b0bd">Log 2 or more entries to see the trend.</div></div>
-    <div class="card c6" style="box-shadow:none"><div class="sub">Waist</div><div id="waistTrend" style="margin-top:10px;color:#a7b0bd">Log 2 or more entries to see the trend.</div></div>
-  </div>
-</div>
-</section>
-
-<!-- NUTRITION -->
-<section id="nutrition" class="tab"><div class="grid">
-<div class="card c5"><h2>Daily nutrition target</h2><div class="stats"><div class="stat"><b>110–120g</b><span>PROTEIN</span></div><div class="stat"><b>2.5–3L</b><span>WATER</span></div><div class="stat"><b>1–2</b><span>FRUIT</span></div><div class="stat"><b>25–35g</b><span>FIBER</span></div></div><div class="note">Aim for sustainable recomposition rather than an aggressive cut.</div></div>
-<div class="card c7"><h2>Meal tracker</h2><div class="fields"><div class="field"><label>Breakfast protein (g)</label><input id="mp0" type="number"></div><div class="field"><label>Lunch protein (g)</label><input id="mp1" type="number"></div><div class="field"><label>Snack protein (g)</label><input id="mp2" type="number"></div><div class="field"><label>Dinner protein (g)</label><input id="mp3" type="number"></div><div class="field"><label>Water (L)</label><input id="water" type="number" step=".1"></div><div class="field"><label>Fruit servings</label><input id="fruit" type="number"></div></div><div class="row"><button class="btn primary" onclick="saveNutrition()">Save nutrition</button></div></div>
-<div class="card c6"><h2>Simple meal template</h2><table class="table"><tr><th>Meal</th><th>Template</th></tr><tr><td>Breakfast</td><td>Oats + milk + protein powder + peanut butter + fruit</td></tr><tr><td>Lunch</td><td>Rice + chicken/paneer + curd + vegetables</td></tr><tr><td>Pre-workout</td><td>Oats + chana</td></tr><tr><td>Dinner</td><td>2 rotis + paneer/chicken + vegetables</td></tr></table></div>
-<div class="card c6"><h2>Food rules</h2><div class="note">✓ Protein at every main meal<br>✓ Limit fried/outside food<br>✓ Don't compensate for a heavy meal by starving<br>✓ Keep hydration consistent<br>✓ Thursday & Saturday: follow your preferred vegetarian days</div></div>
-</div></section>
-
-<!-- CAREER -->
-<section id="career" class="tab"><div class="grid">
-
-<div class="card c12" style="padding:0;background:transparent;border:0;box-shadow:none">
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
-    <button class="btn" onclick="changeCareerDate(-1)" style="font-size:24px;padding:7px 18px">←</button>
-    <div style="text-align:center">
-      <div class="eyebrow">CAREER CHECK-IN</div>
-      <h2 id="careerDate" style="font-size:32px;margin:4px 0">Thursday 1 Oct</h2>
-    </div>
-    <button class="btn" onclick="changeCareerDate(1)" style="font-size:24px;padding:7px 18px">→</button>
-  </div>
-</div>
-
-<div class="card c4">
-  <div class="heroNum" style="font-size:42px" id="careerHours">0.0</div>
-  <div class="sub" style="font-size:16px">Study hours</div>
-</div>
-<div class="card c4">
-  <div class="heroNum" style="font-size:42px" id="careerApps">0</div>
-  <div class="sub" style="font-size:16px">Applications</div>
-</div>
-<div class="card c4">
-  <div class="heroNum" style="font-size:42px" id="careerOutcome">0</div>
-  <div class="sub" style="font-size:16px">Interviews / offers</div>
-</div>
-
-<div class="card c12">
-  <div class="fields" style="grid-template-columns:1fr 1fr">
-    <div class="field">
-      <label>Today's topic</label>
-      <select id="careerTopic">
-        <option>SQL</option>
-        <option>PySpark</option>
-        <option>Python</option>
-        <option>Cloud</option>
-        <option>Data Warehousing</option>
-        <option>ETL / System Design</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Minutes studied</label>
-      <input id="careerMinutes" type="number" min="0" placeholder="60">
-    </div>
-    <div class="field" style="grid-column:1/-1">
-      <label>What I learned or practised</label>
-      <textarea id="careerLearned" placeholder="Short note — SQL window functions, Spark joins, AWS Glue scenario..."></textarea>
-    </div>
-  </div>
-  <div class="row">
-    <button class="btn primary" onclick="saveCareerDay()">Save check-in</button>
-    <button class="btn" onclick="clearCareerDay()">Clear day</button>
-  </div>
-</div>
-
-<div class="card c12">
-  <h2>Hours by topic</h2>
-  <div id="careerTopicBars"></div>
-</div>
-
-<div class="card c12">
-  <h2>Applications and referrals</h2>
-  <div style="display:flex;gap:10px;margin-top:13px">
-    <input id="applicationInput" class="fieldInput" placeholder="Company and role" style="flex:1;background:#0b0e13;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px">
-    <button class="btn primary" onclick="addApplication()">Add</button>
-  </div>
-  <div id="applicationsList" style="margin-top:10px"></div>
-  <div class="sub" style="margin-top:16px">Saved in this browser only.</div>
-</div>
-
-</div></section>
-
-<!-- FINANCE -->
-<section id="finance" class="tab"><div class="grid">
-<div class="card c5"><h2>Monthly money check</h2><div class="fields"><div class="field"><label>Monthly SIP ₹</label><input id="sip" type="number"></div><div class="field"><label>Investments this month ₹</label><input id="inv" type="number"></div><div class="field"><label>Unplanned spend ₹</label><input id="unplanned" type="number"></div></div><div class="row"><button class="btn primary" onclick="saveFinance()">Save</button></div></div>
-<div class="card c7"><h2>Sunday finance review</h2><div class="habitgrid"><label class="habit"><input id="fi0" type="checkbox">Reviewed SIPs</label><label class="habit"><input id="fi1" type="checkbox">Reviewed portfolio allocation</label><label class="habit"><input id="fi2" type="checkbox">Checked upcoming expenses</label><label class="habit"><input id="fi3" type="checkbox">Avoided impulsive decisions</label></div><div class="note">Use this as a discipline tracker, not a signal to constantly change investments.</div></div>
-<div class="card c12"><h2>Monthly finance log</h2><table class="table" id="financeTable"><tr><th>Month</th><th>SIP</th><th>Invested</th><th>Unplanned spend</th></tr></table></div>
-</div></section>
-
-<!-- HABITS -->
-<section id="habits" class="tab"><div class="grid">
-<div class="card c6"><h2>Daily operating system</h2><div class="tasks" id="routine">
-<label class="habit"><input id="r0" type="checkbox">Wake without social media</label>
-<label class="habit"><input id="r1" type="checkbox">Plan top 3 priorities</label>
-<label class="habit"><input id="r2" type="checkbox">Movement / workout</label>
-<label class="habit"><input id="r3" type="checkbox">Focused career block</label>
-<label class="habit"><input id="r4" type="checkbox">Prepare tomorrow</label>
-<label class="habit"><input id="r5" type="checkbox">Wind down before sleep</label></div><div class="row"><button class="btn primary" onclick="saveRoutine()">Save routine</button></div></div>
-<div class="card c6"><h2>Weekly standards</h2><table class="table"><tr><th>Standard</th><th>Target</th></tr><tr><td>Gym</td><td>3–4 sessions</td></tr><tr><td>Steps</td><td>8–10K most days</td></tr><tr><td>Career</td><td>10–15 focused hours</td></tr><tr><td>Sleep</td><td>7–8 hours</td></tr><tr><td>Social/personal</td><td>1 meaningful interaction</td></tr></table></div>
-<div class="card c12"><h2>Consistency philosophy</h2><div class="note">Never miss twice. Don't restart. Don't chase motivation. Protect your energy. Compare October Krishna with December Krishna — not yourself with someone else's highlight reel.</div></div>
-</div></section>
-
-
-<!-- WELLNESS -->
-<section id="wellness" class="tab"><div class="grid">
-<div class="card c7">
-<h2>Daily wellness check-in</h2>
-<div class="sub">Small routines that keep your day consistent.</div>
-<div class="habitgrid">
-<label class="habit"><input id="w0" type="checkbox">☀️ Morning skincare</label>
-<label class="habit"><input id="w1" type="checkbox">🌙 Evening skincare</label>
-<label class="habit"><input id="w2" type="checkbox">🪥 Morning oral care</label>
-<label class="habit"><input id="w3" type="checkbox">🪥 Night oral care</label>
-<label class="habit"><input id="w4" type="checkbox">🧴 Grooming / personal care</label>
-<label class="habit"><input id="w5" type="checkbox">💊 Medication / inhaler check-in</label>
-<label class="habit"><input id="w6" type="checkbox">😴 Wind-down routine</label>
-<label class="habit"><input id="w7" type="checkbox">📵 No phone in bed</label>
-<label class="habit"><input id="w8" type="checkbox">😴 Sleep 8+ hours</label>
-<label class="habit"><input id="w9" type="checkbox">🎯 No-fap day</label>
-</div>
-<div class="row"><button class="btn primary" onclick="saveWellness()">Save wellness</button><button class="btn" onclick="clearWellness()">Clear</button></div>
-</div>
-
-<div class="card c5">
-<h2>No-sugar challenge</h2>
-<div class="sub">Target: <b>5 days / week</b></div>
-<div class="heroNum" id="sugarCount">0/5</div>
-<div class="progress"><i id="sugarBar"></i></div>
-<div class="calendar" id="sugarWeek"></div>
-<div class="row"><button class="btn primary" onclick="toggleSugar()">Mark today no-sugar</button></div>
-<div class="note">Define your own rule consistently—for example, avoiding added/free sugars. The tracker is for consistency, not perfection.</div>
-</div>
-
-<div class="card c6">
-<h2>Inhaler / medication log</h2>
-<div class="sub">Record only what is prescribed or recommended for you.</div>
-<div class="fields">
-<div class="field"><label>Date</label><input id="medDate" type="date"></div>
-<div class="field"><label>Check-in</label><select id="medStatus"><option value="as_planned">As planned</option><option value="not_needed">Not needed</option><option value="missed">Missed / not taken</option></select></div>
-<div class="field"><label>Optional note</label><input id="medNote" placeholder="Short note"></div>
-</div>
-<div class="row"><button class="btn primary" onclick="saveMed()">Save check-in</button></div>
-<div class="note">This is only a personal log. Follow your clinician's instructions for medication/inhaler use; don't change doses based on the tracker.</div>
-</div>
-
-<div class="card c6">
-<h2>Wellness streaks</h2>
-<div class="barrow"><div class="barhead"><span>Morning skincare</span><b id="ws0">0%</b></div><div class="bar"><i id="wb0"></i></div></div>
-<div class="barrow"><div class="barhead"><span>Evening skincare</span><b id="ws1">0%</b></div><div class="bar"><i id="wb1"></i></div></div>
-<div class="barrow"><div class="barhead"><span>No-sugar target</span><b id="ws2">0/5</b></div><div class="bar"><i id="wb2"></i></div></div>
-<div class="barrow"><div class="barhead"><span>Wellness check-ins</span><b id="ws3">0/7</b></div><div class="bar"><i id="wb3"></i></div></div>
-</div>
-
-<div class="card c12">
-<h2>Simple morning → evening routine</h2>
-<table class="table">
-<tr><th>Time</th><th>Routine</th><th>Check</th></tr>
-<tr><td>Morning</td><td>Skincare • oral care • water • daily priorities</td><td>☀️</td></tr>
-<tr><td>Day</td><td>Steps • protein • hydration • no-sugar goal</td><td>🎯</td></tr>
-<tr><td>Evening</td><td>Workout if scheduled • dinner • skincare</td><td>🌙</td></tr>
-<tr><td>Night</td><td>Medication/inhaler check-in if prescribed • wind down • sleep</td><td>😴</td></tr>
-</table>
-</div>
-</div></section>
-
-<!-- REVIEW -->
-<section id="review" class="tab"><div class="grid">
-
-<div class="card c12" style="background:#172235">
-  <h2 id="reviewPhase" style="font-size:20px">October: Foundation</h2>
-  <div class="sub">Oct 1 to Oct 31 Foundation · Nov 1 to Nov 30 Progress · Dec 1 to Dec 31 Transformation</div>
-</div>
-
-<div class="card c12">
-  <h2 style="font-size:20px">92 days</h2>
-  <div id="reviewCalendar" style="display:grid;grid-template-columns:repeat(25,1fr);gap:5px;margin-top:14px"></div>
-  <div class="sub" style="margin-top:14px">🟨 Amber = win day (75%+ daily score). Each day is scored from Fitness, Nutrition, Career, Wellness and Habits. 16/21 or higher counts as a Win Day. Click a day to review it.</div>
-</div>
-
-<div class="card c12">
-  <h2 style="font-size:18px">Performance summaries</h2>
-  <div class="sub">All three summaries follow the global selected date. Change the date above and the summaries update automatically.</div>
-  <div class="grid" style="margin-top:14px">
-    <div class="card c4" style="background:#0b0e13">
-      <div class="eyebrow">DAILY SUMMARY</div>
-      <div class="heroNum" style="font-size:38px" id="dailySummaryScore">0/21</div>
-      <div class="sub" id="dailySummaryPct">0% • Not a Win Day</div>
-      <div class="bar"><i id="dailySummaryBar"></i></div>
-      <div id="dailySummaryBreakdown" class="note">Fitness 0/2 · Nutrition 0/2 · Career 0/1 · Wellness 0/10 · Habits 0/6</div>
-    </div>
-    <div class="card c4" style="background:#0b0e13">
-      <div class="eyebrow">WEEKLY SUMMARY</div>
-      <div class="heroNum" style="font-size:38px" id="weeklySummaryScore">0/147</div>
-      <div class="sub" id="weeklySummaryPct">0% • 0 Win Days</div>
-      <div class="bar"><i id="weeklySummaryBar"></i></div>
-      <div id="weeklySummaryBreakdown" class="note">Selected week: —</div>
-    </div>
-    <div class="card c4" style="background:#0b0e13">
-      <div class="eyebrow">MONTHLY SUMMARY</div>
-      <div class="heroNum" style="font-size:38px" id="monthlySummaryScore">0/0</div>
-      <div class="sub" id="monthlySummaryPct">0% • 0 Win Days</div>
-      <div class="bar"><i id="monthlySummaryBar"></i></div>
-      <div id="monthlySummaryBreakdown" class="note">Selected month: —</div>
-    </div>
-  </div>
-</div>
-
-<div class="card c12">
-  <h2 style="font-size:18px">Weekly summary</h2>
-  <div style="overflow:auto">
-  <table class="table" id="weeklySummary">
-    <tr><th>Week</th><th>Wins</th><th>Gym</th><th>Avg steps</th><th>Avg protein</th><th>Study hrs</th><th>Score</th></tr>
-  </table>
-  </div>
-</div>
-
-<div class="card c6">
-  <h2>Weekly reflection</h2>
-  <div class="fields" style="grid-template-columns:1fr">
-    <div class="field"><label>What went well?</label><textarea id="reviewGood" placeholder="What worked this week?"></textarea></div>
-    <div class="field"><label>What went wrong?</label><textarea id="reviewBad" placeholder="What got in the way?"></textarea></div>
-    <div class="field"><label>One improvement for next week</label><textarea id="reviewNext" placeholder="One thing to change"></textarea></div>
-  </div>
-  <div class="row"><button class="btn primary" onclick="saveReview()">Save review</button></div>
-</div>
-
-<div class="card c6">
-  <h2>Winter Arc score</h2>
-  <div class="heroNum" id="overallReviewScore">0%</div>
-  <div class="progress"><i id="overallReviewBar"></i></div>
-  <div class="stats" style="margin-top:14px">
-    <div class="stat"><b id="reviewWinDays">0</b><span>WIN DAYS</span></div>
-    <div class="stat"><b id="reviewGymDays">0</b><span>GYM DAYS</span></div>
-    <div class="stat"><b id="reviewStudy">0h</b><span>STUDY HOURS</span></div>
-    <div class="stat"><b id="reviewAvgSteps">—</b><span>AVG STEPS</span></div>
-  </div>
-</div>
-
-<div class="card c12">
-  <h2>Monthly checkpoint</h2>
-  <div style="overflow:auto">
-  <table class="table">
-    <tr><th>Checkpoint</th><th>October</th><th>November</th><th>December</th></tr>
-    <tr><td>Gym consistency</td><td>☐</td><td>☐</td><td>☐</td></tr>
-    <tr><td>Nutrition consistency</td><td>☐</td><td>☐</td><td>☐</td></tr>
-    <tr><td>Career progress</td><td>☐</td><td>☐</td><td>☐</td></tr>
-    <tr><td>Wellness routines</td><td>☐</td><td>☐</td><td>☐</td></tr>
-    <tr><td>Body metrics</td><td>☐</td><td>☐</td><td>☐</td></tr>
-  </table>
-  </div>
-</div>
-
-</div></section>
-
-<div class="footer">Winter Arc 2026 • Local browser storage • Your data stays on this device</div>
-</main></div>
 <script>
-const START=new Date('2026-10-01T00:00:00'),END=new Date('2026-12-31T23:59:59'),KEY='winterArcTabs2026';
-let S=JSON.parse(localStorage.getItem(KEY)||'{"days":{},"body":[],"workouts":[],"nutrition":{},"skills":[0,0,0,0,0],"careerCheck":[],"finance":[],"routine":{},"wellness":{},"sugar":{},"meds":[],"review":{}}');
-S.wellness=S.wellness||{}; S.sugar=S.sugar||{}; S.meds=S.meds||[]; S.fitness=S.fitness||{};
-S.careerDays=S.careerDays||{}; S.applications=S.applications||[];
-const skillNames=['SQL','PySpark','Python','Cloud','Data Warehousing'];
-const ex={ 'Upper A':['Bench Press','Lat Pulldown','Seated Cable Row','Incline DB Press','Lateral Raise','Biceps Curl','Triceps Pushdown'], 'Lower A':['Squat / Leg Press','Romanian Deadlift','Leg Extension','Leg Curl','Calf Raise','Plank'], 'Upper B':['Incline Bench','Pulldown / Pull-up','DB Shoulder Press','Chest-Supported Row','Lateral Raise','Hammer Curl','Triceps Extension'], 'Lower B':['Leg Press','Romanian Deadlift','Bulgarian Split Squat','Leg Curl','Calf Raise','Knee Raise','Plank']};
-function localKey(d=new Date()){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-let selectedDate=localKey();
-function key(d){return d?localKey(d):selectedDate}
-function save(){localStorage.setItem(KEY,JSON.stringify(S));render()}
-function clamp(x){return Math.max(0,Math.min(100,x))}
-function tab(id,btn){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');}
-function selectedDateObj(){let [y,m,d]=selectedDate.split('-').map(Number);return new Date(y,m-1,d,12)}
-function week(base=selectedDateObj()){let d=new Date(base);let day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return [...Array(7)].map((_,i)=>{let x=new Date(d);x.setDate(d.getDate()+i);return localKey(x)})}
-function arcKeys(keys){return keys.filter(k=>k>=localKey(START)&&k<=localKey(END))}
-function scoreWeek(){return arcKeys(week()).reduce((a,k)=>a+dailyScore(k),0)}
-function scoreWeekMax(){return arcKeys(week()).length*21}
-function setSelectedDate(v){if(/^\\d{4}-\\d{2}-\\d{2}$/.test(v)){selectedDate=v;render()}}
-function changeSelectedDate(n){let d=selectedDateObj();d.setDate(d.getDate()+n);selectedDate=localKey(d);render()}
-function goToday(){selectedDate=localKey();render()}
-function categoryScores(k=selectedDate){
- const f=S.fitness[k]||{}, n=S.nutrition[k]||{}, c=S.careerDays[k]||{}, w=S.wellness[k]||[], r=S.routine[k]||{};
- const nutritionProtein=Number(f.protein||((n.p||[]).reduce((a,b)=>a+Number(b||0),0))||0);
- const fitness=(f.workout?1:0)+(Number(f.steps||0)>=8000?1:0);
- const nutrition=(nutritionProtein>=110?1:0)+(Number(n.water||0)>=2.5?1:0);
- const career=Number(c.minutes||0)>=30?1:0;
- const wellness=Array.isArray(w)?w.filter(Boolean).length:0;
- const habits=Array.isArray(r.items)?r.items.filter(Boolean).length:0;
- return {fitness,nutrition,career,wellness,habits,total:fitness+nutrition+career+wellness+habits,max:21};
+const START=new Date(2026,9,1), END=new Date(2026,11,31);
+const tabs=[
+ ['dashboard','Dashboard'],['fitness','Fitness'],['nutrition','Nutrition'],['career','Career'],['wellness','Wellness'],['finance','Finance'],['summary','Summary'],['review','Review']
+];
+let selected=new Date(); selected.setHours(0,0,0,0);
+let active='dashboard';
+const key=d=>{let x=new Date(d);return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`};
+const storeKey='winterArc2026_final_v1';
+let db=JSON.parse(localStorage.getItem(storeKey)||'{}');
+function save(){localStorage.setItem(storeKey,JSON.stringify(db))}
+function day(d=selected){let k=key(d); if(!db[k]) db[k]={fitness:{},nutrition:{},career:{},wellness:{},finance:{}}; return db[k]}
+function fmt(d=selected){return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}
+function pct(n,m){return m?Math.round(n/m*100):0}
+function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
+function arcDay(d){if(d<START)return 0; if(d>END)return 92; return Math.floor((d-START)/86400000)+1}
+function inArc(d){return d>=START&&d<=END}
+function notify(t){let el=document.getElementById('toast');el.textContent=t;el.style.display='block';setTimeout(()=>el.style.display='none',1500)}
+function score(d){
+ const x=day(d), f=x.fitness||{}, n=x.nutrition||{}, c=x.career||{}, w=x.wellness||{};
+ let fs=(f.workout&&f.workout!=='No workout'?1:0)+(Number(f.steps)>=8000?1:0);
+ let ns=(Number(n.protein)>=110?1:0)+(Number(n.water)>=2.5?1:0);
+ let cs=Number(c.minutes)>0?1:0;
+ let ws=['morningSkin','eveningSkin','oralMorning','oralNight','grooming','meds','winddown','noPhone','sleep8','nofap'].filter(k=>!!w[k]).length;
+ return {fitness:fs,nutrition:ns,career:cs,wellness:ws,total:fs+ns+cs+ws,max:15,win:fs+ns+cs+ws>=12};
 }
-function dailyScore(k=selectedDate){return categoryScores(k).total}
-function dailyPct(k=selectedDate){const s=categoryScores(k);return Math.round(s.total/s.max*100)}
-function isWinDay(k){return dailyPct(k)>=75}
-function saveFitnessDay(){
- const k=selectedDate;
- S.fitness[k]={
-   workout:fitWorkout.value,steps:+fitSteps.value||null,calories:+fitCalories.value||null,
-   protein:+fitProtein.value||null,weight:+fitWeight.value||null,waist:+fitWaist.value||null,lift:fitLift.value
- };
- save();
+function setField(path,val){let x=day(); let [sec,k]=path.split('.'); x[sec][k]=val; save(); render()}
+function checked(path){let [sec,k]=path.split('.');return !!day()[sec]?.[k]}
+function navHtml(){return tabs.map(([id,n])=>`<button class="${active===id?'active':''}" data-tab="${id}">${n}</button>`).join('')}
+function initNav(){document.getElementById('nav').innerHTML=navHtml();document.getElementById('mobileNav').innerHTML=navHtml();document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{active=b.dataset.tab;render()})}
+function dateControls(){
+ document.getElementById('prev').onclick=()=>{selected.setDate(selected.getDate()-1);render()};
+ document.getElementById('next').onclick=()=>{selected.setDate(selected.getDate()+1);render()};
+ document.getElementById('today').onclick=()=>{selected=new Date();selected.setHours(0,0,0,0);render()};
 }
-function clearFitnessDay(){delete S.fitness[selectedDate];save()}
-function renderFitness(){
- const d=new Date(selectedDate+'T12:00:00');
- fitnessDate.textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short'});
- const wk=week(), entries=wk.map(k=>S.fitness[k]).filter(Boolean);
- const gyms=entries.filter(x=>x.workout && !['Cardio / Walk'].includes(x.workout)).length;
- gymWeek.textContent=Math.min(gyms,4)+'/4';
- const steps=entries.map(x=>x.steps).filter(x=>x!=null);
- const proteins=entries.map(x=>x.protein).filter(x=>x!=null);
- avgSteps.textContent=steps.length?Math.round(steps.reduce((a,b)=>a+b,0)/steps.length).toLocaleString():'—';
- avgProtein.textContent=proteins.length?Math.round(proteins.reduce((a,b)=>a+b,0)/proteins.length):'—';
- const done=entries.length;
- fitnessDayProgress.style.width=Math.min(100,done/7*100)+'%';
- const x=S.fitness[selectedDate]||{};
- fitWorkout.value=x.workout||'';fitSteps.value=x.steps??'';fitCalories.value=x.calories??'';fitProtein.value=x.protein??'';
- fitWeight.value=x.weight??'';fitWaist.value=x.waist??'';fitLift.value=x.lift||'';
- const body=Object.entries(S.fitness).sort(([a],[b])=>a.localeCompare(b));
- const w=body.filter(([,x])=>x.weight!=null).map(([,x])=>x.weight);
- const wa=body.filter(([,x])=>x.waist!=null).map(([,x])=>x.waist);
- weightTrend.textContent=w.length>=2?`${w[0]} kg → ${w[w.length-1]} kg (${(w[w.length-1]-w[0]).toFixed(1)} kg)`:'Log 2 or more entries to see the trend.';
- waistTrend.textContent=wa.length>=2?`${wa[0]}" → ${wa[wa.length-1]}" (${(wa[wa.length-1]-wa[0]).toFixed(1)}")`:'Log 2 or more entries to see the trend.';
+function inputField(label,html){return `<div class="field"><label>${label}</label>${html}</div>`}
+function dashboard(){
+ const s=score(), ad=arcDay(selected), logged=Object.keys(db).filter(k=>k>=key(START)&&k<=key(END)).length;
+ const days=[...Array(92)].map((_,i)=>{let d=new Date(START);d.setDate(d.getDate()+i);let sc=score(d);return `<div class="day ${sc.win?'win':sc.total?'partial':''} ${d>new Date()?'future':''}" title="${fmt(d)} · ${sc.total}/15">${i+1}</div>`}).join('');
+ return `<div class="cards">
+ <div class="card"><div class="label">Arc day</div><div class="big">${ad||'—'}</div><div class="sub">${inArc(selected)?'of 92':'Starts Oct 1'}</div></div>
+ <div class="card"><div class="label">Days logged</div><div class="big">${logged}</div><div class="sub">of 92</div></div>
+ <div class="card"><div class="label">Current streak</div><div class="big">${streak()}</div><div class="sub">75%+ win days</div></div>
+ <div class="card"><div class="label">Today score</div><div class="big">${s.total}<span style="font-size:14px;color:var(--muted)">/15</span></div><div class="sub">${s.win?'✓ Win day':'Keep going'}</div></div></div>
+ <div class="grid2">
+ <section class="section"><h2>Today · ${fmt()}</h2><p class="note">One source of truth — enter data only in the relevant tab.</p>
+ <div class="rows">
+ ${scoreRow('Fitness',s.fitness,2,'fitness')} ${scoreRow('Nutrition',s.nutrition,2,'nutrition')} ${scoreRow('Career',s.career,1,'career')} ${scoreRow('Wellness',s.wellness,10,'wellness')}
+ </div></section>
+ <section class="section"><h2>92-day journey</h2><p class="note">12/15 or higher is a Win Day and continues your streak.</p><div class="calendar">${days}</div></section></div>`;
 }
-function saveBody(){S.body=S.body.filter(x=>x.date!==key());S.body.push({date:key(),weight:+bw.value||null,waist:+ww.value||null,steps:+sw.value||null});save()}
-function saveNutrition(){S.nutrition[key()]={p:[0,1,2,3].map(i=>+document.getElementById('mp'+i).value||0),water:+water.value||0,fruit:+fruit.value||0};save()}
-function saveWorkout(){let day=workoutDay.value, vals=[...document.querySelectorAll('#exerciseList .exercise')].map(r=>[...r.querySelectorAll('input')].map(x=>x.value));S.workouts.push({date:key(),day,vals});save();alert('Workout saved.')}
-function buildExercises(){let d=workoutDay.value;exerciseList.innerHTML=ex[d].map((n,i)=>`<div class="exercise"><b>${n}</b><input placeholder="kg" data-e="${i}"><input placeholder="reps"><input placeholder="sets"></div>`).join('')}
-function studySession(){let i=+prompt('1 SQL  2 PySpark  3 Python  4 AWS  5 Data Warehousing');if(i>=1&&i<=5){S.skills[i-1]=clamp(S.skills[i-1]+5);save()}}
-function resetSkills(){if(confirm('Reset career skill progress?')){S.skills=[0,0,0,0,0];save()}}
-
-const careerTopics=['SQL','PySpark','Python','Cloud','Data Warehousing','ETL / System Design'];
-function changeCareerDate(n){changeSelectedDate(n)}
-function saveCareerDay(){
- const k=selectedDate;
- S.careerDays[k]={topic:careerTopic.value,minutes:+careerMinutes.value||0,learned:careerLearned.value};
- save();
+function scoreRow(n,v,m,t){return `<div class="row"><div><div class="name">${n}</div><div class="barline"><i style="width:${pct(v,m)}%"></i></div></div><div class="score">${v}/${m}</div></div>`}
+function fitness(){
+ let f=day().fitness;
+ return `<section class="section"><h2>Fitness</h2><p class="note">Keep it simple: movement, steps and body progress.</p>
+ <div class="formgrid">
+ ${inputField('Workout',`<select id="f_workout"><option>No workout</option><option>Upper A</option><option>Lower A</option><option>Upper B</option><option>Lower B</option><option>Full body</option><option>Cardio / Walk</option></select>`)}
+ ${inputField('Steps',`<input id="f_steps" type="number" min="0" placeholder="e.g. 9000" value="${f.steps||''}">`)}
+ ${inputField('Weight (kg)',`<input id="f_weight" type="number" step="0.1" value="${f.weight||''}">`)}
+ ${inputField('Waist (in)',`<input id="f_waist" type="number" step="0.1" value="${f.waist||''}">`)}
+ ${inputField('Main lift / best set',`<input id="f_lift" value="${f.lift||''}" placeholder="e.g. Bench 50kg × 8">`)}
+ </div><div class="actions"><button class="primary" onclick="saveFitness()">Save fitness</button></div></section>
+ <div class="grid2"><section class="section"><h2>Today score</h2>${scoreRow('Fitness',score().fitness,2,'fitness')}</section><section class="section"><h2>Recent body notes</h2><p class="note">Weight and waist are stored by date so you can review trends later.</p></section></div>`;
 }
-function clearCareerDay(){delete S.careerDays[selectedDate];save()}
-function renderCareerTracker(){
- const d=new Date(selectedDate+'T12:00:00');
- careerDate.textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short'});
- const wk=week();
- const hours=wk.reduce((a,k)=>a+(S.careerDays[k]?.minutes||0),0)/60;
- careerHours.textContent=hours.toFixed(1);
- const appCount=S.applications.filter(x=>x.date>=wk[0]&&x.date<=wk[6]).length;
- careerApps.textContent=appCount;
- const outcomes=S.applications.filter(x=>x.date>=wk[0]&&x.date<=wk[6]&&(x.status==='Interview'||x.status==='Offer')).length;
- careerOutcome.textContent=outcomes;
- const x=S.careerDays[selectedDate]||{};
- careerTopic.value=x.topic||'SQL';careerMinutes.value=x.minutes||'';careerLearned.value=x.learned||'';
- const totals={};careerTopics.forEach(t=>totals[t]=0);
- Object.values(S.careerDays).forEach(v=>{if(totals[v.topic]!=null)totals[v.topic]+=(v.minutes||0)/60});
- const max=Math.max(1,...Object.values(totals));
- careerTopicBars.innerHTML=careerTopics.map(t=>`<div class="barrow">
- <div class="barhead"><span>${t}</span><b>${totals[t].toFixed(1)} h</b></div>
- <div class="bar"><i style="width:${Math.min(100,totals[t]/max*100)}%"></i></div>
- </div>`).join('');
- renderApplications();
+function saveFitness(){let x=day().fitness;x.workout=document.getElementById('f_workout').value;x.steps=document.getElementById('f_steps').value;x.weight=document.getElementById('f_weight').value;x.waist=document.getElementById('f_waist').value;x.lift=document.getElementById('f_lift').value;save();notify('Fitness saved');render()}
+function nutrition(){
+ let n=day().nutrition;
+ return `<section class="section"><h2>Nutrition</h2><p class="note">Only protein and water affect the score. Other food notes are for tracking.</p>
+ <div class="formgrid">${inputField('Protein (g)',`<input id="n_protein" type="number" value="${n.protein||''}" placeholder="110">`)}${inputField('Water (L)',`<input id="n_water" type="number" step="0.1" value="${n.water||''}" placeholder="2.5">`)}${inputField('Fruit / vegetables',`<input id="n_fruit" value="${n.fruit||''}" placeholder="e.g. 2 servings">`)}${inputField('Food note',`<textarea id="n_note">${n.note||''}</textarea>`)}</div><div class="actions"><button class="primary" onclick="saveNutrition()">Save nutrition</button></div></section>
+ <section class="section"><h2>Today score</h2>${scoreRow('Nutrition',score().nutrition,2,'nutrition')}</section>`;
 }
-function addApplication(){
- const value=applicationInput.value.trim();if(!value)return;
- S.applications.push({date:selectedDate,name:value,status:'Applied'});applicationInput.value='';save();
+function saveNutrition(){let x=day().nutrition;x.protein=document.getElementById('n_protein').value;x.water=document.getElementById('n_water').value;x.fruit=document.getElementById('n_fruit').value;x.note=document.getElementById('n_note').value;save();notify('Nutrition saved');render()}
+function career(){
+ let c=day().career;
+ return `<section class="section"><h2>Career</h2><p class="note">Cloud can include AWS, Azure, GCP, Databricks, Synapse, ADF, Glue, etc.</p>
+ <div class="formgrid">${inputField('Today’s topic',`<select id="c_topic"><option>SQL</option><option>PySpark</option><option>Python</option><option>Cloud</option><option>Data Warehousing</option><option>ETL / System Design</option><option>Interview Prep</option></select>`)}${inputField('Study minutes',`<input id="c_minutes" type="number" value="${c.minutes||''}" placeholder="60">`)}${inputField('What I learned / practised',`<textarea id="c_learn">${c.learn||''}</textarea>`)}${inputField('Applications / referrals / interview note',`<textarea id="c_note">${c.note||''}</textarea>`)}</div><div class="actions"><button class="primary" onclick="saveCareer()">Save career</button></div></section>
+ <section class="section"><h2>Today score</h2>${scoreRow('Career',score().career,1,'career')}</section>`;
 }
-function updateApplication(i,status){S.applications[i].status=status;save()}
-function removeApplication(i){S.applications.splice(i,1);save()}
-function renderApplications(){
- if(!S.applications.length){applicationsList.innerHTML='<div class="sub" style="padding:12px 0">No applications logged yet.</div>';return}
- applicationsList.innerHTML=S.applications.slice().reverse().map((a,ri)=>{
-   const i=S.applications.length-1-ri;
-   return `<div style="display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)">
-     <div style="flex:1"><b>${a.name.replace(/</g,'&lt;')}</b><div class="sub">${a.date}</div></div>
-     <select onchange="updateApplication(${i},this.value)" style="background:#0b0e13;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:7px">
-       ${['Applied','Referral','Interview','Offer','Rejected','Closed'].map(x=>`<option ${a.status===x?'selected':''}>${x}</option>`).join('')}
-     </select>
-     <button class="btn red" onclick="removeApplication(${i})">×</button>
-   </div>`
- }).join('');
+function saveCareer(){let x=day().career;x.topic=document.getElementById('c_topic').value;x.minutes=document.getElementById('c_minutes').value;x.learn=document.getElementById('c_learn').value;x.note=document.getElementById('c_note').value;save();notify('Career saved');render()}
+function wellness(){
+ let w=day().wellness;
+ const items=[['morningSkin','Morning skincare'],['eveningSkin','Evening skincare'],['oralMorning','Morning oral care'],['oralNight','Night oral care'],['grooming','Grooming / personal care'],['meds','Medication / inhaler check'],['winddown','Wind-down routine'],['noPhone','No phone in bed'],['sleep8','Sleep 8+ hours'],['nofap','No-fap day']];
+ return `<section class="section"><h2>Wellness</h2><p class="note">Your wellness score comes entirely from this tab. 10 checks = 10 points.</p><div class="checklist">${items.map(([k,n])=>`<label class="check"><input type="checkbox" ${w[k]?'checked':''} onchange="toggleWellness('${k}',this.checked)"><span>${n}</span></label>`).join('')}</div><div class="actions"><button class="secondary" onclick="clearWellness()">Clear wellness for this day</button></div></section><section class="section"><h2>Today score</h2>${scoreRow('Wellness',score().wellness,10,'wellness')}</section>`;
 }
-function saveCareerChecklist(){S.careerCheck=[...Array(8)].map((_,i)=>document.getElementById('ci'+i).checked);save()}
-function saveFinance(){S.finance.push({month:new Date().toLocaleString('en-IN',{month:'short',year:'numeric'}),sip:+sip.value||0,inv:+inv.value||0,unplanned:+unplanned.value||0});save()}
-function saveRoutine(){S.routine[key()]={items:[...Array(6)].map((_,i)=>document.getElementById('r'+i).checked)};save()}
-function saveReview(){S.review={date:key(),good:reviewGood.value,bad:reviewBad.value,next:reviewNext.value};save();alert('Review saved.')}
-
-function saveWellness(){let a=[...Array(10)].map((_,i)=>document.getElementById('w'+i).checked);S.wellness[key()]=a;save()}
-function clearWellness(){delete S.wellness[key()];save()}
-function toggleSugar(){let k=key();S.sugar[k]=!S.sugar[k];save()}
-function sugarWeekCount(){return week().filter(k=>S.sugar[k]).length}
-function renderWellness(){
- let a=S.wellness[key()]||[];[...Array(10)].forEach((_,i)=>document.getElementById('w'+i).checked=!!a[i]);
- let sc=sugarWeekCount(); document.getElementById('sugarCount').textContent=sc+'/5';document.getElementById('sugarBar').style.width=Math.min(100,sc/5*100)+'%';
- let sw=document.getElementById('sugarWeek');sw.innerHTML='';week().forEach(k=>{let d=document.createElement('div');d.className='cal '+(S.sugar[k]?'done':'');d.textContent=new Date(k+'T12:00:00').toLocaleDateString('en-IN',{weekday:'short'}).slice(0,3);d.title=S.sugar[k]?'No-sugar day':'Not marked';sw.appendChild(d)});
- let wk=week();let wellnessDays=wk.filter(k=>S.wellness[k]?.some(Boolean)).length;
- let sk0=wk.filter(k=>S.wellness[k]?.[0]).length,sk1=wk.filter(k=>S.wellness[k]?.[1]).length;
- [['ws0','wb0',sk0/7*100,sk0+'/7'],['ws1','wb1',sk1/7*100,sk1+'/7'],['ws2','wb2',Math.min(100,sc/5*100),sc+'/5'],['ws3','wb3',wellnessDays/7*100,wellnessDays+'/7']].forEach(x=>{document.getElementById(x[0]).textContent=x[3];document.getElementById(x[1]).style.width=x[2]+'%'});
+function toggleWellness(k,v){day().wellness[k]=v;save();render()}
+function clearWellness(){day().wellness={};save();render()}
+function finance(){
+ let f=day().finance;
+ return `<section class="section"><h2>Finance</h2><p class="note">Lightweight tracking — enough to keep the Winter Arc financially intentional.</p><div class="formgrid">${inputField('Investment / SIP',`<input id="fi_sip" value="${f.sip||''}" placeholder="₹">`)}${inputField('Spend today',`<input id="fi_spend" value="${f.spend||''}" placeholder="₹">`)}${inputField('Unplanned spend',`<input id="fi_unplanned" value="${f.unplanned||''}" placeholder="₹0">`)}${inputField('Note',`<textarea id="fi_note">${f.note||''}</textarea>`)}</div><div class="actions"><button class="primary" onclick="saveFinance()">Save finance</button></div></section>`;
 }
-function saveMed(){let d=document.getElementById('medDate').value||key(),st=document.getElementById('medStatus').value,n=document.getElementById('medNote').value;S.meds=S.meds.filter(x=>x.date!==d);S.meds.push({date:d,status:st,note:n});save();document.getElementById('medNote').value='';}
-function drawChart(){let c=document.getElementById('bodyChart');if(!c)return;let x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);let a=S.body.filter(v=>v.weight).sort((a,b)=>a.date.localeCompare(b.date));if(!a.length){x.fillStyle='#687283';x.font='13px system-ui';x.fillText('Save weekly body metrics to see your weight trend.',25,105);return}let lo=Math.min(...a.map(v=>v.weight))-1,hi=Math.max(...a.map(v=>v.weight))+1;x.strokeStyle='#2a3039';for(let y=25;y<195;y+=40){x.beginPath();x.moveTo(30,y);x.lineTo(670,y);x.stroke()}x.strokeStyle='#d9ff57';x.lineWidth=3;x.beginPath();a.forEach((v,i)=>{let px=40+i/(Math.max(1,a.length-1))*620,py=175-(v.weight-lo)/(hi-lo)*125;if(i)x.lineTo(px,py);else x.moveTo(px,py)});x.stroke()}
-function renderCalendar(){calendar.innerHTML='';let d=new Date(START);while(d<=END){let el=document.createElement('div'),k=localKey(d),v=dailyScore(k),pct=dailyPct(k);el.className='cal '+(pct>=100?'done':pct>0?'partial':'');el.textContent=d.getDate();el.title=`${k}: ${v}/21 (${pct}%)`;calendar.appendChild(el);d.setDate(d.getDate()+1)}}
-
-function summaryKeysForMonth(k){const d=new Date(k+'T12:00:00'),y=d.getFullYear(),m=d.getMonth();let out=[];for(let day=1;day<=31;day++){let x=new Date(y,m,day);if(x.getMonth()!==m)break;let kk=localKey(x);if(kk>=localKey(START)&&kk<=localKey(END))out.push(kk)}return out}
-function renderSummaries(){
- const k=selectedDate, c=categoryScores(k), dp=dailyPct(k);
- dailySummaryScore.textContent=c.total+'/21'; dailySummaryPct.textContent=dp+'% • '+(isWinDay(k)?'Win Day':'Not a Win Day'); dailySummaryBar.style.width=Math.min(100,dp)+'%';
- dailySummaryBreakdown.textContent=`Fitness ${c.fitness}/2 · Nutrition ${c.nutrition}/2 · Career ${c.career}/1 · Wellness ${c.wellness}/10 · Habits ${c.habits}/6`;
- const wk=arcKeys(week()), ws=wk.reduce((a,x)=>a+dailyScore(x),0), wm=wk.length*21, wp=wm?Math.round(ws/wm*100):0, ww=wk.filter(isWinDay).length;
- weeklySummaryScore.textContent=ws+'/'+wm; weeklySummaryPct.textContent=wp+'% • '+ww+' Win Days'; weeklySummaryBar.style.width=wp+'%';
- const wf=wk.reduce((a,x)=>a+categoryScores(x).fitness,0),wn=wk.reduce((a,x)=>a+categoryScores(x).nutrition,0),wc=wk.reduce((a,x)=>a+categoryScores(x).career,0),wws=wk.reduce((a,x)=>a+categoryScores(x).wellness,0),wh=wk.reduce((a,x)=>a+categoryScores(x).habits,0);
- weeklySummaryBreakdown.textContent=`${wk.length?new Date(wk[0]+'T12:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short'}):'—'} – ${wk.length?new Date(wk[wk.length-1]+'T12:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short'}):'—'} · F ${wf}/${wk.length*2} · N ${wn}/${wk.length*2} · C ${wc}/${wk.length} · W ${wws}/${wk.length*10} · H ${wh}/${wk.length*6}`;
- const mk=summaryKeysForMonth(k), ms=mk.reduce((a,x)=>a+dailyScore(x),0), mm=mk.length*21, mp=mm?Math.round(ms/mm*100):0, mw=mk.filter(isWinDay).length;
- monthlySummaryScore.textContent=ms+'/'+mm; monthlySummaryPct.textContent=mp+'% • '+mw+' Win Days'; monthlySummaryBar.style.width=mp+'%';
- const mf=mk.reduce((a,x)=>a+categoryScores(x).fitness,0),mn=mk.reduce((a,x)=>a+categoryScores(x).nutrition,0),mc=mk.reduce((a,x)=>a+categoryScores(x).career,0),mws=mk.reduce((a,x)=>a+categoryScores(x).wellness,0),mh=mk.reduce((a,x)=>a+categoryScores(x).habits,0);
- const md=new Date(k+'T12:00:00').toLocaleDateString('en-IN',{month:'long',year:'numeric'});
- monthlySummaryBreakdown.textContent=`${md} · F ${mf}/${mk.length*2} · N ${mn}/${mk.length*2} · C ${mc}/${mk.length} · W ${mws}/${mk.length*10} · H ${mh}/${mk.length*6}`;
+function saveFinance(){let x=day().finance;x.sip=document.getElementById('fi_sip').value;x.spend=document.getElementById('fi_spend').value;x.unplanned=document.getElementById('fi_unplanned').value;x.note=document.getElementById('fi_note').value;save();notify('Finance saved');render()}
+function rangeDays(a,b){let out=[];let d=new Date(a);d.setHours(0,0,0,0);while(d<=b){out.push(new Date(d));d.setDate(d.getDate()+1)}return out}
+function summary(){
+ let s=score(selected), weekStart=new Date(selected);let wd=(weekStart.getDay()+6)%7;weekStart.setDate(weekStart.getDate()-wd);let weekEnd=new Date(weekStart);weekEnd.setDate(weekEnd.getDate()+6);
+ let monthStart=new Date(selected.getFullYear(),selected.getMonth(),1), monthEnd=new Date(selected.getFullYear(),selected.getMonth()+1,0);
+ const aggregate=(days)=>{let t={fitness:0,nutrition:0,career:0,wellness:0,total:0,max:0,wins:0};days.forEach(d=>{let q=score(d);t.fitness+=q.fitness;t.nutrition+=q.nutrition;t.career+=q.career;t.wellness+=q.wellness;t.total+=q.total;t.max+=15;if(q.win)t.wins++});return t};
+ let w=aggregate(rangeDays(weekStart,weekEnd)),m=aggregate(rangeDays(monthStart,monthEnd));
+ return `<div class="grid2"><section class="section"><h2>Daily Summary</h2><p class="note">${fmt(selected)}</p>${summaryRows(s,15)}<div class="pill ${s.win?'win':''}">${s.win?'WIN DAY':'Below 75%'}</div></section>
+ <section class="section"><h2>Weekly Summary</h2><p class="note">${fmt(weekStart)} – ${fmt(weekEnd)}</p>${summaryRows(w,w.max)}<p class="note">${w.wins} Win Days · ${pct(w.total,w.max)}%</p></section></div>
+ <section class="section"><h2>Monthly Summary</h2><p class="note">${selected.toLocaleDateString('en-IN',{month:'long',year:'numeric'})}</p>${summaryRows(m,m.max)}<p class="note">${m.wins} Win Days · ${pct(m.total,m.max)}%</p></section>`;
 }
-function renderReview(){
- const days=[];let d=new Date(START);while(d<=END){days.push(localKey(d));d.setDate(d.getDate()+1)}
- const cal=document.getElementById('reviewCalendar');cal.innerHTML='';
- days.forEach(k=>{
-   const v=dailyScore(k),pct=dailyPct(k),el=document.createElement('div');
-   el.style.cssText='height:25px;border-radius:5px;background:'+(pct>=75?'#f6b548':pct>0?'#4b5d39':'#182337')+';border:1px solid #22314a;cursor:pointer';
-   el.textContent=new Date(k+'T12:00:00').getDate();el.title=`${k}: ${v}/21 (${pct}%)`;el.onclick=()=>{selectedDate=k;tab('fitness',document.querySelector('.nav button:nth-child(2)'));render();};
-   cal.appendChild(el);
- });
- let wins=days.filter(isWinDay).length;
- let gyms=days.filter(k=>S.fitness[k]?.workout && S.fitness[k].workout!=='Cardio / Walk').length;
- let study=Object.values(S.careerDays).reduce((a,x)=>a+(x.minutes||0),0)/60;
- let st=days.map(k=>S.fitness[k]?.steps).filter(x=>x!=null);let av=st.length?Math.round(st.reduce((a,b)=>a+b,0)/st.length):null;
- const points=days.reduce((a,k)=>a+dailyScore(k),0);
- let pct=Math.round(points/(92*21)*100);
- overallReviewScore.textContent=pct+'%';overallReviewBar.style.width=pct+'%';reviewWinDays.textContent=wins;reviewGymDays.textContent=gyms;reviewStudy.textContent=study.toFixed(1)+'h';reviewAvgSteps.textContent=av?av.toLocaleString():'—';
- const rows=[];
- let ws=new Date(START);ws.setDate(ws.getDate()-((ws.getDay()+6)%7));
- let weekNo=1;
- while(ws<=END){
-   let keys=[];for(let j=0;j<7;j++){let x=new Date(ws);x.setDate(ws.getDate()+j);let k=localKey(x);if(k>=localKey(START)&&k<=localKey(END))keys.push(k)}
-   if(keys.length){
-    let wWins=keys.filter(isWinDay).length;
-    let wg=keys.filter(k=>S.fitness[k]?.workout&&S.fitness[k].workout!=='Cardio / Walk').length;
-    let ss=keys.map(k=>S.fitness[k]?.steps).filter(x=>x!=null),pp=keys.map(k=>S.fitness[k]?.protein).filter(x=>x!=null);
-    let sh=keys.reduce((a,k)=>a+(S.careerDays[k]?.minutes||0),0)/60,sc=keys.reduce((a,k)=>a+dailyScore(k),0),mx=keys.length*21;
-    rows.push(`<tr><td>${weekNo}</td><td>${wWins}/${keys.length}</td><td>${wg}</td><td>${ss.length?Math.round(ss.reduce((a,b)=>a+b,0)/ss.length).toLocaleString():'-'}</td><td>${pp.length?Math.round(pp.reduce((a,b)=>a+b,0)/pp.length):'-'}</td><td>${sh.toFixed(1)}</td><td>${sc}/${mx} (${Math.round(sc/mx*100)}%)</td></tr>`);weekNo++;
-   }
-   ws.setDate(ws.getDate()+7);
- }
- weeklySummary.innerHTML='<tr><th>Week</th><th>Wins</th><th>Gym</th><th>Avg steps</th><th>Avg protein</th><th>Study hrs</th><th>Score</th></tr>'+rows.join('');
- let now=new Date();reviewPhase.textContent=now<new Date('2026-11-01')?'October: Foundation':now<new Date('2026-12-01')?'November: Progress':'December: Transformation';
- if(S.review.date===key()){reviewGood.value=S.review.good||'';reviewBad.value=S.review.bad||'';reviewNext.value=S.review.next||''}
+function summaryRows(s,max){return `<div class="rows"><div class="row"><span class="name">Fitness</span><b>${s.fitness}</b></div><div class="row"><span class="name">Nutrition</span><b>${s.nutrition}</b></div><div class="row"><span class="name">Career</span><b>${s.career}</b></div><div class="row"><span class="name">Wellness</span><b>${s.wellness}</b></div><div class="row"><span class="name">Total</span><b>${s.total}/${max} · ${pct(s.total,max)}%</b></div></div>`}
+function review(){
+ let days=rangeDays(START,END), wins=days.filter(d=>score(d).win).length, total=days.reduce((a,d)=>a+score(d).total,0);
+ let weeks=[];for(let i=0;i<13;i++){let a=new Date(START);a.setDate(a.getDate()+i*7);let b=new Date(a);b.setDate(b.getDate()+6);if(b>END)b=new Date(END);let q=days.filter(d=>d>=a&&d<=b).map(score);let st=q.reduce((x,z)=>x+z.total,0),mx=q.length*15;weeks.push(`<tr><td>Week ${i+1}</td><td>${st}/${mx}</td><td>${pct(st,mx)}%</td><td>${q.filter(z=>z.win).length}</td></tr>`)};
+ return `<section class="section"><h2>92-Day Review</h2><p class="note">One place to reflect on the journey. Scoring is pulled from the individual tabs.</p><div class="cards"><div class="card"><div class="label">Overall</div><div class="big">${total}/1380</div></div><div class="card"><div class="label">Overall %</div><div class="big">${pct(total,1380)}%</div></div><div class="card"><div class="label">Win days</div><div class="big">${wins}</div></div><div class="card"><div class="label">Current streak</div><div class="big">${streak()}</div></div></div><div class="calendar">${days.map((d,i)=>{let q=score(d);return `<div class="day ${q.win?'win':q.total?'partial':''} ${d>new Date()?'future':''}" title="${fmt(d)} · ${q.total}/15">${i+1}</div>`}).join('')}</div></section>
+ <section class="section"><h2>Weekly performance</h2><div class="tablewrap"><table class="table"><thead><tr><th>Week</th><th>Score</th><th>%</th><th>Win Days</th></tr></thead><tbody>${weeks.join('')}</tbody></table></div></section>
+ <section class="section"><h2>Weekly reflection</h2><div class="formgrid">${inputField('What went well',`<textarea id="r_good" placeholder="Write your reflection..."></textarea>`)}${inputField('What went wrong',`<textarea id="r_bad" placeholder="Be honest, keep it useful..."></textarea>`)}${inputField('One improvement',`<textarea id="r_next" placeholder="One change for next week..."></textarea>`)}${inputField('Selected date',`<input disabled value="${fmt()}">`)}</div><div class="actions"><button class="primary" onclick="saveReflection()">Save reflection</button></div></section>`;
 }
-
+function saveReflection(){let x=day();x.reflection={good:document.getElementById('r_good').value,bad:document.getElementById('r_bad').value,next:document.getElementById('r_next').value};save();notify('Reflection saved')}
+function streak(){
+ let d=new Date();d.setHours(0,0,0,0);if(d<START)return 0;if(d>END)d=new Date(END);
+ let n=0;while(d>=START){if(score(d).win)n++;else break;d.setDate(d.getDate()-1)}return n;
+}
 function render(){
- renderWellness();renderFitness();renderCareerTracker();renderSummaries();renderReview();
- const now=new Date(),todayKey=localKey(now),sel=selectedDateObj();
- const pct=Math.max(0,Math.min(100,(sel-START)/(END-START)*100));
- const inArc=selectedDate>=localKey(START)&&selectedDate<=localKey(END);
- const day=inArc?Math.floor((sel-START)/86400000)+1:0;
- date.textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'2-digit',month:'short',year:'numeric'});
- globalDate.value=selectedDate;
- selectedDateLabel.textContent=selectedDate===todayKey?'Today • '+sel.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'}):sel.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short',year:'numeric'});
- arcPct.textContent=Math.round(pct)+'%';arcBar.style.width=pct+'%';dayNo.textContent=day||'—';
- const logged=new Set([...Object.keys(S.fitness),...Object.keys(S.nutrition),...Object.keys(S.careerDays),...Object.keys(S.wellness)]).size;
- document.getElementById('logged').textContent=logged;
- let st=0,d=new Date(todayKey+'T12:00:00');if(d>=START&&d<=END){while(d>=START&&isWinDay(localKey(d))){st++;d.setDate(d.getDate()-1)}}streak.textContent=st;
- const ws=scoreWeek(),wm=scoreWeekMax();score.textContent=ws+'/'+wm;reviewScore.textContent=ws+'/'+wm;reviewBar.style.width=wm?Math.min(100,ws/wm*100)+'%':'0%';consistency.textContent=ws+'/'+wm;
- const f=S.fitness[selectedDate]||{},n=S.nutrition[selectedDate]||{},c=S.careerDays[selectedDate]||{},wellArr=S.wellness[selectedDate]||[],r=S.routine[selectedDate]||{}; const ri=r.items||[];[...Array(6)].forEach((_,i)=>{const el=document.getElementById('r'+i);if(el)el.checked=!!ri[i]});
- const cscores=categoryScores(selectedDate);
- dashFitnessScore.textContent=cscores.fitness+'/2';dashNutritionScore.textContent=cscores.nutrition+'/2';dashCareerScore.textContent=cscores.career+'/1';dashWellnessScore.textContent=cscores.wellness+'/10';dashHabitsScore.textContent=cscores.habits+'/6';dashDailyScore.textContent=cscores.total+'/21';
- renderCalendar();
-let months=[['octp','octb',new Date('2026-10-01'),new Date('2026-10-31')],['novp','novb',new Date('2026-11-01'),new Date('2026-11-30')],['decp','decb',new Date('2026-12-01'),END]];months.forEach(([a,b,st,en])=>{let total=0,possible=0,md=new Date(st);while(md<=en){let k=localKey(md);total+=dailyScore(k);possible+=21;md.setDate(md.getDate()+1)}let p=possible?Math.round(total/possible*100):0;document.getElementById(a).textContent=p+'%';document.getElementById(b).style.width=p+'%'});
-let body=S.body.at(-1);phys.textContent=body?`${body.weight||'—'} kg / ${body.waist||'—'}"`:'—';stepdash.textContent=body?.steps?body.steps.toLocaleString():'—';let ca=Math.round(S.skills.reduce((a,b)=>a+b,0)/5);careerAvg.textContent=ca+'%';S.skills.forEach((v,i)=>{let id='s'+i;if(document.getElementById(id))document.getElementById(id).style.width=v+'%';if(document.getElementById('sv'+i))document.getElementById('sv'+i).textContent=v+'%'});
-let w=S.workouts.filter(x=>week().includes(x.date)).length;gymcount.textContent=Math.min(w,4)+' / 4';gymbar.style.width=Math.min(100,w/4*100)+'%';let sd=week().filter(k=>S.body.find(x=>x.date===k)?.steps>=8000).length;stepcount.textContent=sd+' / 7';stepbar.style.width=sd/7*100+'%';drawChart();financeTable.innerHTML='<tr><th>Month</th><th>SIP</th><th>Invested</th><th>Unplanned spend</th></tr>'+S.finance.slice(-8).map(x=>`<tr><td>${x.month}</td><td>₹${x.sip.toLocaleString()}</td><td>₹${x.inv.toLocaleString()}</td><td>₹${x.unplanned.toLocaleString()}</td></tr>`).join('');
-let n2=S.nutrition[key()];if(n2){n2.p.forEach((v,i)=>document.getElementById('mp'+i).value=v);water.value=n2.water;fruit.value=n2.fruit}let r2=S.routine[key()]||{};[...Array(6)].forEach((_,i)=>document.getElementById('r'+i).checked=!!(r2.items?.[i]));let rv=S.review;if(rv.date===key()){rw0.value=rv.good||'';rw1.value=rv.bad||'';rw2.value=rv.next||''}}
-document.getElementById('medDate').value=key();render();
+ initNav();document.getElementById('dateLabel').textContent=fmt();document.getElementById('pageTitle').textContent=tabs.find(x=>x[0]===active)[1];
+ document.getElementById('pageSub').textContent=inArc(selected)?`Arc Day ${arcDay(selected)} · ${selected.toLocaleDateString('en-IN',{weekday:'long'})}`:`Outside the 92-day arc`;
+ let html=active==='dashboard'?dashboard():active==='fitness'?fitness():active==='nutrition'?nutrition():active==='career'?career():active==='wellness'?wellness():active==='finance'?finance():active==='summary'?summary():review();
+ document.getElementById('view').innerHTML=html;
+ if(active==='fitness')document.getElementById('f_workout').value=day().fitness.workout||'No workout';
+ if(active==='career')document.getElementById('c_topic').value=day().career.topic||'SQL';
+ dateControls();
+}
+render();
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});
 </script>
-
-<script>
-let deferredInstallPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault(); deferredInstallPrompt=e;
-  const b=document.getElementById('installBanner');
-  if(localStorage.getItem('winterArcInstallDismissed')!=='1') b.style.display='block';
-});
-async function installPWA(){
-  if(!deferredInstallPrompt)return;
-  deferredInstallPrompt.prompt();
-  await deferredInstallPrompt.userChoice;
-  deferredInstallPrompt=null;
-  document.getElementById('installBanner').style.display='none';
-}
-function dismissInstall(){
-  localStorage.setItem('winterArcInstallDismissed','1');
-  document.getElementById('installBanner').style.display='none';
-}
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-}
-</script>
-</body>
-</html>
+</body></html>

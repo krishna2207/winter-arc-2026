@@ -1,14 +1,9 @@
-# Winter Arc 2026 PWA
+Winter Arc 2026
+================
+Final clean PWA build.
 
-This is an installable Progressive Web App.
+Tabs:
+Dashboard, Fitness, Nutrition, Career, Wellness, Finance, Summary, Review.
 
-## Included
-- index.html
-- manifest.webmanifest
-- sw.js
-- icons/
-- Local browser storage for tracker data
-- Cloud career topic (AWS/Azure/GCP/etc.)
-
-## Important
-A PWA must be served over HTTPS (or localhost) for browser installation.
+Data is stored locally in the browser using localStorage. No backend/cloud database is used.
+Deploy the folder contents to GitHub Pages over HTTPS for PWA installation.
