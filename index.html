@@ -52,20 +52,33 @@ canvas{width:100%;height:210px;background:#0b0e13;border:1px solid var(--line);b
 </aside>
 <main class="main">
 <header class="top"><div><div class="eyebrow">92 DAY PERSONAL UPGRADE</div><h1>Winter Arc <span style="color:var(--lime)">2026</span></h1></div><div class="date" id="date"></div></header>
+<div class="card" style="margin-bottom:16px;padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap">
+  <button class="btn" onclick="changeSelectedDate(-1)">←</button>
+  <input id="globalDate" type="date" onchange="setSelectedDate(this.value)" style="background:#111a29;color:#fff;border:1px solid #33445e;border-radius:10px;padding:9px 12px;font:inherit">
+  <button class="btn primary" onclick="goToday()">Today</button>
+  <button class="btn" onclick="changeSelectedDate(1)">→</button>
+  <span class="sub" id="selectedDateLabel" style="min-width:170px;text-align:center">Today</span>
+</div>
 
 <!-- DASHBOARD -->
 <section id="dashboard" class="tab active">
 <div class="grid">
 <div class="card c8"><div class="sub">OCT 01 — DEC 31</div><div class="heroNum" id="arcPct">0%</div><div class="progress"><i id="arcBar"></i></div><div class="stats">
-<div class="stat"><b id="dayNo">1</b><span>ARC DAY</span></div><div class="stat"><b id="logged">0</b><span>DAYS LOGGED</span></div><div class="stat"><b id="streak">0</b><span>STREAK</span></div><div class="stat"><b id="score">0</b><span>WEEK POINTS</span></div></div></div>
+<div class="stat"><b id="dayNo">1</b><span>ARC DAY</span></div><div class="stat"><b id="logged">0</b><span>DAYS LOGGED</span></div><div class="stat"><b id="streak">0</b><span>STREAK</span></div><div class="stat"><b id="score">0</b><span>WEEK SCORE</span></div></div></div>
 <div class="card c4"><h2>Today's mission</h2><div class="heroNum" style="font-size:30px">Win the day.</div><div class="sub">Complete the basics before entertainment.</div><div class="note">🏋️ Train • 🚶 Move • 🍗 Protein • 💻 Learn • 😴 Recover</div></div>
 
-<div class="card c7"><h2>Daily check-in</h2><div class="sub">8 points available today</div><div class="habitgrid">
-<div class="habit"><input id="d0" type="checkbox">🏋️ Workout / movement</div><div class="habit"><input id="d1" type="checkbox">🚶 8–10K steps</div>
-<div class="habit"><input id="d2" type="checkbox">🍗 110–120g protein</div><div class="habit"><input id="d3" type="checkbox">💧 2.5–3L water</div>
-<div class="habit"><input id="d4" type="checkbox">💻 Career study</div><div class="habit"><input id="d5" type="checkbox">😴 Sleep target</div>
-<div class="habit"><input id="d6" type="checkbox">📱 Screen discipline</div><div class="habit"><input id="d7" type="checkbox">🥗 Nutrition discipline</div>
-</div><div class="row"><button class="btn primary" onclick="saveDaily()">Save today</button><button class="btn" onclick="clearDaily()">Clear</button></div>
+<div class="card c7"><h2>Selected day score</h2><div class="sub">Scores come directly from the individual tabs — no duplicate check-in here.</div>
+<div class="stats" style="margin-top:14px">
+  <div class="stat"><b id="dashFitnessScore">0/2</b><span>FITNESS</span></div>
+  <div class="stat"><b id="dashNutritionScore">0/2</b><span>NUTRITION</span></div>
+  <div class="stat"><b id="dashCareerScore">0/1</b><span>CAREER</span></div>
+  <div class="stat"><b id="dashWellnessScore">0/10</b><span>WELLNESS</span></div>
+</div>
+<div class="stats" style="margin-top:10px">
+  <div class="stat"><b id="dashHabitsScore">0/6</b><span>HABITS</span></div>
+  <div class="stat"><b id="dashDailyScore">0/21</b><span>TODAY SCORE</span></div>
+</div>
+<div class="note" style="margin-top:14px">Open Fitness, Nutrition, Career, Wellness or Habits to update the selected date. The Dashboard reflects those entries automatically.</div>
 <div class="calendar" id="calendar"></div></div>
 
 <div class="card c5"><h2>Phase tracker</h2><div class="barrow"><div class="barhead"><span>October • Build</span><b id="octp">0%</b></div><div class="bar"><i id="octb"></i></div></div><div class="barrow"><div class="barhead"><span>November • Progress</span><b id="novp">0%</b></div><div class="bar"><i id="novb"></i></div></div><div class="barrow"><div class="barhead"><span>December • Prove It</span><b id="decp">0%</b></div><div class="bar"><i id="decb"></i></div></div><div class="note">Rule: <b>Never miss twice.</b> One bad day is data, not failure.</div></div>
@@ -74,7 +87,7 @@ canvas{width:100%;height:210px;background:#0b0e13;border:1px solid var(--line);b
 <tr><td>Physique</td><td>Reduce waist + build strength</td><td id="phys">—</td><td><span class="tag">TRACKING</span></td></tr>
 <tr><td>Steps</td><td>8–10K/day</td><td id="stepdash">—</td><td><span class="tag">TRACKING</span></td></tr>
 <tr><td>Career</td><td>Interview ready</td><td id="careerAvg">0%</td><td><span class="tag">BUILDING</span></td></tr>
-<tr><td>Consistency</td><td>45+/56 weekly</td><td id="consistency">0/56</td><td><span class="tag">LIVE</span></td></tr>
+<tr><td>Consistency</td><td>75%+ weekly</td><td id="consistency">0/147</td><td><span class="tag">LIVE</span></td></tr>
 </table></div>
 </div></section>
 
@@ -255,6 +268,8 @@ canvas{width:100%;height:210px;background:#0b0e13;border:1px solid var(--line);b
 <label class="habit"><input id="w5" type="checkbox">💊 Medication / inhaler check-in</label>
 <label class="habit"><input id="w6" type="checkbox">😴 Wind-down routine</label>
 <label class="habit"><input id="w7" type="checkbox">📵 No phone in bed</label>
+<label class="habit"><input id="w8" type="checkbox">😴 Sleep 8+ hours</label>
+<label class="habit"><input id="w9" type="checkbox">🎯 No-fap day</label>
 </div>
 <div class="row"><button class="btn primary" onclick="saveWellness()">Save wellness</button><button class="btn" onclick="clearWellness()">Clear</button></div>
 </div>
@@ -312,7 +327,35 @@ canvas{width:100%;height:210px;background:#0b0e13;border:1px solid var(--line);b
 <div class="card c12">
   <h2 style="font-size:20px">92 days</h2>
   <div id="reviewCalendar" style="display:grid;grid-template-columns:repeat(25,1fr);gap:5px;margin-top:14px"></div>
-  <div class="sub" style="margin-top:14px">🟨 Amber = win day (5 or more of 8 habits). Click a day to review it.</div>
+  <div class="sub" style="margin-top:14px">🟨 Amber = win day (75%+ daily score). Each day is scored from Fitness, Nutrition, Career, Wellness and Habits. 16/21 or higher counts as a Win Day. Click a day to review it.</div>
+</div>
+
+<div class="card c12">
+  <h2 style="font-size:18px">Performance summaries</h2>
+  <div class="sub">All three summaries follow the global selected date. Change the date above and the summaries update automatically.</div>
+  <div class="grid" style="margin-top:14px">
+    <div class="card c4" style="background:#0b0e13">
+      <div class="eyebrow">DAILY SUMMARY</div>
+      <div class="heroNum" style="font-size:38px" id="dailySummaryScore">0/21</div>
+      <div class="sub" id="dailySummaryPct">0% • Not a Win Day</div>
+      <div class="bar"><i id="dailySummaryBar"></i></div>
+      <div id="dailySummaryBreakdown" class="note">Fitness 0/2 · Nutrition 0/2 · Career 0/1 · Wellness 0/10 · Habits 0/6</div>
+    </div>
+    <div class="card c4" style="background:#0b0e13">
+      <div class="eyebrow">WEEKLY SUMMARY</div>
+      <div class="heroNum" style="font-size:38px" id="weeklySummaryScore">0/147</div>
+      <div class="sub" id="weeklySummaryPct">0% • 0 Win Days</div>
+      <div class="bar"><i id="weeklySummaryBar"></i></div>
+      <div id="weeklySummaryBreakdown" class="note">Selected week: —</div>
+    </div>
+    <div class="card c4" style="background:#0b0e13">
+      <div class="eyebrow">MONTHLY SUMMARY</div>
+      <div class="heroNum" style="font-size:38px" id="monthlySummaryScore">0/0</div>
+      <div class="sub" id="monthlySummaryPct">0% • 0 Win Days</div>
+      <div class="bar"><i id="monthlySummaryBar"></i></div>
+      <div id="monthlySummaryBreakdown" class="note">Selected month: —</div>
+    </div>
+  </div>
 </div>
 
 <div class="card c12">
@@ -371,27 +414,44 @@ S.wellness=S.wellness||{}; S.sugar=S.sugar||{}; S.meds=S.meds||[]; S.fitness=S.f
 S.careerDays=S.careerDays||{}; S.applications=S.applications||[];
 const skillNames=['SQL','PySpark','Python','Cloud','Data Warehousing'];
 const ex={ 'Upper A':['Bench Press','Lat Pulldown','Seated Cable Row','Incline DB Press','Lateral Raise','Biceps Curl','Triceps Pushdown'], 'Lower A':['Squat / Leg Press','Romanian Deadlift','Leg Extension','Leg Curl','Calf Raise','Plank'], 'Upper B':['Incline Bench','Pulldown / Pull-up','DB Shoulder Press','Chest-Supported Row','Lateral Raise','Hammer Curl','Triceps Extension'], 'Lower B':['Leg Press','Romanian Deadlift','Bulgarian Split Squat','Leg Curl','Calf Raise','Knee Raise','Plank']};
-function key(d=new Date()){return d.toISOString().slice(0,10)} function save(){localStorage.setItem(KEY,JSON.stringify(S));render()}
+function localKey(d=new Date()){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+let selectedDate=localKey();
+function key(d){return d?localKey(d):selectedDate}
+function save(){localStorage.setItem(KEY,JSON.stringify(S));render()}
 function clamp(x){return Math.max(0,Math.min(100,x))}
 function tab(id,btn){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');}
-function week(){let d=new Date(),day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return [...Array(7)].map((_,i)=>{let x=new Date(d);x.setDate(d.getDate()+i);return key(x)})}
-function scoreWeek(){return week().reduce((a,k)=>a+(S.days[k]?.score||0),0)}
-function saveDaily(){let h=[...Array(8)].map((_,i)=>document.getElementById('d'+i).checked);S.days[key()]={habits:h,score:h.filter(Boolean).length};save()}
-function clearDaily(){delete S.days[key()];save()}
-
-let fitnessDateKey=key();
-function changeFitnessDate(n){let d=new Date(fitnessDateKey+'T12:00:00');d.setDate(d.getDate()+n);fitnessDateKey=key(d);renderFitness()}
+function selectedDateObj(){let [y,m,d]=selectedDate.split('-').map(Number);return new Date(y,m-1,d,12)}
+function week(base=selectedDateObj()){let d=new Date(base);let day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return [...Array(7)].map((_,i)=>{let x=new Date(d);x.setDate(d.getDate()+i);return localKey(x)})}
+function arcKeys(keys){return keys.filter(k=>k>=localKey(START)&&k<=localKey(END))}
+function scoreWeek(){return arcKeys(week()).reduce((a,k)=>a+dailyScore(k),0)}
+function scoreWeekMax(){return arcKeys(week()).length*21}
+function setSelectedDate(v){if(/^\\d{4}-\\d{2}-\\d{2}$/.test(v)){selectedDate=v;render()}}
+function changeSelectedDate(n){let d=selectedDateObj();d.setDate(d.getDate()+n);selectedDate=localKey(d);render()}
+function goToday(){selectedDate=localKey();render()}
+function categoryScores(k=selectedDate){
+ const f=S.fitness[k]||{}, n=S.nutrition[k]||{}, c=S.careerDays[k]||{}, w=S.wellness[k]||[], r=S.routine[k]||{};
+ const nutritionProtein=Number(f.protein||((n.p||[]).reduce((a,b)=>a+Number(b||0),0))||0);
+ const fitness=(f.workout?1:0)+(Number(f.steps||0)>=8000?1:0);
+ const nutrition=(nutritionProtein>=110?1:0)+(Number(n.water||0)>=2.5?1:0);
+ const career=Number(c.minutes||0)>=30?1:0;
+ const wellness=Array.isArray(w)?w.filter(Boolean).length:0;
+ const habits=Array.isArray(r.items)?r.items.filter(Boolean).length:0;
+ return {fitness,nutrition,career,wellness,habits,total:fitness+nutrition+career+wellness+habits,max:21};
+}
+function dailyScore(k=selectedDate){return categoryScores(k).total}
+function dailyPct(k=selectedDate){const s=categoryScores(k);return Math.round(s.total/s.max*100)}
+function isWinDay(k){return dailyPct(k)>=75}
 function saveFitnessDay(){
- const k=fitnessDateKey;
+ const k=selectedDate;
  S.fitness[k]={
    workout:fitWorkout.value,steps:+fitSteps.value||null,calories:+fitCalories.value||null,
    protein:+fitProtein.value||null,weight:+fitWeight.value||null,waist:+fitWaist.value||null,lift:fitLift.value
  };
  save();
 }
-function clearFitnessDay(){delete S.fitness[fitnessDateKey];save()}
+function clearFitnessDay(){delete S.fitness[selectedDate];save()}
 function renderFitness(){
- const d=new Date(fitnessDateKey+'T12:00:00');
+ const d=new Date(selectedDate+'T12:00:00');
  fitnessDate.textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short'});
  const wk=week(), entries=wk.map(k=>S.fitness[k]).filter(Boolean);
  const gyms=entries.filter(x=>x.workout && !['Cardio / Walk'].includes(x.workout)).length;
@@ -402,7 +462,7 @@ function renderFitness(){
  avgProtein.textContent=proteins.length?Math.round(proteins.reduce((a,b)=>a+b,0)/proteins.length):'—';
  const done=entries.length;
  fitnessDayProgress.style.width=Math.min(100,done/7*100)+'%';
- const x=S.fitness[fitnessDateKey]||{};
+ const x=S.fitness[selectedDate]||{};
  fitWorkout.value=x.workout||'';fitSteps.value=x.steps??'';fitCalories.value=x.calories??'';fitProtein.value=x.protein??'';
  fitWeight.value=x.weight??'';fitWaist.value=x.waist??'';fitLift.value=x.lift||'';
  const body=Object.entries(S.fitness).sort(([a],[b])=>a.localeCompare(b));
@@ -418,17 +478,16 @@ function buildExercises(){let d=workoutDay.value;exerciseList.innerHTML=ex[d].ma
 function studySession(){let i=+prompt('1 SQL  2 PySpark  3 Python  4 AWS  5 Data Warehousing');if(i>=1&&i<=5){S.skills[i-1]=clamp(S.skills[i-1]+5);save()}}
 function resetSkills(){if(confirm('Reset career skill progress?')){S.skills=[0,0,0,0,0];save()}}
 
-let careerDateKey=key();
-const careerTopics=['SQL','PySpark','Python','AWS','Data Warehousing','ETL / System Design'];
-function changeCareerDate(n){let d=new Date(careerDateKey+'T12:00:00');d.setDate(d.getDate()+n);careerDateKey=key(d);renderCareerTracker()}
+const careerTopics=['SQL','PySpark','Python','Cloud','Data Warehousing','ETL / System Design'];
+function changeCareerDate(n){changeSelectedDate(n)}
 function saveCareerDay(){
- const k=careerDateKey;
+ const k=selectedDate;
  S.careerDays[k]={topic:careerTopic.value,minutes:+careerMinutes.value||0,learned:careerLearned.value};
  save();
 }
-function clearCareerDay(){delete S.careerDays[careerDateKey];save()}
+function clearCareerDay(){delete S.careerDays[selectedDate];save()}
 function renderCareerTracker(){
- const d=new Date(careerDateKey+'T12:00:00');
+ const d=new Date(selectedDate+'T12:00:00');
  careerDate.textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short'});
  const wk=week();
  const hours=wk.reduce((a,k)=>a+(S.careerDays[k]?.minutes||0),0)/60;
@@ -437,7 +496,7 @@ function renderCareerTracker(){
  careerApps.textContent=appCount;
  const outcomes=S.applications.filter(x=>x.date>=wk[0]&&x.date<=wk[6]&&(x.status==='Interview'||x.status==='Offer')).length;
  careerOutcome.textContent=outcomes;
- const x=S.careerDays[careerDateKey]||{};
+ const x=S.careerDays[selectedDate]||{};
  careerTopic.value=x.topic||'SQL';careerMinutes.value=x.minutes||'';careerLearned.value=x.learned||'';
  const totals={};careerTopics.forEach(t=>totals[t]=0);
  Object.values(S.careerDays).forEach(v=>{if(totals[v.topic]!=null)totals[v.topic]+=(v.minutes||0)/60});
@@ -450,7 +509,7 @@ function renderCareerTracker(){
 }
 function addApplication(){
  const value=applicationInput.value.trim();if(!value)return;
- S.applications.push({date:key(),name:value,status:'Applied'});applicationInput.value='';save();
+ S.applications.push({date:selectedDate,name:value,status:'Applied'});applicationInput.value='';save();
 }
 function updateApplication(i,status){S.applications[i].status=status;save()}
 function removeApplication(i){S.applications.splice(i,1);save()}
@@ -469,15 +528,15 @@ function renderApplications(){
 }
 function saveCareerChecklist(){S.careerCheck=[...Array(8)].map((_,i)=>document.getElementById('ci'+i).checked);save()}
 function saveFinance(){S.finance.push({month:new Date().toLocaleString('en-IN',{month:'short',year:'numeric'}),sip:+sip.value||0,inv:+inv.value||0,unplanned:+unplanned.value||0});save()}
-function saveRoutine(){S.routine={date:key(),items:[...Array(6)].map((_,i)=>document.getElementById('r'+i).checked)};save()}
+function saveRoutine(){S.routine[key()]={items:[...Array(6)].map((_,i)=>document.getElementById('r'+i).checked)};save()}
 function saveReview(){S.review={date:key(),good:reviewGood.value,bad:reviewBad.value,next:reviewNext.value};save();alert('Review saved.')}
 
-function saveWellness(){let a=[...Array(8)].map((_,i)=>document.getElementById('w'+i).checked);S.wellness[key()]=a;save()}
+function saveWellness(){let a=[...Array(10)].map((_,i)=>document.getElementById('w'+i).checked);S.wellness[key()]=a;save()}
 function clearWellness(){delete S.wellness[key()];save()}
 function toggleSugar(){let k=key();S.sugar[k]=!S.sugar[k];save()}
 function sugarWeekCount(){return week().filter(k=>S.sugar[k]).length}
 function renderWellness(){
- let a=S.wellness[key()]||[];[...Array(8)].forEach((_,i)=>document.getElementById('w'+i).checked=!!a[i]);
+ let a=S.wellness[key()]||[];[...Array(10)].forEach((_,i)=>document.getElementById('w'+i).checked=!!a[i]);
  let sc=sugarWeekCount(); document.getElementById('sugarCount').textContent=sc+'/5';document.getElementById('sugarBar').style.width=Math.min(100,sc/5*100)+'%';
  let sw=document.getElementById('sugarWeek');sw.innerHTML='';week().forEach(k=>{let d=document.createElement('div');d.className='cal '+(S.sugar[k]?'done':'');d.textContent=new Date(k+'T12:00:00').toLocaleDateString('en-IN',{weekday:'short'}).slice(0,3);d.title=S.sugar[k]?'No-sugar day':'Not marked';sw.appendChild(d)});
  let wk=week();let wellnessDays=wk.filter(k=>S.wellness[k]?.some(Boolean)).length;
@@ -486,43 +545,80 @@ function renderWellness(){
 }
 function saveMed(){let d=document.getElementById('medDate').value||key(),st=document.getElementById('medStatus').value,n=document.getElementById('medNote').value;S.meds=S.meds.filter(x=>x.date!==d);S.meds.push({date:d,status:st,note:n});save();document.getElementById('medNote').value='';}
 function drawChart(){let c=document.getElementById('bodyChart');if(!c)return;let x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);let a=S.body.filter(v=>v.weight).sort((a,b)=>a.date.localeCompare(b.date));if(!a.length){x.fillStyle='#687283';x.font='13px system-ui';x.fillText('Save weekly body metrics to see your weight trend.',25,105);return}let lo=Math.min(...a.map(v=>v.weight))-1,hi=Math.max(...a.map(v=>v.weight))+1;x.strokeStyle='#2a3039';for(let y=25;y<195;y+=40){x.beginPath();x.moveTo(30,y);x.lineTo(670,y);x.stroke()}x.strokeStyle='#d9ff57';x.lineWidth=3;x.beginPath();a.forEach((v,i)=>{let px=40+i/(Math.max(1,a.length-1))*620,py=175-(v.weight-lo)/(hi-lo)*125;if(i)x.lineTo(px,py);else x.moveTo(px,py)});x.stroke()}
-function renderCalendar(){calendar.innerHTML='';let s=new Date(START);while(s<=END){let d=document.createElement('div'),k=key(s),v=S.days[k]?.score||0;d.className='cal '+(v===8?'done':v?'partial':'');d.textContent=s.getDate();d.title=`${k}: ${v}/8`;calendar.appendChild(d);s.setDate(s.getDate()+1)}}
+function renderCalendar(){calendar.innerHTML='';let d=new Date(START);while(d<=END){let el=document.createElement('div'),k=localKey(d),v=dailyScore(k),pct=dailyPct(k);el.className='cal '+(pct>=100?'done':pct>0?'partial':'');el.textContent=d.getDate();el.title=`${k}: ${v}/21 (${pct}%)`;calendar.appendChild(el);d.setDate(d.getDate()+1)}}
 
+function summaryKeysForMonth(k){const d=new Date(k+'T12:00:00'),y=d.getFullYear(),m=d.getMonth();let out=[];for(let day=1;day<=31;day++){let x=new Date(y,m,day);if(x.getMonth()!==m)break;let kk=localKey(x);if(kk>=localKey(START)&&kk<=localKey(END))out.push(kk)}return out}
+function renderSummaries(){
+ const k=selectedDate, c=categoryScores(k), dp=dailyPct(k);
+ dailySummaryScore.textContent=c.total+'/21'; dailySummaryPct.textContent=dp+'% • '+(isWinDay(k)?'Win Day':'Not a Win Day'); dailySummaryBar.style.width=Math.min(100,dp)+'%';
+ dailySummaryBreakdown.textContent=`Fitness ${c.fitness}/2 · Nutrition ${c.nutrition}/2 · Career ${c.career}/1 · Wellness ${c.wellness}/10 · Habits ${c.habits}/6`;
+ const wk=arcKeys(week()), ws=wk.reduce((a,x)=>a+dailyScore(x),0), wm=wk.length*21, wp=wm?Math.round(ws/wm*100):0, ww=wk.filter(isWinDay).length;
+ weeklySummaryScore.textContent=ws+'/'+wm; weeklySummaryPct.textContent=wp+'% • '+ww+' Win Days'; weeklySummaryBar.style.width=wp+'%';
+ const wf=wk.reduce((a,x)=>a+categoryScores(x).fitness,0),wn=wk.reduce((a,x)=>a+categoryScores(x).nutrition,0),wc=wk.reduce((a,x)=>a+categoryScores(x).career,0),wws=wk.reduce((a,x)=>a+categoryScores(x).wellness,0),wh=wk.reduce((a,x)=>a+categoryScores(x).habits,0);
+ weeklySummaryBreakdown.textContent=`${wk.length?new Date(wk[0]+'T12:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short'}):'—'} – ${wk.length?new Date(wk[wk.length-1]+'T12:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short'}):'—'} · F ${wf}/${wk.length*2} · N ${wn}/${wk.length*2} · C ${wc}/${wk.length} · W ${wws}/${wk.length*10} · H ${wh}/${wk.length*6}`;
+ const mk=summaryKeysForMonth(k), ms=mk.reduce((a,x)=>a+dailyScore(x),0), mm=mk.length*21, mp=mm?Math.round(ms/mm*100):0, mw=mk.filter(isWinDay).length;
+ monthlySummaryScore.textContent=ms+'/'+mm; monthlySummaryPct.textContent=mp+'% • '+mw+' Win Days'; monthlySummaryBar.style.width=mp+'%';
+ const mf=mk.reduce((a,x)=>a+categoryScores(x).fitness,0),mn=mk.reduce((a,x)=>a+categoryScores(x).nutrition,0),mc=mk.reduce((a,x)=>a+categoryScores(x).career,0),mws=mk.reduce((a,x)=>a+categoryScores(x).wellness,0),mh=mk.reduce((a,x)=>a+categoryScores(x).habits,0);
+ const md=new Date(k+'T12:00:00').toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+ monthlySummaryBreakdown.textContent=`${md} · F ${mf}/${mk.length*2} · N ${mn}/${mk.length*2} · C ${mc}/${mk.length} · W ${mws}/${mk.length*10} · H ${mh}/${mk.length*6}`;
+}
 function renderReview(){
- const days=[];let d=new Date(START);while(d<=END){days.push(key(d));d.setDate(d.getDate()+1)}
+ const days=[];let d=new Date(START);while(d<=END){days.push(localKey(d));d.setDate(d.getDate()+1)}
  const cal=document.getElementById('reviewCalendar');cal.innerHTML='';
  days.forEach(k=>{
-   const v=S.days[k]?.score||0,el=document.createElement('div');
-   el.style.cssText='height:25px;border-radius:5px;background:'+(v>=5?'#f6b548':v>0?'#4b5d39':'#182337')+';border:1px solid #22314a;cursor:pointer';
-   el.title=`${k}: ${v}/8`;el.onclick=()=>{let [y,m,day]=k.split('-').map(Number);let dt=new Date(y,m-1,day);fitnessDateKey=k;careerDateKey=k;tab('fitness',document.querySelector('.nav button:nth-child(2)'));renderFitness();};
+   const v=dailyScore(k),pct=dailyPct(k),el=document.createElement('div');
+   el.style.cssText='height:25px;border-radius:5px;background:'+(pct>=75?'#f6b548':pct>0?'#4b5d39':'#182337')+';border:1px solid #22314a;cursor:pointer';
+   el.textContent=new Date(k+'T12:00:00').getDate();el.title=`${k}: ${v}/21 (${pct}%)`;el.onclick=()=>{selectedDate=k;tab('fitness',document.querySelector('.nav button:nth-child(2)'));render();};
    cal.appendChild(el);
  });
- let wins=days.filter(k=>(S.days[k]?.score||0)>=5).length;
+ let wins=days.filter(isWinDay).length;
  let gyms=days.filter(k=>S.fitness[k]?.workout && S.fitness[k].workout!=='Cardio / Walk').length;
  let study=Object.values(S.careerDays).reduce((a,x)=>a+(x.minutes||0),0)/60;
  let st=days.map(k=>S.fitness[k]?.steps).filter(x=>x!=null);let av=st.length?Math.round(st.reduce((a,b)=>a+b,0)/st.length):null;
- const logged=days.filter(k=>S.days[k]).length,points=days.reduce((a,k)=>a+(S.days[k]?.score||0),0);
- let pct=Math.round(points/(92*8)*100);
+ const points=days.reduce((a,k)=>a+dailyScore(k),0);
+ let pct=Math.round(points/(92*21)*100);
  overallReviewScore.textContent=pct+'%';overallReviewBar.style.width=pct+'%';reviewWinDays.textContent=wins;reviewGymDays.textContent=gyms;reviewStudy.textContent=study.toFixed(1)+'h';reviewAvgSteps.textContent=av?av.toLocaleString():'—';
- const rows=[];let ws=new Date(START);
- for(let i=1;i<=14;i++){
-   let keys=[];for(let j=0;j<7&&ws<=END;j++){keys.push(key(ws));ws.setDate(ws.getDate()+1)}
-   let wWins=keys.filter(k=>(S.days[k]?.score||0)>=5).length;
-   let wg=keys.filter(k=>S.fitness[k]?.workout&&S.fitness[k].workout!=='Cardio / Walk').length;
-   let ss=keys.map(k=>S.fitness[k]?.steps).filter(x=>x!=null),pp=keys.map(k=>S.fitness[k]?.protein).filter(x=>x!=null);
-   let sh=keys.reduce((a,k)=>a+(S.careerDays[k]?.minutes||0),0)/60,sc=keys.reduce((a,k)=>a+(S.days[k]?.score||0),0);
-   rows.push(`<tr><td>${i}</td><td>${wWins}/${keys.length}</td><td>${wg}</td><td>${ss.length?Math.round(ss.reduce((a,b)=>a+b,0)/ss.length).toLocaleString():'-'}</td><td>${pp.length?Math.round(pp.reduce((a,b)=>a+b,0)/pp.length):'-'}</td><td>${sh.toFixed(1)}</td><td>${sc}/${keys.length*8}</td></tr>`);
+ const rows=[];
+ let ws=new Date(START);ws.setDate(ws.getDate()-((ws.getDay()+6)%7));
+ let weekNo=1;
+ while(ws<=END){
+   let keys=[];for(let j=0;j<7;j++){let x=new Date(ws);x.setDate(ws.getDate()+j);let k=localKey(x);if(k>=localKey(START)&&k<=localKey(END))keys.push(k)}
+   if(keys.length){
+    let wWins=keys.filter(isWinDay).length;
+    let wg=keys.filter(k=>S.fitness[k]?.workout&&S.fitness[k].workout!=='Cardio / Walk').length;
+    let ss=keys.map(k=>S.fitness[k]?.steps).filter(x=>x!=null),pp=keys.map(k=>S.fitness[k]?.protein).filter(x=>x!=null);
+    let sh=keys.reduce((a,k)=>a+(S.careerDays[k]?.minutes||0),0)/60,sc=keys.reduce((a,k)=>a+dailyScore(k),0),mx=keys.length*21;
+    rows.push(`<tr><td>${weekNo}</td><td>${wWins}/${keys.length}</td><td>${wg}</td><td>${ss.length?Math.round(ss.reduce((a,b)=>a+b,0)/ss.length).toLocaleString():'-'}</td><td>${pp.length?Math.round(pp.reduce((a,b)=>a+b,0)/pp.length):'-'}</td><td>${sh.toFixed(1)}</td><td>${sc}/${mx} (${Math.round(sc/mx*100)}%)</td></tr>`);weekNo++;
+   }
+   ws.setDate(ws.getDate()+7);
  }
  weeklySummary.innerHTML='<tr><th>Week</th><th>Wins</th><th>Gym</th><th>Avg steps</th><th>Avg protein</th><th>Study hrs</th><th>Score</th></tr>'+rows.join('');
  let now=new Date();reviewPhase.textContent=now<new Date('2026-11-01')?'October: Foundation':now<new Date('2026-12-01')?'November: Progress':'December: Transformation';
  if(S.review.date===key()){reviewGood.value=S.review.good||'';reviewBad.value=S.review.bad||'';reviewNext.value=S.review.next||''}
 }
-function render(){renderWellness();renderFitness();renderCareerTracker();renderReview();let now=new Date(),pct=Math.max(0,Math.min(100,(now-START)/(END-START)*100)),day=Math.max(1,Math.min(92,Math.floor((now-START)/86400000)+1));date.textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'2-digit',month:'short',year:'numeric'});arcPct.textContent=Math.round(pct)+'%';arcBar.style.width=pct+'%';dayNo.textContent=day;logged.textContent=Object.keys(S.days).length;let st=0,d=new Date(now);while(S.days[key(d)]?.score>0){st++;d.setDate(d.getDate()-1)}streak.textContent=st;score.textContent=scoreWeek();reviewScore.textContent=scoreWeek()+'/56';reviewBar.style.width=Math.min(100,scoreWeek()/56*100)+'%';consistency.textContent=scoreWeek()+'/56';
-let h=S.days[key()]?.habits||[];[...Array(8)].forEach((_,i)=>document.getElementById('d'+i).checked=!!h[i]);renderCalendar();
-let months=[['octp','octb',new Date('2026-10-01'),new Date('2026-10-31')],['novp','novb',new Date('2026-11-01'),new Date('2026-11-30')],['decp','decb',new Date('2026-12-01'),END]];months.forEach(([a,b,st,en])=>{let n=0,t=0,d=new Date(st);while(d<=en){t++;if(S.days[key(d)])n++;d.setDate(d.getDate()+1)}let p=Math.round(n/t*100);document.getElementById(a).textContent=p+'%';document.getElementById(b).style.width=p+'%'});
+
+function render(){
+ renderWellness();renderFitness();renderCareerTracker();renderSummaries();renderReview();
+ const now=new Date(),todayKey=localKey(now),sel=selectedDateObj();
+ const pct=Math.max(0,Math.min(100,(sel-START)/(END-START)*100));
+ const inArc=selectedDate>=localKey(START)&&selectedDate<=localKey(END);
+ const day=inArc?Math.floor((sel-START)/86400000)+1:0;
+ date.textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'2-digit',month:'short',year:'numeric'});
+ globalDate.value=selectedDate;
+ selectedDateLabel.textContent=selectedDate===todayKey?'Today • '+sel.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'}):sel.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short',year:'numeric'});
+ arcPct.textContent=Math.round(pct)+'%';arcBar.style.width=pct+'%';dayNo.textContent=day||'—';
+ const logged=new Set([...Object.keys(S.fitness),...Object.keys(S.nutrition),...Object.keys(S.careerDays),...Object.keys(S.wellness)]).size;
+ document.getElementById('logged').textContent=logged;
+ let st=0,d=new Date(todayKey+'T12:00:00');if(d>=START&&d<=END){while(d>=START&&isWinDay(localKey(d))){st++;d.setDate(d.getDate()-1)}}streak.textContent=st;
+ const ws=scoreWeek(),wm=scoreWeekMax();score.textContent=ws+'/'+wm;reviewScore.textContent=ws+'/'+wm;reviewBar.style.width=wm?Math.min(100,ws/wm*100)+'%':'0%';consistency.textContent=ws+'/'+wm;
+ const f=S.fitness[selectedDate]||{},n=S.nutrition[selectedDate]||{},c=S.careerDays[selectedDate]||{},wellArr=S.wellness[selectedDate]||[],r=S.routine[selectedDate]||{}; const ri=r.items||[];[...Array(6)].forEach((_,i)=>{const el=document.getElementById('r'+i);if(el)el.checked=!!ri[i]});
+ const cscores=categoryScores(selectedDate);
+ dashFitnessScore.textContent=cscores.fitness+'/2';dashNutritionScore.textContent=cscores.nutrition+'/2';dashCareerScore.textContent=cscores.career+'/1';dashWellnessScore.textContent=cscores.wellness+'/10';dashHabitsScore.textContent=cscores.habits+'/6';dashDailyScore.textContent=cscores.total+'/21';
+ renderCalendar();
+let months=[['octp','octb',new Date('2026-10-01'),new Date('2026-10-31')],['novp','novb',new Date('2026-11-01'),new Date('2026-11-30')],['decp','decb',new Date('2026-12-01'),END]];months.forEach(([a,b,st,en])=>{let total=0,possible=0,md=new Date(st);while(md<=en){let k=localKey(md);total+=dailyScore(k);possible+=21;md.setDate(md.getDate()+1)}let p=possible?Math.round(total/possible*100):0;document.getElementById(a).textContent=p+'%';document.getElementById(b).style.width=p+'%'});
 let body=S.body.at(-1);phys.textContent=body?`${body.weight||'—'} kg / ${body.waist||'—'}"`:'—';stepdash.textContent=body?.steps?body.steps.toLocaleString():'—';let ca=Math.round(S.skills.reduce((a,b)=>a+b,0)/5);careerAvg.textContent=ca+'%';S.skills.forEach((v,i)=>{let id='s'+i;if(document.getElementById(id))document.getElementById(id).style.width=v+'%';if(document.getElementById('sv'+i))document.getElementById('sv'+i).textContent=v+'%'});
 let w=S.workouts.filter(x=>week().includes(x.date)).length;gymcount.textContent=Math.min(w,4)+' / 4';gymbar.style.width=Math.min(100,w/4*100)+'%';let sd=week().filter(k=>S.body.find(x=>x.date===k)?.steps>=8000).length;stepcount.textContent=sd+' / 7';stepbar.style.width=sd/7*100+'%';drawChart();financeTable.innerHTML='<tr><th>Month</th><th>SIP</th><th>Invested</th><th>Unplanned spend</th></tr>'+S.finance.slice(-8).map(x=>`<tr><td>${x.month}</td><td>₹${x.sip.toLocaleString()}</td><td>₹${x.inv.toLocaleString()}</td><td>₹${x.unplanned.toLocaleString()}</td></tr>`).join('');
-let n=S.nutrition[key()];if(n){n.p.forEach((v,i)=>document.getElementById('mp'+i).value=v);water.value=n.water;fruit.value=n.fruit}let r=S.routine;[...Array(6)].forEach((_,i)=>document.getElementById('r'+i).checked=!!(r.date===key()&&r.items[i]));let rv=S.review;if(rv.date===key()){rw0.value=rv.good||'';rw1.value=rv.bad||'';rw2.value=rv.next||''}}
+let n2=S.nutrition[key()];if(n2){n2.p.forEach((v,i)=>document.getElementById('mp'+i).value=v);water.value=n2.water;fruit.value=n2.fruit}let r2=S.routine[key()]||{};[...Array(6)].forEach((_,i)=>document.getElementById('r'+i).checked=!!(r2.items?.[i]));let rv=S.review;if(rv.date===key()){rw0.value=rv.good||'';rw1.value=rv.bad||'';rw2.value=rv.next||''}}
 document.getElementById('medDate').value=key();render();
 </script>
 
