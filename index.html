@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Winter Arc 2026 — Personal Command Center</title>
+<style>
+:root{--bg:#080a0e;--panel:#11151c;--panel2:#171c25;--line:#252c37;--text:#f6f8fb;--muted:#8993a3;--lime:#d9ff57;--cyan:#7fe7ff;--red:#ff7382;--orange:#ffbd69;--r:18px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,#202c12,transparent 30%),radial-gradient(circle at 100% 10%,#102a32,transparent 28%),var(--bg);color:var(--text);font:14px Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select,textarea{font:inherit}.app{display:flex;min-height:100vh}.side{width:240px;background:rgba(10,12,17,.94);border-right:1px solid var(--line);padding:24px 15px;position:sticky;top:0;height:100vh}.brand{padding:8px 10px 25px}.brand b{font-size:18px}.brand small{display:block;color:var(--muted);margin-top:5px}.nav{display:grid;gap:6px}.nav button{background:none;border:0;color:#9da6b5;text-align:left;padding:12px;border-radius:12px;cursor:pointer}.nav button.active,.nav button:hover{background:#1b212a;color:var(--text)}.nav button.active{box-shadow:inset 3px 0 var(--lime);color:var(--lime)}
+.main{flex:1;padding:25px;max-width:1400px;margin:auto;width:100%}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.eyebrow{color:var(--lime);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.top h1{font-size:34px;letter-spacing:-.04em;margin:5px 0}.date{color:var(--muted);font-size:13px}
+.tab{display:none}.tab.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:15px}.c12{grid-column:span 12}.c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}.c5{grid-column:span 5}.c4{grid-column:span 4}.card{background:linear-gradient(145deg,#141921,#0e1117);border:1px solid var(--line);border-radius:var(--r);padding:19px;box-shadow:0 15px 45px #0005}.card h2{margin:0 0 4px;font-size:17px}.sub{color:var(--muted);font-size:12px}.heroNum{font-size:54px;font-weight:800;letter-spacing:-.06em;margin:10px 0}.progress{height:9px;background:#252c35;border-radius:99px;overflow:hidden;margin:12px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--lime),#a7e64b);width:0}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.stat{background:#0b0e13;border:1px solid var(--line);padding:13px;border-radius:14px}.stat b{font-size:24px;display:block}.stat span{font-size:10px;color:var(--muted)}
+.btn{border:1px solid var(--line);background:#1a2029;color:var(--text);padding:9px 12px;border-radius:10px;cursor:pointer}.btn.primary{background:var(--lime);color:#101309;border-color:var(--lime);font-weight:800}.btn.red{color:#ff9da8}.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:13px}.field label{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;background:#0b0e13;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px;outline:none}.field textarea{min-height:80px;resize:vertical}.habitgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:15px}.habit{background:#0b0e13;border:1px solid var(--line);border-radius:13px;padding:12px;display:flex;gap:9px;align-items:center}.habit input,.check input{accent-color:var(--lime)}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:13px}.cal{height:31px;border-radius:7px;background:#202631;color:#788293;font-size:10px;display:flex;align-items:center;justify-content:center}.cal.done{background:#a4dc4d;color:#10140a}.cal.partial{background:#536f32;color:#eaffc5}
+.table{width:100%;border-collapse:collapse;margin-top:12px}.table th,.table td{border-bottom:1px solid var(--line);padding:11px 7px;text-align:left;font-size:12px}.table th{color:var(--muted);font-weight:600}
+.barrow{margin:13px 0}.barhead{display:flex;justify-content:space-between;color:#cbd2dc;font-size:12px}.bar{height:8px;background:#252b35;border-radius:99px;margin-top:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--cyan);width:0}.exercise{display:grid;grid-template-columns:1.5fr .7fr .7fr .7fr;gap:8px;align-items:center;margin-top:8px}.exercise input{background:#0b0e13;border:1px solid var(--line);border-radius:9px;color:var(--text);padding:8px;width:100%}.tag{display:inline-block;padding:5px 8px;border:1px solid var(--line);border-radius:99px;font-size:10px;color:var(--muted)}
+canvas{width:100%;height:210px;background:#0b0e13;border:1px solid var(--line);border-radius:13px;margin-top:12px}.note{padding:12px;background:#0b0e13;border:1px dashed #3a424e;border-radius:12px;color:#a7b0bd;margin-top:12px;line-height:1.5}
+.footer{text-align:center;color:#5f6978;font-size:11px;padding:25px}
+@media(max-width:900px){.side{width:75px;padding:18px 8px}.brand{padding:5px 7px 20px}.brand b{font-size:0}.brand b:after{content:"❄️";font-size:22px}.brand small,.nav button span{display:none}.nav button{text-align:center}.main{padding:18px}.c8,.c7,.c6,.c5,.c4{grid-column:span 12}.habitgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.main{padding:12px}.top h1{font-size:27px}.stats{grid-template-columns:repeat(2,1fr)}.habitgrid,.fields{grid-template-columns:1fr}.side{width:58px}.exercise{grid-template-columns:1.3fr .7fr .7fr .7fr}.heroNum{font-size:42px}}
+</style>
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0b1220">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Winter Arc">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+
+<div id="installBanner" style="display:none;position:fixed;left:18px;right:18px;bottom:18px;z-index:9999;background:#171f2d;border:1px solid #33445e;border-radius:16px;padding:14px 16px;box-shadow:0 20px 50px #0009">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="flex:1"><b>Install Winter Arc</b><div style="color:#98a7bd;font-size:12px;margin-top:3px">Use it like an app on your Mac, phone or desktop.</div></div>
+    <button onclick="installPWA()" style="border:0;background:#d9ff57;color:#111;padding:9px 13px;border-radius:10px;font-weight:800">Install</button>
+    <button onclick="dismissInstall()" style="border:1px solid #33445e;background:transparent;color:#fff;padding:9px 11px;border-radius:10px">×</button>
+  </div>
+</div>
+<div class="app">
+<aside class="side">
+  <div class="brand"><b>WINTER ARC</b><small>2026 Command Center</small></div>
+  <nav class="nav">
+    <button class="active" onclick="tab('dashboard',this)">⌂ <span>Dashboard</span></button>
+    <button onclick="tab('fitness',this)">🏋️ <span>Fitness</span></button>
+    <button onclick="tab('nutrition',this)">🍗 <span>Nutrition</span></button>
+    <button onclick="tab('career',this)">💻 <span>Career</span></button>
+    <button onclick="tab('finance',this)">💰 <span>Finance</span></button>
+    <button onclick="tab('habits',this)">🧠 <span>Habits</span></button>
+    <button onclick="tab('wellness',this)">✨ <span>Wellness</span></button>
+    <button onclick="tab('review',this)">📓 <span>Reviews</span></button>
+  </nav>
+</aside>
+<main class="main">
+<header class="top"><div><div class="eyebrow">92 DAY PERSONAL UPGRADE</div><h1>Winter Arc <span style="color:var(--lime)">2026</span></h1></div><div class="date" id="date"></div></header>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="tab active">
+<div class="grid">
+<div class="card c8"><div class="sub">OCT 01 — DEC 31</div><div class="heroNum" id="arcPct">0%</div><div class="progress"><i id="arcBar"></i></div><div class="stats">
+<div class="stat"><b id="dayNo">1</b><span>ARC DAY</span></div><div class="stat"><b id="logged">0</b><span>DAYS LOGGED</span></div><div class="stat"><b id="streak">0</b><span>STREAK</span></div><div class="stat"><b id="score">0</b><span>WEEK POINTS</span></div></div></div>
+<div class="card c4"><h2>Today's mission</h2><div class="heroNum" style="font-size:30px">Win the day.</div><div class="sub">Complete the basics before entertainment.</div><div class="note">🏋️ Train • 🚶 Move • 🍗 Protein • 💻 Learn • 😴 Recover</div></div>
+
+<div class="card c7"><h2>Daily check-in</h2><div class="sub">8 points available today</div><div class="habitgrid">
+<div class="habit"><input id="d0" type="checkbox">🏋️ Workout / movement</div><div class="habit"><input id="d1" type="checkbox">🚶 8–10K steps</div>
+<div class="habit"><input id="d2" type="checkbox">🍗 110–120g protein</div><div class="habit"><input id="d3" type="checkbox">💧 2.5–3L water</div>
+<div class="habit"><input id="d4" type="checkbox">💻 Career study</div><div class="habit"><input id="d5" type="checkbox">😴 Sleep target</div>
+<div class="habit"><input id="d6" type="checkbox">📱 Screen discipline</div><div class="habit"><input id="d7" type="checkbox">🥗 Nutrition discipline</div>
+</div><div class="row"><button class="btn primary" onclick="saveDaily()">Save today</button><button class="btn" onclick="clearDaily()">Clear</button></div>
+<div class="calendar" id="calendar"></div></div>
+
+<div class="card c5"><h2>Phase tracker</h2><div class="barrow"><div class="barhead"><span>October • Build</span><b id="octp">0%</b></div><div class="bar"><i id="octb"></i></div></div><div class="barrow"><div class="barhead"><span>November • Progress</span><b id="novp">0%</b></div><div class="bar"><i id="novb"></i></div></div><div class="barrow"><div class="barhead"><span>December • Prove It</span><b id="decp">0%</b></div><div class="bar"><i id="decb"></i></div></div><div class="note">Rule: <b>Never miss twice.</b> One bad day is data, not failure.</div></div>
+
+<div class="card c12"><h2>90-day scoreboard</h2><table class="table"><tr><th>Area</th><th>Target</th><th>Current</th><th>Status</th></tr>
+<tr><td>Physique</td><td>Reduce waist + build strength</td><td id="phys">—</td><td><span class="tag">TRACKING</span></td></tr>
+<tr><td>Steps</td><td>8–10K/day</td><td id="stepdash">—</td><td><span class="tag">TRACKING</span></td></tr>
+<tr><td>Career</td><td>Interview ready</td><td id="careerAvg">0%</td><td><span class="tag">BUILDING</span></td></tr>
+<tr><td>Consistency</td><td>45+/56 weekly</td><td id="consistency">0/56</td><td><span class="tag">LIVE</span></td></tr>
+</table></div>
+</div></section>
+
+<!-- FITNESS -->
+<section id="fitness" class="tab"><div class="grid">
+<div class="card c12" style="padding:0;background:transparent;border:0;box-shadow:none">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
+    <button class="btn" onclick="changeFitnessDate(-1)" style="font-size:24px;padding:7px 18px">←</button>
+    <div style="text-align:center">
+      <div class="eyebrow">FITNESS CHECK-IN</div>
+      <h2 id="fitnessDate" style="font-size:32px;margin:4px 0">Thursday 1 Oct</h2>
+    </div>
+    <button class="btn" onclick="changeFitnessDate(1)" style="font-size:24px;padding:7px 18px">→</button>
+  </div>
+</div>
+
+<div class="card c4">
+  <div class="heroNum" style="font-size:42px" id="gymWeek">0/4</div>
+  <div class="sub" style="font-size:16px">Gym this week</div>
+</div>
+<div class="card c4">
+  <div class="heroNum" style="font-size:42px" id="avgSteps">—</div>
+  <div class="sub" style="font-size:16px">Avg steps</div>
+</div>
+<div class="card c4">
+  <div class="heroNum" style="font-size:42px" id="avgProtein">—</div>
+  <div class="sub" style="font-size:16px">Avg protein (g)</div>
+</div>
+
+<div class="card c12">
+  <div class="progress" style="margin:0"><i id="fitnessDayProgress"></i></div>
+</div>
+
+<div class="card c12">
+  <div class="fields" style="grid-template-columns:1.2fr 1fr 1fr 1fr">
+    <div class="field">
+      <label>Workout</label>
+      <select id="fitWorkout">
+        <option value="">No workout</option>
+        <option>Upper A</option><option>Lower A</option><option>Upper B</option><option>Lower B</option>
+        <option>Lower / Core</option><option>Cardio / Walk</option>
+      </select>
+    </div>
+    <div class="field"><label>Steps</label><input id="fitSteps" type="number" placeholder="8000"></div>
+    <div class="field"><label>Calories <span class="sub">(goal 2700)</span></label><input id="fitCalories" type="number" placeholder="2700"></div>
+    <div class="field"><label>Protein g <span class="sub">(goal 110–120)</span></label><input id="fitProtein" type="number" placeholder="110"></div>
+    <div class="field"><label>Weight (kg)</label><input id="fitWeight" type="number" step=".1" placeholder="65"></div>
+    <div class="field"><label>Waist (in)</label><input id="fitWaist" type="number" step=".1" placeholder="33"></div>
+    <div class="field" style="grid-column:span 2"><label>Main lift / best set <span class="sub">(optional)</span></label><input id="fitLift" placeholder="e.g. Bench 40kg × 8"></div>
+  </div>
+  <div class="row">
+    <button class="btn primary" onclick="saveFitnessDay()">Save check-in</button>
+    <button class="btn" onclick="clearFitnessDay()">Clear day</button>
+  </div>
+</div>
+
+<div class="card c12">
+  <h2>Trends</h2>
+  <div id="fitnessTrendWrap" class="grid" style="margin-top:12px">
+    <div class="card c6" style="box-shadow:none"><div class="sub">Weight</div><div id="weightTrend" style="margin-top:10px;color:#a7b0bd">Log 2 or more entries to see the trend.</div></div>
+    <div class="card c6" style="box-shadow:none"><div class="sub">Waist</div><div id="waistTrend" style="margin-top:10px;color:#a7b0bd">Log 2 or more entries to see the trend.</div></div>
+  </div>
+</div>
+</section>
+
+<!-- NUTRITION -->
+<section id="nutrition" class="tab"><div class="grid">
+<div class="card c5"><h2>Daily nutrition target</h2><div class="stats"><div class="stat"><b>110–120g</b><span>PROTEIN</span></div><div class="stat"><b>2.5–3L</b><span>WATER</span></div><div class="stat"><b>1–2</b><span>FRUIT</span></div><div class="stat"><b>25–35g</b><span>FIBER</span></div></div><div class="note">Aim for sustainable recomposition rather than an aggressive cut.</div></div>
+<div class="card c7"><h2>Meal tracker</h2><div class="fields"><div class="field"><label>Breakfast protein (g)</label><input id="mp0" type="number"></div><div class="field"><label>Lunch protein (g)</label><input id="mp1" type="number"></div><div class="field"><label>Snack protein (g)</label><input id="mp2" type="number"></div><div class="field"><label>Dinner protein (g)</label><input id="mp3" type="number"></div><div class="field"><label>Water (L)</label><input id="water" type="number" step=".1"></div><div class="field"><label>Fruit servings</label><input id="fruit" type="number"></div></div><div class="row"><button class="btn primary" onclick="saveNutrition()">Save nutrition</button></div></div>
+<div class="card c6"><h2>Simple meal template</h2><table class="table"><tr><th>Meal</th><th>Template</th></tr><tr><td>Breakfast</td><td>Oats + milk + protein powder + peanut butter + fruit</td></tr><tr><td>Lunch</td><td>Rice + chicken/paneer + curd + vegetables</td></tr><tr><td>Pre-workout</td><td>Oats + chana</td></tr><tr><td>Dinner</td><td>2 rotis + paneer/chicken + vegetables</td></tr></table></div>
+<div class="card c6"><h2>Food rules</h2><div class="note">✓ Protein at every main meal<br>✓ Limit fried/outside food<br>✓ Don't compensate for a heavy meal by starving<br>✓ Keep hydration consistent<br>✓ Thursday & Saturday: follow your preferred vegetarian days</div></div>
+</div></section>
+
+<!-- CAREER -->
+<section id="career" class="tab"><div class="grid">
+
+<div class="card c12" style="padding:0;background:transparent;border:0;box-shadow:none">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
+    <button class="btn" onclick="changeCareerDate(-1)" style="font-size:24px;padding:7px 18px">←</button>
+    <div style="text-align:center">
+      <div class="eyebrow">CAREER CHECK-IN</div>
+      <h2 id="careerDate" style="font-size:32px;margin:4px 0">Thursday 1 Oct</h2>
+    </div>
+    <button class="btn" onclick="changeCareerDate(1)" style="font-size:24px;padding:7px 18px">→</button>
+  </div>
+</div>
+
+<div class="card c4">
+  <div class="heroNum" style="font-size:42px" id="careerHours">0.0</div>
+  <div class="sub" style="font-size:16px">Study hours</div>
+</div>
+<div class="card c4">
+  <div class="heroNum" style="font-size:42px" id="careerApps">0</div>
+  <div class="sub" style="font-size:16px">Applications</div>
+</div>
+<div class="card c4">
+  <div class="heroNum" style="font-size:42px" id="careerOutcome">0</div>
+  <div class="sub" style="font-size:16px">Interviews / offers</div>
+</div>
+
+<div class="card c12">
+  <div class="fields" style="grid-template-columns:1fr 1fr">
+    <div class="field">
+      <label>Today's topic</label>
+      <select id="careerTopic">
+        <option>SQL</option>
+        <option>PySpark</option>
+        <option>Python</option>
+        <option>Cloud</option>
+        <option>Data Warehousing</option>
+        <option>ETL / System Design</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Minutes studied</label>
+      <input id="careerMinutes" type="number" min="0" placeholder="60">
+    </div>
+    <div class="field" style="grid-column:1/-1">
+      <label>What I learned or practised</label>
+      <textarea id="careerLearned" placeholder="Short note — SQL window functions, Spark joins, AWS Glue scenario..."></textarea>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn primary" onclick="saveCareerDay()">Save check-in</button>
+    <button class="btn" onclick="clearCareerDay()">Clear day</button>
+  </div>
+</div>
+
+<div class="card c12">
+  <h2>Hours by topic</h2>
+  <div id="careerTopicBars"></div>
+</div>
+
+<div class="card c12">
+  <h2>Applications and referrals</h2>
+  <div style="display:flex;gap:10px;margin-top:13px">
+    <input id="applicationInput" class="fieldInput" placeholder="Company and role" style="flex:1;background:#0b0e13;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px">
+    <button class="btn primary" onclick="addApplication()">Add</button>
+  </div>
+  <div id="applicationsList" style="margin-top:10px"></div>
+  <div class="sub" style="margin-top:16px">Saved in this browser only.</div>
+</div>
+
+</div></section>
+
+<!-- FINANCE -->
+<section id="finance" class="tab"><div class="grid">
+<div class="card c5"><h2>Monthly money check</h2><div class="fields"><div class="field"><label>Monthly SIP ₹</label><input id="sip" type="number"></div><div class="field"><label>Investments this month ₹</label><input id="inv" type="number"></div><div class="field"><label>Unplanned spend ₹</label><input id="unplanned" type="number"></div></div><div class="row"><button class="btn primary" onclick="saveFinance()">Save</button></div></div>
+<div class="card c7"><h2>Sunday finance review</h2><div class="habitgrid"><label class="habit"><input id="fi0" type="checkbox">Reviewed SIPs</label><label class="habit"><input id="fi1" type="checkbox">Reviewed portfolio allocation</label><label class="habit"><input id="fi2" type="checkbox">Checked upcoming expenses</label><label class="habit"><input id="fi3" type="checkbox">Avoided impulsive decisions</label></div><div class="note">Use this as a discipline tracker, not a signal to constantly change investments.</div></div>
+<div class="card c12"><h2>Monthly finance log</h2><table class="table" id="financeTable"><tr><th>Month</th><th>SIP</th><th>Invested</th><th>Unplanned spend</th></tr></table></div>
+</div></section>
+
+<!-- HABITS -->
+<section id="habits" class="tab"><div class="grid">
+<div class="card c6"><h2>Daily operating system</h2><div class="tasks" id="routine">
+<label class="habit"><input id="r0" type="checkbox">Wake without social media</label>
+<label class="habit"><input id="r1" type="checkbox">Plan top 3 priorities</label>
+<label class="habit"><input id="r2" type="checkbox">Movement / workout</label>
+<label class="habit"><input id="r3" type="checkbox">Focused career block</label>
+<label class="habit"><input id="r4" type="checkbox">Prepare tomorrow</label>
+<label class="habit"><input id="r5" type="checkbox">Wind down before sleep</label></div><div class="row"><button class="btn primary" onclick="saveRoutine()">Save routine</button></div></div>
+<div class="card c6"><h2>Weekly standards</h2><table class="table"><tr><th>Standard</th><th>Target</th></tr><tr><td>Gym</td><td>3–4 sessions</td></tr><tr><td>Steps</td><td>8–10K most days</td></tr><tr><td>Career</td><td>10–15 focused hours</td></tr><tr><td>Sleep</td><td>7–8 hours</td></tr><tr><td>Social/personal</td><td>1 meaningful interaction</td></tr></table></div>
+<div class="card c12"><h2>Consistency philosophy</h2><div class="note">Never miss twice. Don't restart. Don't chase motivation. Protect your energy. Compare October Krishna with December Krishna — not yourself with someone else's highlight reel.</div></div>
+</div></section>
+
+
+<!-- WELLNESS -->
+<section id="wellness" class="tab"><div class="grid">
+<div class="card c7">
+<h2>Daily wellness check-in</h2>
+<div class="sub">Small routines that keep your day consistent.</div>
+<div class="habitgrid">
+<label class="habit"><input id="w0" type="checkbox">☀️ Morning skincare</label>
+<label class="habit"><input id="w1" type="checkbox">🌙 Evening skincare</label>
+<label class="habit"><input id="w2" type="checkbox">🪥 Morning oral care</label>
+<label class="habit"><input id="w3" type="checkbox">🪥 Night oral care</label>
+<label class="habit"><input id="w4" type="checkbox">🧴 Grooming / personal care</label>
+<label class="habit"><input id="w5" type="checkbox">💊 Medication / inhaler check-in</label>
+<label class="habit"><input id="w6" type="checkbox">😴 Wind-down routine</label>
+<label class="habit"><input id="w7" type="checkbox">📵 No phone in bed</label>
+</div>
+<div class="row"><button class="btn primary" onclick="saveWellness()">Save wellness</button><button class="btn" onclick="clearWellness()">Clear</button></div>
+</div>
+
+<div class="card c5">
+<h2>No-sugar challenge</h2>
+<div class="sub">Target: <b>5 days / week</b></div>
+<div class="heroNum" id="sugarCount">0/5</div>
+<div class="progress"><i id="sugarBar"></i></div>
+<div class="calendar" id="sugarWeek"></div>
+<div class="row"><button class="btn primary" onclick="toggleSugar()">Mark today no-sugar</button></div>
+<div class="note">Define your own rule consistently—for example, avoiding added/free sugars. The tracker is for consistency, not perfection.</div>
+</div>
+
+<div class="card c6">
+<h2>Inhaler / medication log</h2>
+<div class="sub">Record only what is prescribed or recommended for you.</div>
+<div class="fields">
+<div class="field"><label>Date</label><input id="medDate" type="date"></div>
+<div class="field"><label>Check-in</label><select id="medStatus"><option value="as_planned">As planned</option><option value="not_needed">Not needed</option><option value="missed">Missed / not taken</option></select></div>
+<div class="field"><label>Optional note</label><input id="medNote" placeholder="Short note"></div>
+</div>
+<div class="row"><button class="btn primary" onclick="saveMed()">Save check-in</button></div>
+<div class="note">This is only a personal log. Follow your clinician's instructions for medication/inhaler use; don't change doses based on the tracker.</div>
+</div>
+
+<div class="card c6">
+<h2>Wellness streaks</h2>
+<div class="barrow"><div class="barhead"><span>Morning skincare</span><b id="ws0">0%</b></div><div class="bar"><i id="wb0"></i></div></div>
+<div class="barrow"><div class="barhead"><span>Evening skincare</span><b id="ws1">0%</b></div><div class="bar"><i id="wb1"></i></div></div>
+<div class="barrow"><div class="barhead"><span>No-sugar target</span><b id="ws2">0/5</b></div><div class="bar"><i id="wb2"></i></div></div>
+<div class="barrow"><div class="barhead"><span>Wellness check-ins</span><b id="ws3">0/7</b></div><div class="bar"><i id="wb3"></i></div></div>
+</div>
+
+<div class="card c12">
+<h2>Simple morning → evening routine</h2>
+<table class="table">
+<tr><th>Time</th><th>Routine</th><th>Check</th></tr>
+<tr><td>Morning</td><td>Skincare • oral care • water • daily priorities</td><td>☀️</td></tr>
+<tr><td>Day</td><td>Steps • protein • hydration • no-sugar goal</td><td>🎯</td></tr>
+<tr><td>Evening</td><td>Workout if scheduled • dinner • skincare</td><td>🌙</td></tr>
+<tr><td>Night</td><td>Medication/inhaler check-in if prescribed • wind down • sleep</td><td>😴</td></tr>
+</table>
+</div>
+</div></section>
+
+<!-- REVIEW -->
+<section id="review" class="tab"><div class="grid">
+
+<div class="card c12" style="background:#172235">
+  <h2 id="reviewPhase" style="font-size:20px">October: Foundation</h2>
+  <div class="sub">Oct 1 to Oct 31 Foundation · Nov 1 to Nov 30 Progress · Dec 1 to Dec 31 Transformation</div>
+</div>
+
+<div class="card c12">
+  <h2 style="font-size:20px">92 days</h2>
+  <div id="reviewCalendar" style="display:grid;grid-template-columns:repeat(25,1fr);gap:5px;margin-top:14px"></div>
+  <div class="sub" style="margin-top:14px">🟨 Amber = win day (5 or more of 8 habits). Click a day to review it.</div>
+</div>
+
+<div class="card c12">
+  <h2 style="font-size:18px">Weekly summary</h2>
+  <div style="overflow:auto">
+  <table class="table" id="weeklySummary">
+    <tr><th>Week</th><th>Wins</th><th>Gym</th><th>Avg steps</th><th>Avg protein</th><th>Study hrs</th><th>Score</th></tr>
+  </table>
+  </div>
+</div>
+
+<div class="card c6">
+  <h2>Weekly reflection</h2>
+  <div class="fields" style="grid-template-columns:1fr">
+    <div class="field"><label>What went well?</label><textarea id="reviewGood" placeholder="What worked this week?"></textarea></div>
+    <div class="field"><label>What went wrong?</label><textarea id="reviewBad" placeholder="What got in the way?"></textarea></div>
+    <div class="field"><label>One improvement for next week</label><textarea id="reviewNext" placeholder="One thing to change"></textarea></div>
+  </div>
+  <div class="row"><button class="btn primary" onclick="saveReview()">Save review</button></div>
+</div>
+
+<div class="card c6">
+  <h2>Winter Arc score</h2>
+  <div class="heroNum" id="overallReviewScore">0%</div>
+  <div class="progress"><i id="overallReviewBar"></i></div>
+  <div class="stats" style="margin-top:14px">
+    <div class="stat"><b id="reviewWinDays">0</b><span>WIN DAYS</span></div>
+    <div class="stat"><b id="reviewGymDays">0</b><span>GYM DAYS</span></div>
+    <div class="stat"><b id="reviewStudy">0h</b><span>STUDY HOURS</span></div>
+    <div class="stat"><b id="reviewAvgSteps">—</b><span>AVG STEPS</span></div>
+  </div>
+</div>
+
+<div class="card c12">
+  <h2>Monthly checkpoint</h2>
+  <div style="overflow:auto">
+  <table class="table">
+    <tr><th>Checkpoint</th><th>October</th><th>November</th><th>December</th></tr>
+    <tr><td>Gym consistency</td><td>☐</td><td>☐</td><td>☐</td></tr>
+    <tr><td>Nutrition consistency</td><td>☐</td><td>☐</td><td>☐</td></tr>
+    <tr><td>Career progress</td><td>☐</td><td>☐</td><td>☐</td></tr>
+    <tr><td>Wellness routines</td><td>☐</td><td>☐</td><td>☐</td></tr>
+    <tr><td>Body metrics</td><td>☐</td><td>☐</td><td>☐</td></tr>
+  </table>
+  </div>
+</div>
+
+</div></section>
+
+<div class="footer">Winter Arc 2026 • Local browser storage • Your data stays on this device</div>
+</main></div>
+<script>
+const START=new Date('2026-10-01T00:00:00'),END=new Date('2026-12-31T23:59:59'),KEY='winterArcTabs2026';
+let S=JSON.parse(localStorage.getItem(KEY)||'{"days":{},"body":[],"workouts":[],"nutrition":{},"skills":[0,0,0,0,0],"careerCheck":[],"finance":[],"routine":{},"wellness":{},"sugar":{},"meds":[],"review":{}}');
+S.wellness=S.wellness||{}; S.sugar=S.sugar||{}; S.meds=S.meds||[]; S.fitness=S.fitness||{};
+S.careerDays=S.careerDays||{}; S.applications=S.applications||[];
+const skillNames=['SQL','PySpark','Python','Cloud','Data Warehousing'];
+const ex={ 'Upper A':['Bench Press','Lat Pulldown','Seated Cable Row','Incline DB Press','Lateral Raise','Biceps Curl','Triceps Pushdown'], 'Lower A':['Squat / Leg Press','Romanian Deadlift','Leg Extension','Leg Curl','Calf Raise','Plank'], 'Upper B':['Incline Bench','Pulldown / Pull-up','DB Shoulder Press','Chest-Supported Row','Lateral Raise','Hammer Curl','Triceps Extension'], 'Lower B':['Leg Press','Romanian Deadlift','Bulgarian Split Squat','Leg Curl','Calf Raise','Knee Raise','Plank']};
+function key(d=new Date()){return d.toISOString().slice(0,10)} function save(){localStorage.setItem(KEY,JSON.stringify(S));render()}
+function clamp(x){return Math.max(0,Math.min(100,x))}
+function tab(id,btn){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');}
+function week(){let d=new Date(),day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return [...Array(7)].map((_,i)=>{let x=new Date(d);x.setDate(d.getDate()+i);return key(x)})}
+function scoreWeek(){return week().reduce((a,k)=>a+(S.days[k]?.score||0),0)}
+function saveDaily(){let h=[...Array(8)].map((_,i)=>document.getElementById('d'+i).checked);S.days[key()]={habits:h,score:h.filter(Boolean).length};save()}
+function clearDaily(){delete S.days[key()];save()}
+
+let fitnessDateKey=key();
+function changeFitnessDate(n){let d=new Date(fitnessDateKey+'T12:00:00');d.setDate(d.getDate()+n);fitnessDateKey=key(d);renderFitness()}
+function saveFitnessDay(){
+ const k=fitnessDateKey;
+ S.fitness[k]={
+   workout:fitWorkout.value,steps:+fitSteps.value||null,calories:+fitCalories.value||null,
+   protein:+fitProtein.value||null,weight:+fitWeight.value||null,waist:+fitWaist.value||null,lift:fitLift.value
+ };
+ save();
+}
+function clearFitnessDay(){delete S.fitness[fitnessDateKey];save()}
+function renderFitness(){
+ const d=new Date(fitnessDateKey+'T12:00:00');
+ fitnessDate.textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short'});
+ const wk=week(), entries=wk.map(k=>S.fitness[k]).filter(Boolean);
+ const gyms=entries.filter(x=>x.workout && !['Cardio / Walk'].includes(x.workout)).length;
+ gymWeek.textContent=Math.min(gyms,4)+'/4';
+ const steps=entries.map(x=>x.steps).filter(x=>x!=null);
+ const proteins=entries.map(x=>x.protein).filter(x=>x!=null);
+ avgSteps.textContent=steps.length?Math.round(steps.reduce((a,b)=>a+b,0)/steps.length).toLocaleString():'—';
+ avgProtein.textContent=proteins.length?Math.round(proteins.reduce((a,b)=>a+b,0)/proteins.length):'—';
+ const done=entries.length;
+ fitnessDayProgress.style.width=Math.min(100,done/7*100)+'%';
+ const x=S.fitness[fitnessDateKey]||{};
+ fitWorkout.value=x.workout||'';fitSteps.value=x.steps??'';fitCalories.value=x.calories??'';fitProtein.value=x.protein??'';
+ fitWeight.value=x.weight??'';fitWaist.value=x.waist??'';fitLift.value=x.lift||'';
+ const body=Object.entries(S.fitness).sort(([a],[b])=>a.localeCompare(b));
+ const w=body.filter(([,x])=>x.weight!=null).map(([,x])=>x.weight);
+ const wa=body.filter(([,x])=>x.waist!=null).map(([,x])=>x.waist);
+ weightTrend.textContent=w.length>=2?`${w[0]} kg → ${w[w.length-1]} kg (${(w[w.length-1]-w[0]).toFixed(1)} kg)`:'Log 2 or more entries to see the trend.';
+ waistTrend.textContent=wa.length>=2?`${wa[0]}" → ${wa[wa.length-1]}" (${(wa[wa.length-1]-wa[0]).toFixed(1)}")`:'Log 2 or more entries to see the trend.';
+}
+function saveBody(){S.body=S.body.filter(x=>x.date!==key());S.body.push({date:key(),weight:+bw.value||null,waist:+ww.value||null,steps:+sw.value||null});save()}
+function saveNutrition(){S.nutrition[key()]={p:[0,1,2,3].map(i=>+document.getElementById('mp'+i).value||0),water:+water.value||0,fruit:+fruit.value||0};save()}
+function saveWorkout(){let day=workoutDay.value, vals=[...document.querySelectorAll('#exerciseList .exercise')].map(r=>[...r.querySelectorAll('input')].map(x=>x.value));S.workouts.push({date:key(),day,vals});save();alert('Workout saved.')}
+function buildExercises(){let d=workoutDay.value;exerciseList.innerHTML=ex[d].map((n,i)=>`<div class="exercise"><b>${n}</b><input placeholder="kg" data-e="${i}"><input placeholder="reps"><input placeholder="sets"></div>`).join('')}
+function studySession(){let i=+prompt('1 SQL  2 PySpark  3 Python  4 AWS  5 Data Warehousing');if(i>=1&&i<=5){S.skills[i-1]=clamp(S.skills[i-1]+5);save()}}
+function resetSkills(){if(confirm('Reset career skill progress?')){S.skills=[0,0,0,0,0];save()}}
+
+let careerDateKey=key();
+const careerTopics=['SQL','PySpark','Python','AWS','Data Warehousing','ETL / System Design'];
+function changeCareerDate(n){let d=new Date(careerDateKey+'T12:00:00');d.setDate(d.getDate()+n);careerDateKey=key(d);renderCareerTracker()}
+function saveCareerDay(){
+ const k=careerDateKey;
+ S.careerDays[k]={topic:careerTopic.value,minutes:+careerMinutes.value||0,learned:careerLearned.value};
+ save();
+}
+function clearCareerDay(){delete S.careerDays[careerDateKey];save()}
+function renderCareerTracker(){
+ const d=new Date(careerDateKey+'T12:00:00');
+ careerDate.textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short'});
+ const wk=week();
+ const hours=wk.reduce((a,k)=>a+(S.careerDays[k]?.minutes||0),0)/60;
+ careerHours.textContent=hours.toFixed(1);
+ const appCount=S.applications.filter(x=>x.date>=wk[0]&&x.date<=wk[6]).length;
+ careerApps.textContent=appCount;
+ const outcomes=S.applications.filter(x=>x.date>=wk[0]&&x.date<=wk[6]&&(x.status==='Interview'||x.status==='Offer')).length;
+ careerOutcome.textContent=outcomes;
+ const x=S.careerDays[careerDateKey]||{};
+ careerTopic.value=x.topic||'SQL';careerMinutes.value=x.minutes||'';careerLearned.value=x.learned||'';
+ const totals={};careerTopics.forEach(t=>totals[t]=0);
+ Object.values(S.careerDays).forEach(v=>{if(totals[v.topic]!=null)totals[v.topic]+=(v.minutes||0)/60});
+ const max=Math.max(1,...Object.values(totals));
+ careerTopicBars.innerHTML=careerTopics.map(t=>`<div class="barrow">
+ <div class="barhead"><span>${t}</span><b>${totals[t].toFixed(1)} h</b></div>
+ <div class="bar"><i style="width:${Math.min(100,totals[t]/max*100)}%"></i></div>
+ </div>`).join('');
+ renderApplications();
+}
+function addApplication(){
+ const value=applicationInput.value.trim();if(!value)return;
+ S.applications.push({date:key(),name:value,status:'Applied'});applicationInput.value='';save();
+}
+function updateApplication(i,status){S.applications[i].status=status;save()}
+function removeApplication(i){S.applications.splice(i,1);save()}
+function renderApplications(){
+ if(!S.applications.length){applicationsList.innerHTML='<div class="sub" style="padding:12px 0">No applications logged yet.</div>';return}
+ applicationsList.innerHTML=S.applications.slice().reverse().map((a,ri)=>{
+   const i=S.applications.length-1-ri;
+   return `<div style="display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)">
+     <div style="flex:1"><b>${a.name.replace(/</g,'&lt;')}</b><div class="sub">${a.date}</div></div>
+     <select onchange="updateApplication(${i},this.value)" style="background:#0b0e13;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:7px">
+       ${['Applied','Referral','Interview','Offer','Rejected','Closed'].map(x=>`<option ${a.status===x?'selected':''}>${x}</option>`).join('')}
+     </select>
+     <button class="btn red" onclick="removeApplication(${i})">×</button>
+   </div>`
+ }).join('');
+}
+function saveCareerChecklist(){S.careerCheck=[...Array(8)].map((_,i)=>document.getElementById('ci'+i).checked);save()}
+function saveFinance(){S.finance.push({month:new Date().toLocaleString('en-IN',{month:'short',year:'numeric'}),sip:+sip.value||0,inv:+inv.value||0,unplanned:+unplanned.value||0});save()}
+function saveRoutine(){S.routine={date:key(),items:[...Array(6)].map((_,i)=>document.getElementById('r'+i).checked)};save()}
+function saveReview(){S.review={date:key(),good:reviewGood.value,bad:reviewBad.value,next:reviewNext.value};save();alert('Review saved.')}
+
+function saveWellness(){let a=[...Array(8)].map((_,i)=>document.getElementById('w'+i).checked);S.wellness[key()]=a;save()}
+function clearWellness(){delete S.wellness[key()];save()}
+function toggleSugar(){let k=key();S.sugar[k]=!S.sugar[k];save()}
+function sugarWeekCount(){return week().filter(k=>S.sugar[k]).length}
+function renderWellness(){
+ let a=S.wellness[key()]||[];[...Array(8)].forEach((_,i)=>document.getElementById('w'+i).checked=!!a[i]);
+ let sc=sugarWeekCount(); document.getElementById('sugarCount').textContent=sc+'/5';document.getElementById('sugarBar').style.width=Math.min(100,sc/5*100)+'%';
+ let sw=document.getElementById('sugarWeek');sw.innerHTML='';week().forEach(k=>{let d=document.createElement('div');d.className='cal '+(S.sugar[k]?'done':'');d.textContent=new Date(k+'T12:00:00').toLocaleDateString('en-IN',{weekday:'short'}).slice(0,3);d.title=S.sugar[k]?'No-sugar day':'Not marked';sw.appendChild(d)});
+ let wk=week();let wellnessDays=wk.filter(k=>S.wellness[k]?.some(Boolean)).length;
+ let sk0=wk.filter(k=>S.wellness[k]?.[0]).length,sk1=wk.filter(k=>S.wellness[k]?.[1]).length;
+ [['ws0','wb0',sk0/7*100,sk0+'/7'],['ws1','wb1',sk1/7*100,sk1+'/7'],['ws2','wb2',Math.min(100,sc/5*100),sc+'/5'],['ws3','wb3',wellnessDays/7*100,wellnessDays+'/7']].forEach(x=>{document.getElementById(x[0]).textContent=x[3];document.getElementById(x[1]).style.width=x[2]+'%'});
+}
+function saveMed(){let d=document.getElementById('medDate').value||key(),st=document.getElementById('medStatus').value,n=document.getElementById('medNote').value;S.meds=S.meds.filter(x=>x.date!==d);S.meds.push({date:d,status:st,note:n});save();document.getElementById('medNote').value='';}
+function drawChart(){let c=document.getElementById('bodyChart');if(!c)return;let x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);let a=S.body.filter(v=>v.weight).sort((a,b)=>a.date.localeCompare(b.date));if(!a.length){x.fillStyle='#687283';x.font='13px system-ui';x.fillText('Save weekly body metrics to see your weight trend.',25,105);return}let lo=Math.min(...a.map(v=>v.weight))-1,hi=Math.max(...a.map(v=>v.weight))+1;x.strokeStyle='#2a3039';for(let y=25;y<195;y+=40){x.beginPath();x.moveTo(30,y);x.lineTo(670,y);x.stroke()}x.strokeStyle='#d9ff57';x.lineWidth=3;x.beginPath();a.forEach((v,i)=>{let px=40+i/(Math.max(1,a.length-1))*620,py=175-(v.weight-lo)/(hi-lo)*125;if(i)x.lineTo(px,py);else x.moveTo(px,py)});x.stroke()}
+function renderCalendar(){calendar.innerHTML='';let s=new Date(START);while(s<=END){let d=document.createElement('div'),k=key(s),v=S.days[k]?.score||0;d.className='cal '+(v===8?'done':v?'partial':'');d.textContent=s.getDate();d.title=`${k}: ${v}/8`;calendar.appendChild(d);s.setDate(s.getDate()+1)}}
+
+function renderReview(){
+ const days=[];let d=new Date(START);while(d<=END){days.push(key(d));d.setDate(d.getDate()+1)}
+ const cal=document.getElementById('reviewCalendar');cal.innerHTML='';
+ days.forEach(k=>{
+   const v=S.days[k]?.score||0,el=document.createElement('div');
+   el.style.cssText='height:25px;border-radius:5px;background:'+(v>=5?'#f6b548':v>0?'#4b5d39':'#182337')+';border:1px solid #22314a;cursor:pointer';
+   el.title=`${k}: ${v}/8`;el.onclick=()=>{let [y,m,day]=k.split('-').map(Number);let dt=new Date(y,m-1,day);fitnessDateKey=k;careerDateKey=k;tab('fitness',document.querySelector('.nav button:nth-child(2)'));renderFitness();};
+   cal.appendChild(el);
+ });
+ let wins=days.filter(k=>(S.days[k]?.score||0)>=5).length;
+ let gyms=days.filter(k=>S.fitness[k]?.workout && S.fitness[k].workout!=='Cardio / Walk').length;
+ let study=Object.values(S.careerDays).reduce((a,x)=>a+(x.minutes||0),0)/60;
+ let st=days.map(k=>S.fitness[k]?.steps).filter(x=>x!=null);let av=st.length?Math.round(st.reduce((a,b)=>a+b,0)/st.length):null;
+ const logged=days.filter(k=>S.days[k]).length,points=days.reduce((a,k)=>a+(S.days[k]?.score||0),0);
+ let pct=Math.round(points/(92*8)*100);
+ overallReviewScore.textContent=pct+'%';overallReviewBar.style.width=pct+'%';reviewWinDays.textContent=wins;reviewGymDays.textContent=gyms;reviewStudy.textContent=study.toFixed(1)+'h';reviewAvgSteps.textContent=av?av.toLocaleString():'—';
+ const rows=[];let ws=new Date(START);
+ for(let i=1;i<=14;i++){
+   let keys=[];for(let j=0;j<7&&ws<=END;j++){keys.push(key(ws));ws.setDate(ws.getDate()+1)}
+   let wWins=keys.filter(k=>(S.days[k]?.score||0)>=5).length;
+   let wg=keys.filter(k=>S.fitness[k]?.workout&&S.fitness[k].workout!=='Cardio / Walk').length;
+   let ss=keys.map(k=>S.fitness[k]?.steps).filter(x=>x!=null),pp=keys.map(k=>S.fitness[k]?.protein).filter(x=>x!=null);
+   let sh=keys.reduce((a,k)=>a+(S.careerDays[k]?.minutes||0),0)/60,sc=keys.reduce((a,k)=>a+(S.days[k]?.score||0),0);
+   rows.push(`<tr><td>${i}</td><td>${wWins}/${keys.length}</td><td>${wg}</td><td>${ss.length?Math.round(ss.reduce((a,b)=>a+b,0)/ss.length).toLocaleString():'-'}</td><td>${pp.length?Math.round(pp.reduce((a,b)=>a+b,0)/pp.length):'-'}</td><td>${sh.toFixed(1)}</td><td>${sc}/${keys.length*8}</td></tr>`);
+ }
+ weeklySummary.innerHTML='<tr><th>Week</th><th>Wins</th><th>Gym</th><th>Avg steps</th><th>Avg protein</th><th>Study hrs</th><th>Score</th></tr>'+rows.join('');
+ let now=new Date();reviewPhase.textContent=now<new Date('2026-11-01')?'October: Foundation':now<new Date('2026-12-01')?'November: Progress':'December: Transformation';
+ if(S.review.date===key()){reviewGood.value=S.review.good||'';reviewBad.value=S.review.bad||'';reviewNext.value=S.review.next||''}
+}
+function render(){renderWellness();renderFitness();renderCareerTracker();renderReview();let now=new Date(),pct=Math.max(0,Math.min(100,(now-START)/(END-START)*100)),day=Math.max(1,Math.min(92,Math.floor((now-START)/86400000)+1));date.textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'2-digit',month:'short',year:'numeric'});arcPct.textContent=Math.round(pct)+'%';arcBar.style.width=pct+'%';dayNo.textContent=day;logged.textContent=Object.keys(S.days).length;let st=0,d=new Date(now);while(S.days[key(d)]?.score>0){st++;d.setDate(d.getDate()-1)}streak.textContent=st;score.textContent=scoreWeek();reviewScore.textContent=scoreWeek()+'/56';reviewBar.style.width=Math.min(100,scoreWeek()/56*100)+'%';consistency.textContent=scoreWeek()+'/56';
+let h=S.days[key()]?.habits||[];[...Array(8)].forEach((_,i)=>document.getElementById('d'+i).checked=!!h[i]);renderCalendar();
+let months=[['octp','octb',new Date('2026-10-01'),new Date('2026-10-31')],['novp','novb',new Date('2026-11-01'),new Date('2026-11-30')],['decp','decb',new Date('2026-12-01'),END]];months.forEach(([a,b,st,en])=>{let n=0,t=0,d=new Date(st);while(d<=en){t++;if(S.days[key(d)])n++;d.setDate(d.getDate()+1)}let p=Math.round(n/t*100);document.getElementById(a).textContent=p+'%';document.getElementById(b).style.width=p+'%'});
+let body=S.body.at(-1);phys.textContent=body?`${body.weight||'—'} kg / ${body.waist||'—'}"`:'—';stepdash.textContent=body?.steps?body.steps.toLocaleString():'—';let ca=Math.round(S.skills.reduce((a,b)=>a+b,0)/5);careerAvg.textContent=ca+'%';S.skills.forEach((v,i)=>{let id='s'+i;if(document.getElementById(id))document.getElementById(id).style.width=v+'%';if(document.getElementById('sv'+i))document.getElementById('sv'+i).textContent=v+'%'});
+let w=S.workouts.filter(x=>week().includes(x.date)).length;gymcount.textContent=Math.min(w,4)+' / 4';gymbar.style.width=Math.min(100,w/4*100)+'%';let sd=week().filter(k=>S.body.find(x=>x.date===k)?.steps>=8000).length;stepcount.textContent=sd+' / 7';stepbar.style.width=sd/7*100+'%';drawChart();financeTable.innerHTML='<tr><th>Month</th><th>SIP</th><th>Invested</th><th>Unplanned spend</th></tr>'+S.finance.slice(-8).map(x=>`<tr><td>${x.month}</td><td>₹${x.sip.toLocaleString()}</td><td>₹${x.inv.toLocaleString()}</td><td>₹${x.unplanned.toLocaleString()}</td></tr>`).join('');
+let n=S.nutrition[key()];if(n){n.p.forEach((v,i)=>document.getElementById('mp'+i).value=v);water.value=n.water;fruit.value=n.fruit}let r=S.routine;[...Array(6)].forEach((_,i)=>document.getElementById('r'+i).checked=!!(r.date===key()&&r.items[i]));let rv=S.review;if(rv.date===key()){rw0.value=rv.good||'';rw1.value=rv.bad||'';rw2.value=rv.next||''}}
+document.getElementById('medDate').value=key();render();
+</script>
+
+<script>
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); deferredInstallPrompt=e;
+  const b=document.getElementById('installBanner');
+  if(localStorage.getItem('winterArcInstallDismissed')!=='1') b.style.display='block';
+});
+async function installPWA(){
+  if(!deferredInstallPrompt)return;
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt=null;
+  document.getElementById('installBanner').style.display='none';
+}
+function dismissInstall(){
+  localStorage.setItem('winterArcInstallDismissed','1');
+  document.getElementById('installBanner').style.display='none';
+}
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
