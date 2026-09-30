@@ -52,12 +52,24 @@ function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
 function arcDay(d){if(d<START)return 0; if(d>END)return 92; return Math.floor((d-START)/86400000)+1}
 function inArc(d){return d>=START&&d<=END}
 function notify(t){let el=document.getElementById('toast');el.textContent=t;el.style.display='block';setTimeout(()=>el.style.display='none',1500)}
+function calcSleep(w){
+ const bed=w.bedTime||'', wake=w.wakeTime||'';
+ if(!bed||!wake) return {duration:null,sevenPlus:false,beforeMidnight:false};
+ const [bh,bm]=bed.split(':').map(Number), [wh,wm]=wake.split(':').map(Number);
+ let start=bh*60+bm, end=wh*60+wm;
+ let mins=end-start; if(mins<=0) mins+=24*60;
+ return {duration:mins,sevenPlus:mins>=420,beforeMidnight:start<24*60};
+}
+function sleepText(mins){if(mins==null)return '—';let h=Math.floor(mins/60),m=mins%60;return `${h}h ${String(m).padStart(2,'0')}m`}
 function score(d){
  const x=readDay(d), f=x.fitness||{}, n=x.nutrition||{}, c=x.career||{}, w=x.wellness||{};
  let fs=(f.workout&&f.workout!=='No workout'?1:0)+(Number(f.steps)>=8000?1:0);
  let ns=(Number(n.protein)>=110?1:0)+(Number(n.water)>=2.5?1:0);
  let cs=Number(c.minutes)>0?1:0;
- let ws=['morningSkin','nightSkin','oralMorning','oralNight','meds','noPhone','sleep8','nofap'].filter(k=>!!w[k]).length;
+ let baseWs=['morningSkin','eveningSkin','oralMorning','oralNight','meds','noPhone','nofap'].filter(k=>!!w[k]).length;
+ const sleep=calcSleep(w);
+ const sleepScore=(sleep.sevenPlus && sleep.beforeMidnight)?1:0;
+ let ws=baseWs+sleepScore;
  const total=fs+ns+cs+ws, max=13;
  return {fitness:fs,nutrition:ns,career:cs,wellness:ws,total,max,win:total>=10};
 }
@@ -140,7 +152,7 @@ function career(){
  <div class="card"><div class="label">Applications</div><div class="big">${appCount}</div><div class="sub">All logged applications</div></div>
  <div class="card"><div class="label">Interviews / offers</div><div class="big">${interviewCount}</div><div class="sub">Current status</div></div></div>
  <section class="section"><h2>💼 Career check-in</h2><p class="note">Track learning here. Cloud can include AWS, Azure, GCP, Databricks, Synapse, ADF, Glue, etc.</p>
- <div class="formgrid">${inputField('Today’s topic',`<select id="c_topic"><option>SQL</option><option>PySpark</option><option>Python</option><option>Cloud</option><option>Data Warehousing</option><option>ETL / System Design</option><option>Interview Prep</option><option>Reading Book for Refreshment</option></select>`)}${inputField('Study minutes',`<input id="c_minutes" type="number" value="${c.minutes||''}" placeholder="60">`)}${inputField('What I learned / practised',`<textarea id="c_learn">${c.learn||''}</textarea>`)}${inputField('Career note',`<textarea id="c_note">${c.note||''}</textarea>`)}</div><div class="actions"><button class="primary" onclick="saveCareer()">Save career</button></div></section>
+ <div class="formgrid">${inputField('Today’s topic',`<select id="c_topic"><option>SQL</option><option>PySpark</option><option>Python</option><option>Cloud</option><option>Data Warehousing</option><option>ETL / System Design</option><option>Interview Prep</option><option>Reading — Books / Whitepapers / Docs</option></select>`)}${inputField('Study minutes',`<input id="c_minutes" type="number" value="${c.minutes||''}" placeholder="60">`)}${inputField('What I learned / practised',`<textarea id="c_learn">${c.learn||''}</textarea>`)}${inputField('Career note',`<textarea id="c_note">${c.note||''}</textarea>`)}</div><div class="actions"><button class="primary" onclick="saveCareer()">Save career</button></div></section>
  <section class="section"><h2>📨 Applications & Referrals</h2><p class="note">Log applications once; update their status as they progress. This is separate from the daily Career score.</p>
  <div class="formgrid"><div class="field"><label>Company & role</label><input id="app_name" placeholder="e.g. Company · Senior Data Engineer"></div><div class="field"><label>Status</label><select id="app_status"><option>Applied</option><option>Referral</option><option>Interview</option><option>Offer</option><option>Rejected</option><option>Closed</option></select></div><div class="field"><label>Link / contact</label><input id="app_link" placeholder="Optional"></div><div class="field"><label>Note</label><input id="app_note" placeholder="Optional"></div></div>
  <div class="actions"><button class="primary" onclick="addApplication()">Add application</button></div><div id="applicationsList" style="margin-top:14px"></div></section>
@@ -156,24 +168,24 @@ function renderApplications(){
  return `<div class="rows">${list.map(a=>`<div class="row" style="align-items:flex-start"><div style="flex:1"><div class="name">${a.name}</div><div class="status">${a.date}${a.note?' · '+a.note:''}</div>${a.link?`<div class="status">${a.link}</div>`:''}</div><div style="display:flex;gap:7px;align-items:center"><select onchange="updateApplication(${a.id},this.value)" style="background:#08192b;color:#eef5fb;border:1px solid #29415b;border-radius:8px;padding:7px">${['Applied','Referral','Interview','Offer','Rejected','Closed'].map(x=>`<option ${a.status===x?'selected':''}>${x}</option>`).join('')}</select><button class="secondary" onclick="removeApplication(${a.id})">Delete</button></div></div>`).join('')}</div>`;
 }
 function wellness(){
- let w=day().wellness;
- const items=[['morningSkin','🧴 Morning skincare'],['nightSkin','🌙 Night skincare'],['oralMorning','🪥 Morning oral care'],['oralNight','🪥 Night oral care'],['meds','💊 Medication / inhaler check'],['noPhone','📵 No phone in bed'],['sleep8','😴 Sleep 8+ hours'],['nofap','🚫 No-fap day']];
+ let w=day().wellness||{};
+ const sleep=calcSleep(w);
+ const items=[['morningSkin','🧴 Morning skincare'],['eveningSkin','🌙 Night skincare'],['oralMorning','🪥 Morning oral care'],['oralNight','🪥 Night oral care'],['meds','💊 Medication / inhaler check'],['noPhone','📵 No phone in bed'],['nofap','🚫 No-fap day']];
+ let wsScore=score().wellness;
  let ws=new Date(selected); let dow=ws.getDay(); ws.setDate(ws.getDate()-dow);
  let week=Array.from({length:7},(_,i)=>{let d=new Date(ws);d.setDate(ws.getDate()+i);return d});
- let yes=week.filter(d=>!!db[key(d)]?.wellness?.noSugar).length;
- let pctNoSugar=Math.round(yes/7*100);
+ let yes=week.filter(d=>!!readDay(d).wellness?.noSugar).length;
  let selectedNoSugar=!!w.noSugar;
  let buttonLabel=selectedNoSugar?'Remove no-sugar mark':(key(selected)===key(new Date())?'Mark today no-sugar':'Mark selected day no-sugar');
- return `<section class="section"><h2>✨ Wellness</h2><p class="note">8 checks count toward the daily score. No Sugar is tracked separately and does not affect your streak score.</p><div class="checklist">${items.map(([k,n])=>`<label class="check"><input type="checkbox" ${w[k]?'checked':''} onchange="toggleWellness('${k}',this.checked)"><span>${n}</span></label>`).join('')}</div><div class="actions"><button class="secondary" onclick="clearWellness()">🧹 Clear wellness for this day</button></div></section>
- <section class="nosugar-card">
-   <div class="nosugar-head"><div><h2 class="nosugar-title">🍬 No-sugar challenge</h2><div class="nosugar-target">Target: 5 days / week</div></div><div class="nosugar-count">${yes}/5</div></div>
-   <div class="nosugar-progress"><i style="width:${Math.min(yes/5,1)*100}%"></i></div>
-   <div class="nosugar-days">${week.map(d=>`<button type="button" class="nosugar-day ${db[key(d)]?.wellness?.noSugar?'done ':''}${key(d)===key(selected)?'selected':''}" onclick="selectDateAndWellness('${key(d)}')" title="${fmt(d)}"><div class="nosugar-day-label">${d.toLocaleDateString('en-IN',{weekday:'short'})}</div><div class="nosugar-day-num">${d.getDate()}</div></button>`).join('')}</div>
-   <div class="nosugar-action"><button onclick="toggleNoSugar()">${buttonLabel}</button></div>
-   <div class="nosugar-rule">Define your own rule consistently—for example, avoiding added/free sugars. The tracker is for consistency, not perfection.</div>
- </section>
- <section class="section"><h2>🎯 Today score</h2>${scoreRow('✨ Wellness',score().wellness,8,'wellness')}</section>`;
+ return `<section class="section"><h2>✨ Wellness</h2><p class="note">7 daily checks count normally. Sleep is worth 1 point only when both sleep conditions are met. No Sugar is tracked separately and does not affect your streak score.</p>
+ <section class="section" style="margin:14px 0 16px;background:rgba(8,25,42,.65)"><h2>🛏️ Sleep log</h2><p class="note">Log your bedtime and wake-up time. The tracker automatically checks 7+ hours and whether you slept before 12 AM.</p>
+ <div class="formgrid"><div class="field"><label>🌙 Bed time</label><input type="time" value="${w.bedTime||''}" onchange="setSleepTime('bedTime',this.value)"></div><div class="field"><label>☀️ Wake-up time</label><input type="time" value="${w.wakeTime||''}" onchange="setSleepTime('wakeTime',this.value)"></div></div>
+ <div class="rows" style="margin-top:12px"><div class="row"><span class="name">😴 Sleep duration</span><b>${sleepText(sleep.duration)}</b></div><div class="row"><span class="name">⏱️ 7+ hours</span><b class="${sleep.sevenPlus?'accent':''}">${sleep.sevenPlus?'✓ Met':'Not met'}</b></div><div class="row"><span class="name">🌙 Slept before 12 AM</span><b class="${sleep.beforeMidnight?'accent':''}">${sleep.beforeMidnight?'✓ Met':'Not met'}</b></div><div class="row"><span class="name">💤 Sleep score</span><b>${sleep.sevenPlus&&sleep.beforeMidnight?'1/1':'0/1'}</b></div></div></section>
+ <div class="checklist">${items.map(([k,n])=>`<label class="check"><input type="checkbox" ${w[k]?'checked':''} onchange="toggleWellness('${k}',this.checked)"><span>${n}</span></label>`).join('')}</div><div class="actions"><button class="secondary" onclick="clearWellness()">🧹 Clear wellness for this day</button></div></section>
+ <section class="nosugar-card"><div class="nosugar-head"><div><h2 class="nosugar-title">🍬 No-sugar challenge</h2><div class="nosugar-target">Target: 5 days / week</div></div><div class="nosugar-count">${yes}/5</div></div><div class="nosugar-progress"><i style="width:${Math.min(yes/5,1)*100}%"></i></div><div class="nosugar-days">${week.map(d=>`<button type="button" class="nosugar-day ${readDay(d).wellness?.noSugar?'done ':''}${key(d)===key(selected)?'selected':''}" onclick="selectDateAndWellness('${key(d)}')" title="${fmt(d)}"><div class="nosugar-day-label">${d.toLocaleDateString('en-IN',{weekday:'short'})}</div><div class="nosugar-day-num">${d.getDate()}</div></button>`).join('')}</div><div class="nosugar-action"><button onclick="toggleNoSugar()">${buttonLabel}</button></div><div class="nosugar-rule">Define your own rule consistently—for example, avoiding added/free sugars. The tracker is for consistency, not perfection.</div></section>
+ <section class="section"><h2>🎯 Today score</h2>${scoreRow('✨ Wellness',wsScore,8,'wellness')}</section>`;
 }
+function setSleepTime(k,v){day().wellness[k]=v;save();render()}
 function toggleWellness(k,v){day().wellness[k]=v;save();render()}
 function clearWellness(){day().wellness={};save();render()}
 function toggleNoSugar(){let w=day().wellness;w.noSugar=!w.noSugar;save();render()}
@@ -204,8 +216,12 @@ function finance(){
  let topCat=catEntries[0];
  let topCatName=topCat?topCat[0]:'No spending yet';
  let topCatAmt=topCat?topCat[1]:0;
- let sipPlanned=Number(mf.sipPlanned||0), sipInvested=Number(mf.sipInvested||0);
- let sipRemaining=Math.max(sipPlanned-sipInvested,0), sipPct=sipPlanned?Math.min(Math.round(sipInvested/sipPlanned*100),100):0;
+ const sipTarget=300000;
+ let sipInvested=Number(mf.sipInvested||0);
+ let arcMonths=['2026-10','2026-11','2026-12'];
+ let sipDoneTillNow=arcMonths.reduce((sum,m)=>{let x=monthlyFinance[m]||{};return sum+Number(x.sipInvested||0)+Number(x.lumpsum||0)},0);
+ let sipRemaining=Math.max(sipTarget-sipDoneTillNow,0);
+ let sipPct=sipTarget?Math.min(Math.round(sipDoneTillNow/sipTarget*100),100):0;
  let rows=ex.map((e,i)=>`<tr><td>${i+1}</td><td>${e.description||'—'}</td><td>${e.category||'—'}</td><td>${e.payment||'—'}</td><td>₹${Number(e.amount||0).toLocaleString('en-IN')}</td><td>${e.type||'Needs'}</td><td>${e.notes||''}</td><td><button class="secondary" style="padding:5px 8px" onclick="deleteExpense(${i})">Delete</button></td></tr>`).join('')||`<tr><td colspan="8" class="empty">No expenses logged for ${fmt(selected)}.</td></tr>`;
  return `<section class="section"><h2>💰 Finance overview</h2><p class="note">Automatic summary from your expense tracker · ${selected.toLocaleDateString('en-IN',{month:'long',year:'numeric'})}</p>
  <div class="cards">
@@ -214,17 +230,21 @@ function finance(){
   <div class="card"><div class="label">⚠️ Monthly unplanned spend</div><div class="big">₹${monthUnplanned.toLocaleString('en-IN')}</div><div class="sub">Unexpected expenses</div></div>
   <div class="card"><div class="label">🏷️ Highest category</div><div class="big" style="font-size:20px">${topCatName}</div><div class="sub">₹${topCatAmt.toLocaleString('en-IN')} this month</div></div>
  </div></section>
- <section class="section"><h2>📈 SIP & Investments</h2><p class="note">Track your monthly SIP plan and the amount actually invested. This block is separate from daily expenses.</p>
+ <section class="section"><h2>📈 SIP & Investments</h2><p class="note">Track your ₹3 lakh SIP target across the 92-day Winter Arc (Oct–Dec). Enter the amount invested for each month; the totals below show how much is done so far.</p>
  <div class="cards sip-cards">
-  <div class="card"><div class="label">🎯 Monthly SIP planned</div><div class="big">₹${sipPlanned.toLocaleString('en-IN')}</div><div class="sub">Target amount</div></div>
-  <div class="card"><div class="label">💸 SIP invested this month</div><div class="big">₹${sipInvested.toLocaleString('en-IN')}</div><div class="sub">Actual invested</div></div>
-  <div class="card"><div class="label">⏳ SIP remaining</div><div class="big">₹${sipRemaining.toLocaleString('en-IN')}</div><div class="sub">To reach monthly plan</div></div>
-  <div class="card"><div class="label">📈 SIP progress</div><div class="big">${sipPct}%</div><div class="progress" style="margin-top:8px"><i style="width:${sipPct}%"></i></div></div>
+  <div class="card"><div class="label">🎯 Target</div><div class="big">₹${sipTarget.toLocaleString('en-IN')}</div><div class="sub">₹1,00,000 per month target</div></div>
+  <div class="card"><div class="label">✅ Target Achieved</div><div class="big">₹${sipDoneTillNow.toLocaleString('en-IN')}</div><div class="sub">SIP + Lumpsum · cumulative</div></div>
+  <div class="card"><div class="label">⏳ SIP Remaining</div><div class="big">₹${sipRemaining.toLocaleString('en-IN')}</div><div class="sub">To complete ₹3 lakh target</div></div>
+  <div class="card"><div class="label">📈 SIP Progress</div><div class="big">${sipPct}%</div><div class="progress" style="margin-top:8px"><i style="width:${sipPct}%"></i></div><div class="sub" style="margin-top:7px">${sipDoneTillNow.toLocaleString('en-IN')} / ${sipTarget.toLocaleString('en-IN')}</div></div>
  </div>
  <div class="formgrid">
- ${inputField('🎯 Monthly SIP planned (₹)',`<input id="sip_planned" type="number" min="0" step="1" value="${mf.sipPlanned||''}" placeholder="40000">`)}
- ${inputField('💸 SIP invested this month (₹)',`<input id="sip_invested" type="number" min="0" step="1" value="${mf.sipInvested||''}" placeholder="40000">`)}
- </div><div class="actions"><button class="primary" onclick="saveMonthlyFinance()">Save SIP</button></div></section>
+ ${inputField('📅 Monthly SIP planned (₹)',`<input id="sip_planned" type="number" min="0" step="1" value="${mf.sipPlanned||100000}" placeholder="100000">`)}
+ ${inputField('💸 SIP invested this month (₹)',`<input id="sip_invested" type="number" min="0" step="1" value="${mf.sipInvested||''}" placeholder="Enter SIP amount">`)}
+ ${inputField('🏦 Lumpsum invested this month (₹)',`<input id="lumpsum" type="number" min="0" step="1" value="${mf.lumpsum||''}" placeholder="Optional lumpsum">`)}
+ </div><div class="actions"><button class="primary" onclick="saveMonthlyFinance()">💾 Save SIP</button></div>
+ <div class="rows" style="margin-top:14px">
+  ${arcMonths.map(m=>{let x=monthlyFinance[m]||{};let sip=Number(x.sipInvested||0),lump=Number(x.lumpsum||0),v=sip+lump;let label=new Date(m+'-01T00:00:00').toLocaleDateString('en-IN',{month:'long',year:'numeric'});return `<div class="row"><span class="name">${label}</span><span class="status">SIP ₹${sip.toLocaleString('en-IN')} · Lumpsum ₹${lump.toLocaleString('en-IN')}</span><span class="score">₹${v.toLocaleString('en-IN')}</span></div>`}).join('')}
+ </div></section>
  <section class="section"><h2>🧾 Daily Expense Tracker</h2><p class="note">One row = one expense. Add expenses here and the summary above updates automatically.</p>
  <div class="formgrid">
  ${inputField('Description',`<input id="fi_desc" placeholder="e.g. Lunch">`)}
@@ -236,7 +256,7 @@ function finance(){
  </div><div class="actions"><button class="primary" onclick="addExpense()">Add expense</button></div></section>
  <section class="section"><h2>🧾 ${fmt(selected)} Expenses</h2><div class="tablewrap"><table class="table"><thead><tr><th>#</th><th>Description</th><th>Category</th><th>Payment</th><th>Amount</th><th>Type</th><th>Notes</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
 }
-function saveMonthlyFinance(){let mk=selected.getFullYear()+'-'+String(selected.getMonth()+1).padStart(2,'0');monthlyFinance[mk]={sipPlanned:document.getElementById('sip_planned').value,sipInvested:document.getElementById('sip_invested').value};save();notify('SIP saved');render()}
+function saveMonthlyFinance(){let mk=selected.getFullYear()+'-'+String(selected.getMonth()+1).padStart(2,'0');monthlyFinance[mk]={sipPlanned:document.getElementById('sip_planned').value,sipInvested:document.getElementById('sip_invested').value,lumpsum:document.getElementById('lumpsum').value};save();notify('Investment saved');render()}
 function addExpense(){
  let amount=Number(document.getElementById('fi_amount').value||0), desc=document.getElementById('fi_desc').value.trim();
  if(!amount||amount<0){notify('Enter an amount');return}
@@ -273,7 +293,7 @@ function summaryRows(s,max){return `<div class="rows"><div class="row"><span cla
 function review(){
  let days=rangeDays(START,END), wins=days.filter(d=>score(d).win).length, total=days.reduce((a,d)=>a+score(d).total,0);
  let weeks=[];for(let i=0;i<13;i++){let a=new Date(START);a.setDate(a.getDate()+i*7);let b=new Date(a);b.setDate(b.getDate()+6);if(b>END)b=new Date(END);let q=days.filter(d=>d>=a&&d<=b).map(score);let st=q.reduce((x,z)=>x+z.total,0),mx=q.reduce((x,z)=>x+z.max,0);weeks.push(`<tr><td>Week ${i+1}</td><td>${st}/${mx}</td><td>${pct(st,mx)}%</td><td>${q.filter(z=>z.win).length}</td></tr>`)};
- return `<section class="section"><h2>📝 92-Day Review</h2><p class="note">One place to reflect on the journey. Scoring is pulled from the individual tabs.</p><div class="cards"><div class="card"><div class="label">Overall</div><div class="big">${total}/1196</div></div><div class="card"><div class="label">Overall %</div><div class="big">${pct(total,1196)}%</div></div><div class="card"><div class="label">Win days</div><div class="big">${wins}</div></div><div class="card"><div class="label">🔥 Current streak</div><div class="big">${streak()}</div></div></div><div class="calendar">${days.map((d,i)=>{let q=score(d);return `<div class="day ${q.win?'win':q.total?'partial':''} ${d>new Date()?'future':''}" title="${fmt(d)} · ${q.total}/${q.max}">${i+1}</div>`}).join('')}</div></section>
+ return `<section class="section"><h2>📝 92-Day Review</h2><p class="note">One place to reflect on the journey. Scoring is pulled from the individual tabs.</p><div class="cards"><div class="card"><div class="label">Overall</div><div class="big">${total}/1288</div></div><div class="card"><div class="label">Overall %</div><div class="big">${pct(total,1288)}%</div></div><div class="card"><div class="label">Win days</div><div class="big">${wins}</div></div><div class="card"><div class="label">🔥 Current streak</div><div class="big">${streak()}</div></div></div><div class="calendar">${days.map((d,i)=>{let q=score(d);return `<div class="day ${q.win?'win':q.total?'partial':''} ${d>new Date()?'future':''}" title="${fmt(d)} · ${q.total}/${q.max}">${i+1}</div>`}).join('')}</div></section>
  <section class="section"><h2>📊 Weekly performance</h2><div class="tablewrap"><table class="table"><thead><tr><th>Week</th><th>Score</th><th>%</th><th>Win Days</th></tr></thead><tbody>${weeks.join('')}</tbody></table></div></section>
  <section class="section"><h2>🧠 Weekly reflection</h2><div class="formgrid">${inputField('What went well',`<textarea id="r_good" placeholder="Write your reflection..."></textarea>`)}${inputField('What went wrong',`<textarea id="r_bad" placeholder="Be honest, keep it useful..."></textarea>`)}${inputField('One improvement',`<textarea id="r_next" placeholder="One change for next week..."></textarea>`)}${inputField('Selected date',`<input disabled value="${fmt()}">`)}</div><div class="actions"><button class="primary" onclick="saveReflection()">Save reflection</button></div></section>`;
 }
