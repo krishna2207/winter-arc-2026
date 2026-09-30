@@ -11,18 +11,18 @@
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>Winter Arc 2026</title>
 <style>
-:root{--bg:#061221;--panel:#0c1b2e;--panel2:#10243b;--line:#203650;--text:#edf4fb;--muted:#8ea4ba;--accent:#b9ef4a;--accent2:#65d8ff;--danger:#ff7d7d;--shadow:0 18px 45px rgba(0,0,0,.25)}
+:root{--bg:#061221;--panel:#0c1b2e;--panel2:#10243b;--line:#203650;--text:#edf4fb;--muted:#8ea4ba;--accent:#b9ef4a;--accent2:#65d8ff;--purple:#b58cff;--orange:#ffb86b;--pink:#ff7eb6;--teal:#5eead4;--danger:#ff7d7d;--shadow:0 18px 45px rgba(0,0,0,.25)}
 *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 20% 0,#102846 0,#061221 42%,#04101c 100%);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-button,input,select,textarea{font:inherit} button{cursor:pointer}.app{display:flex;min-height:100vh}.sidebar{width:235px;padding:24px 16px;border-right:1px solid var(--line);background:rgba(4,15,27,.85);backdrop-filter:blur(16px);position:sticky;top:0;height:100vh}.brand{padding:6px 10px 22px}.brand b{font-size:20px;letter-spacing:.3px}.brand span{display:block;color:var(--muted);font-size:12px;margin-top:3px}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#b9c8d8;text-align:left;padding:11px 12px;border-radius:10px}.nav button:hover,.nav button.active{background:#12263e;color:#fff}.nav button.active{box-shadow:inset 3px 0 var(--accent)}.main{flex:1;max-width:1250px;margin:auto;padding:24px 30px 60px;width:100%}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:22px}.eyebrow{color:var(--accent);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1.4px}.title{font-size:31px;font-weight:800;margin:2px 0}.sub{color:var(--muted)}.datebar{display:flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);padding:6px;border-radius:14px}.datebar button{border:0;background:#12243a;color:#dce8f3;border-radius:9px;padding:8px 11px}.datebar button:hover{background:#19314d}.datevalue{min-width:150px;text-align:center;font-weight:700}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.card,.section{background:linear-gradient(180deg,rgba(15,35,57,.94),rgba(8,25,42,.94));border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.card{padding:17px}.label{font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:1px}.big{font-size:27px;font-weight:800;margin-top:4px}.accent{color:var(--accent)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.section{padding:18px;margin-bottom:16px}.section h2{font-size:17px;margin:0 0 4px}.section p.note{color:var(--muted);margin:0 0 15px;font-size:12px}.progress{height:9px;background:#13273d;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#d9ff83);border-radius:99px}.rows{display:grid;gap:10px}.row{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border:1px solid #1c344e;border-radius:12px;background:#0a1b2d}.row .name{font-weight:650}.status{color:var(--muted);font-size:12px}.score{font-weight:800}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field label{display:block;color:#b9c8d8;font-size:12px;margin:0 0 5px}.field input,.field select,.field textarea{width:100%;background:#08192b;color:#eef5fb;border:1px solid #29415b;border-radius:10px;padding:10px;outline:none}.field textarea{min-height:90px;resize:vertical}.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.check{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid #1c344e;border-radius:11px;background:#0a1b2d}.check input{accent-color:var(--accent);width:17px;height:17px}.actions{display:flex;gap:8px;margin-top:14px}.primary,.secondary{border:0;border-radius:10px;padding:10px 15px;font-weight:750}.primary{background:var(--accent);color:#071426}.secondary{background:#17304a;color:#e8f1f8}.metric{display:flex;justify-content:space-between;gap:10px;margin:10px 0}.barline{height:7px;background:#152b42;border-radius:99px;overflow:hidden;flex:1;margin-top:6px}.barline i{display:block;height:100%;background:var(--accent2)}.pill{display:inline-flex;padding:4px 8px;border-radius:99px;background:#17324c;color:#b9d4e8;font-size:11px}.win{background:#17351e;color:#b9ef4a}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.day{min-height:35px;border-radius:7px;background:#0a1b2d;border:1px solid #1c344e;display:grid;place-items:center;font-size:11px}.day.win{background:#27451f;border-color:#547c38;color:#d9ff9a}.day.partial{background:#2d2a17;border-color:#6b6031;color:#f5df84}.day.future{opacity:.35}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:9px 8px;border-bottom:1px solid #1d344c;text-align:left;font-size:12px}.table th{color:#8ea4ba;font-weight:650}.empty{color:var(--muted);padding:15px 0}.toast{position:fixed;right:20px;bottom:20px;background:#d9ff83;color:#071426;padding:10px 14px;border-radius:10px;font-weight:750;display:none;z-index:20}.mobile-nav{display:none}
-@media(max-width:900px){.sidebar{display:none}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#071426ee;border-top:1px solid var(--line);z-index:10;overflow:auto}.mobile-nav button{flex:1;min-width:78px;background:transparent;color:#9db0c2;border:0;padding:9px 4px;font-size:10px}.mobile-nav button.active{color:var(--accent)}.main{padding:18px 14px 85px}.top{align-items:flex-start;flex-direction:column}.datebar{width:100%;justify-content:center}.cards{grid-template-columns:repeat(2,1fr)}.grid2,.formgrid{grid-template-columns:1fr}.checklist{grid-template-columns:1fr}.title{font-size:26px}}
+button,input,select,textarea{font:inherit} button{cursor:pointer}.app{display:flex;min-height:100vh}.sidebar{width:235px;padding:24px 16px;border-right:1px solid var(--line);background:rgba(4,15,27,.85);backdrop-filter:blur(16px);position:sticky;top:0;height:100vh}.brand{padding:6px 10px 22px}.brand b{font-size:20px;letter-spacing:.3px}.brand span{display:block;color:var(--muted);font-size:12px;margin-top:3px}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#b9c8d8;text-align:left;padding:11px 12px;border-radius:10px}.nav button:hover,.nav button.active{background:#12263e;color:#fff}.nav button.active{box-shadow:inset 3px 0 var(--accent)}.main{flex:1;max-width:1250px;margin:auto;padding:24px 30px 60px;width:100%}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:22px}.eyebrow{color:var(--accent);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1.4px}.title{font-size:31px;font-weight:800;margin:2px 0}.sub{color:var(--muted)}.datebar{display:flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);padding:6px;border-radius:14px}.datebar button{border:0;background:#12243a;color:#dce8f3;border-radius:9px;padding:8px 11px}.datebar button:hover{background:#19314d}.datevalue{min-width:150px;text-align:center;font-weight:700}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.card:nth-child(1) .label{color:var(--accent2)}.card:nth-child(2) .label{color:var(--teal)}.card:nth-child(3) .label{color:var(--purple)}.card:nth-child(4) .label{color:var(--orange)}.card,.section{background:linear-gradient(180deg,rgba(15,35,57,.94),rgba(8,25,42,.94));border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.card{padding:17px}.label{font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:1px}.big{font-size:27px;font-weight:800;margin-top:4px}.accent{color:var(--accent)}.emoji{font-size:1.05em;margin-right:7px}.nav-emoji{display:inline-block;width:23px}.section h2 .emoji{margin-right:6px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.section{padding:18px;margin-bottom:16px}.section h2{font-size:17px;margin:0 0 4px}.section p.note{color:var(--muted);margin:0 0 15px;font-size:12px}.progress{height:9px;background:#13273d;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#d9ff83);border-radius:99px}.rows{display:grid;gap:10px}.row{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border:1px solid #1c344e;border-radius:12px;background:#0a1b2d}.row .name{font-weight:650}.status{color:var(--muted);font-size:12px}.score{font-weight:800}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field label{display:block;color:#b9c8d8;font-size:12px;margin:0 0 5px}.field input,.field select,.field textarea{width:100%;background:#08192b;color:#eef5fb;border:1px solid #29415b;border-radius:10px;padding:10px;outline:none}.field textarea{min-height:90px;resize:vertical}.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.check{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid #1c344e;border-radius:11px;background:#0a1b2d}.check input{accent-color:var(--accent);width:17px;height:17px}.actions{display:flex;gap:8px;margin-top:14px}.primary,.secondary{border:0;border-radius:10px;padding:10px 15px;font-weight:750}.primary{background:var(--accent);color:#071426}.secondary{background:#17304a;color:#e8f1f8}.metric{display:flex;justify-content:space-between;gap:10px;margin:10px 0}.barline{height:7px;background:#152b42;border-radius:99px;overflow:hidden;flex:1;margin-top:6px}.barline i{display:block;height:100%;background:var(--accent2)}.pill{display:inline-flex;padding:4px 8px;border-radius:99px;background:#17324c;color:#b9d4e8;font-size:11px}.win{background:#17351e;color:#b9ef4a}.flag{background:#4a1f24;color:#ffb0b0}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.day{min-height:35px;border-radius:7px;background:#0a1b2d;border:1px solid #1c344e;display:grid;place-items:center;font-size:11px}.day.win{background:#27451f;border-color:#547c38;color:#d9ff9a}.day.partial{background:#2d2a17;border-color:#6b6031;color:#f5df84}.day.future{opacity:.35}.nosugar-card{background:linear-gradient(180deg,#0e2137,#0a1b2d);border:1px solid #203b57;border-radius:16px;padding:24px;margin-top:16px;box-shadow:var(--shadow)}.nosugar-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.nosugar-title{font-size:25px;font-weight:800;margin:0}.nosugar-target{color:var(--muted);font-size:14px;margin-top:4px}.nosugar-count{font-size:52px;line-height:1;font-weight:850;letter-spacing:-2px}.nosugar-progress{height:10px;background:#1a3047;border-radius:99px;overflow:hidden;margin:20px 0 14px}.nosugar-progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#d9ff83);border-radius:99px}.nosugar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}.nosugar-day{border:1px solid #203b57;background:#132940;color:#8ea4ba;border-radius:11px;padding:11px 6px;text-align:center;font-weight:700}.nosugar-day.done{background:#b9ef4a;color:#071426;border-color:#b9ef4a}.nosugar-day.selected{outline:2px solid #65d8ff;outline-offset:1px}.nosugar-day-label{font-size:12px}.nosugar-day-num{font-size:11px;margin-top:3px;opacity:.8}.nosugar-action{margin-top:16px}.nosugar-action button{border:0;border-radius:11px;padding:12px 18px;font-weight:800;background:var(--accent);color:#071426}.nosugar-rule{margin-top:16px;padding:15px 17px;border:1px dashed #39516a;border-radius:13px;color:#aebdcb;background:#09192a;font-size:14px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:9px 8px;border-bottom:1px solid #1d344c;text-align:left;font-size:12px}.table th{color:#8ea4ba;font-weight:650}.empty{color:var(--muted);padding:15px 0}.toast{position:fixed;right:20px;bottom:20px;background:#d9ff83;color:#071426;padding:10px 14px;border-radius:10px;font-weight:750;display:none;z-index:20}.sip-cards{grid-template-columns:repeat(4,1fr);margin:0 0 14px}.journal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.journal-day{background:#0a1b2d;border:1px solid #1c344e;border-radius:12px;padding:12px;min-height:92px;cursor:pointer;text-align:left;color:inherit}.journal-day:hover{border-color:#65d8ff;background:#0d2238}.journal-day.has-entry{border-color:#5c8d3d;background:#10261d}.journal-day-head{display:flex;justify-content:space-between;gap:8px;color:#9db0c2;font-size:11px;margin-bottom:7px}.journal-day-text{font-size:12px;color:#dce8f3;line-height:1.45;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.journal-day.empty .journal-day-text{min-height:58px}.mobile-nav{display:none}
+@media(max-width:900px){.journal-grid{grid-template-columns:repeat(2,1fr)}.sip-cards{grid-template-columns:repeat(2,1fr)}.sidebar{display:none}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#071426ee;border-top:1px solid var(--line);z-index:10;overflow:auto}.mobile-nav button{flex:1;min-width:78px;background:transparent;color:#9db0c2;border:0;padding:9px 4px;font-size:10px}.mobile-nav button.active{color:var(--accent)}.main{padding:18px 14px 85px}.top{align-items:flex-start;flex-direction:column}.datebar{width:100%;justify-content:center}.cards{grid-template-columns:repeat(2,1fr)}.grid2,.formgrid{grid-template-columns:1fr}.checklist{grid-template-columns:1fr}.title{font-size:26px}}
 </style>
 </head>
 <body>
 <div class="app">
-<aside class="sidebar"><div class="brand"><b>WINTER ARC</b><span>2026 · 92 day system</span></div><nav class="nav" id="nav"></nav></aside>
+<aside class="sidebar"><div class="brand"><b>KRISHNA'S WINTER ARC</b><span>2026 · 92 day system</span></div><nav class="nav" id="nav"></nav></aside>
 <main class="main">
 <header class="top">
-  <div><div class="eyebrow">Winter Arc 2026</div><div class="title" id="pageTitle">Dashboard</div><div class="sub" id="pageSub"></div></div>
+  <div><div class="eyebrow">Krishna's Winter Arc 2026 (Oct - Dec)</div><div class="title" id="pageTitle">Dashboard</div><div class="sub" id="pageSub"></div></div>
   <div class="datebar"><button id="prev">‹</button><button id="today">Today</button><div class="datevalue" id="dateLabel"></div><button id="next">›</button></div>
 </header>
 <div id="view"></div>
@@ -33,15 +33,19 @@ button,input,select,textarea{font:inherit} button{cursor:pointer}.app{display:fl
 <script>
 const START=new Date(2026,9,1), END=new Date(2026,11,31);
 const tabs=[
- ['dashboard','Dashboard'],['fitness','Fitness'],['nutrition','Nutrition'],['career','Career'],['wellness','Wellness'],['finance','Finance'],['summary','Summary'],['review','Review']
+ ['dashboard','Dashboard','📊'],['fitness','Fitness','💪'],['nutrition','Nutrition','🥗'],['career','Career','💼'],['wellness','Wellness','✨'],['finance','Finance','💰'],['summary','Summary','📈'],['journal','Journal','📓'],['review','Review','📝']
 ];
 let selected=new Date(); selected.setHours(0,0,0,0);
 let active='dashboard';
 const key=d=>{let x=new Date(d);return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`};
 const storeKey='winterArc2026_final_v1';
 let db=JSON.parse(localStorage.getItem(storeKey)||'{}');
-function save(){localStorage.setItem(storeKey,JSON.stringify(db))}
-function day(d=selected){let k=key(d); if(!db[k]) db[k]={fitness:{},nutrition:{},career:{},wellness:{},finance:{}}; return db[k]}
+let applications=JSON.parse(localStorage.getItem(storeKey+'_applications')||'[]');
+let monthlyFinance=JSON.parse(localStorage.getItem(storeKey+'_monthlyFinance')||'{}');
+function save(){localStorage.setItem(storeKey,JSON.stringify(db));localStorage.setItem(storeKey+'_applications',JSON.stringify(applications));localStorage.setItem(storeKey+'_monthlyFinance',JSON.stringify(monthlyFinance))}
+function blankDay(){return {fitness:{},nutrition:{},career:{},wellness:{},finance:{}}}
+function readDay(d=selected){return db[key(d)]||blankDay()}
+function day(d=selected){let k=key(d); if(!db[k]) db[k]=blankDay(); return db[k]}
 function fmt(d=selected){return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}
 function pct(n,m){return m?Math.round(n/m*100):0}
 function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
@@ -49,16 +53,17 @@ function arcDay(d){if(d<START)return 0; if(d>END)return 92; return Math.floor((d
 function inArc(d){return d>=START&&d<=END}
 function notify(t){let el=document.getElementById('toast');el.textContent=t;el.style.display='block';setTimeout(()=>el.style.display='none',1500)}
 function score(d){
- const x=day(d), f=x.fitness||{}, n=x.nutrition||{}, c=x.career||{}, w=x.wellness||{};
+ const x=readDay(d), f=x.fitness||{}, n=x.nutrition||{}, c=x.career||{}, w=x.wellness||{};
  let fs=(f.workout&&f.workout!=='No workout'?1:0)+(Number(f.steps)>=8000?1:0);
  let ns=(Number(n.protein)>=110?1:0)+(Number(n.water)>=2.5?1:0);
  let cs=Number(c.minutes)>0?1:0;
- let ws=['morningSkin','eveningSkin','oralMorning','oralNight','grooming','meds','winddown','noPhone','sleep8','nofap'].filter(k=>!!w[k]).length;
- return {fitness:fs,nutrition:ns,career:cs,wellness:ws,total:fs+ns+cs+ws,max:15,win:fs+ns+cs+ws>=12};
+ let ws=['morningSkin','nightSkin','oralMorning','oralNight','meds','noPhone','sleep8','nofap'].filter(k=>!!w[k]).length;
+ const total=fs+ns+cs+ws, max=13;
+ return {fitness:fs,nutrition:ns,career:cs,wellness:ws,total,max,win:total>=10};
 }
 function setField(path,val){let x=day(); let [sec,k]=path.split('.'); x[sec][k]=val; save(); render()}
 function checked(path){let [sec,k]=path.split('.');return !!day()[sec]?.[k]}
-function navHtml(){return tabs.map(([id,n])=>`<button class="${active===id?'active':''}" data-tab="${id}">${n}</button>`).join('')}
+function navHtml(){return tabs.map(([id,n,e])=>`<button class="${active===id?'active':''}" data-tab="${id}"><span class="nav-emoji">${e}</span>${n}</button>`).join('')}
 function initNav(){document.getElementById('nav').innerHTML=navHtml();document.getElementById('mobileNav').innerHTML=navHtml();document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{active=b.dataset.tab;render()})}
 function dateControls(){
  document.getElementById('prev').onclick=()=>{selected.setDate(selected.getDate()-1);render()};
@@ -66,25 +71,48 @@ function dateControls(){
  document.getElementById('today').onclick=()=>{selected=new Date();selected.setHours(0,0,0,0);render()};
 }
 function inputField(label,html){return `<div class="field"><label>${label}</label>${html}</div>`}
+function hasLoggedData(d){
+ const x=readDay(d);
+ const f=x.fitness||{},n=x.nutrition||{},c=x.career||{},w=x.wellness||{},fin=x.finance||{};
+ return Object.keys(f).length>0||Object.keys(n).length>0||Object.keys(c).length>0||Object.keys(w).length>0||(fin.expenses||[]).length>0;
+}
 function dashboard(){
- const s=score(), ad=arcDay(selected), logged=Object.keys(db).filter(k=>k>=key(START)&&k<=key(END)).length;
- const days=[...Array(92)].map((_,i)=>{let d=new Date(START);d.setDate(d.getDate()+i);let sc=score(d);return `<div class="day ${sc.win?'win':sc.total?'partial':''} ${d>new Date()?'future':''}" title="${fmt(d)} · ${sc.total}/15">${i+1}</div>`}).join('');
+ const s=score(), ad=arcDay(selected), logged=rangeDays(START,END).filter(d=>hasLoggedData(d)).length;
+ const days=[...Array(92)].map((_,i)=>{let d=new Date(START);d.setDate(d.getDate()+i);let sc=score(d);return `<div class="day ${sc.win?'win':sc.total?'partial':''} ${d>new Date()?'future':''}" title="${fmt(d)} · ${sc.total}/${sc.max}">${i+1}</div>`}).join('');
  return `<div class="cards">
- <div class="card"><div class="label">Arc day</div><div class="big">${ad||'—'}</div><div class="sub">${inArc(selected)?'of 92':'Starts Oct 1'}</div></div>
- <div class="card"><div class="label">Days logged</div><div class="big">${logged}</div><div class="sub">of 92</div></div>
- <div class="card"><div class="label">Current streak</div><div class="big">${streak()}</div><div class="sub">75%+ win days</div></div>
- <div class="card"><div class="label">Today score</div><div class="big">${s.total}<span style="font-size:14px;color:var(--muted)">/15</span></div><div class="sub">${s.win?'✓ Win day':'Keep going'}</div></div></div>
+ <div class="card"><div class="label">🧭 Arc day</div><div class="big">${ad||'—'}</div><div class="sub">${inArc(selected)?'of 92':'Starts Oct 1'}</div></div>
+ <div class="card"><div class="label">📅 Days logged</div><div class="big">${logged}</div><div class="sub">of 92</div></div>
+ <div class="card"><div class="label">🔥 Current streak</div><div class="big">${streak()}</div><div class="sub">75%+ win days</div></div>
+ <div class="card"><div class="label">🎯 Today score</div><div class="big">${s.total}<span style="font-size:14px;color:var(--muted)">/${s.max}</span></div><div class="sub">${s.win?'✓ Win day':'Keep going'}</div></div></div>
  <div class="grid2">
- <section class="section"><h2>Today · ${fmt()}</h2><p class="note">One source of truth — enter data only in the relevant tab.</p>
+ <section class="section"><h2>📅 Today · ${fmt()}</h2><p class="note">One source of truth — enter data only in the relevant tab.</p>
  <div class="rows">
- ${scoreRow('Fitness',s.fitness,2,'fitness')} ${scoreRow('Nutrition',s.nutrition,2,'nutrition')} ${scoreRow('Career',s.career,1,'career')} ${scoreRow('Wellness',s.wellness,10,'wellness')}
+ ${scoreRow('💪 Fitness',s.fitness,2,'fitness')} ${scoreRow('🥗 Nutrition',s.nutrition,2,'nutrition')} ${scoreRow('💼 Career',s.career,1,'career')} ${scoreRow('✨ Wellness',s.wellness,8,'wellness')}
  </div></section>
- <section class="section"><h2>92-day journey</h2><p class="note">12/15 or higher is a Win Day and continues your streak.</p><div class="calendar">${days}</div></section></div>`;
+ <section class="section"><h2>❄️ 92-day journey</h2><p class="note">10/13 or higher is a Win Day and continues your streak.</p><div class="calendar">${days}</div></section></div>`;
 }
 function scoreRow(n,v,m,t){return `<div class="row"><div><div class="name">${n}</div><div class="barline"><i style="width:${pct(v,m)}%"></i></div></div><div class="score">${v}/${m}</div></div>`}
+function fitnessMetrics(d=selected){
+ let start=new Date(d); start.setHours(0,0,0,0);
+ let monday=(start.getDay()+6)%7; start.setDate(start.getDate()-monday);
+ let days=rangeDays(start,d);
+ let gym=days.filter(x=>{let f=readDay(x).fitness||{}; return f.workout&&f.workout!=='No workout'}).length;
+ let steps=days.map(x=>Number(readDay(x).fitness?.steps)).filter(x=>Number.isFinite(x)&&x>0);
+ let protein=days.map(x=>Number(readDay(x).nutrition?.protein)).filter(x=>Number.isFinite(x)&&x>0);
+ return {
+   gym,
+   avgSteps: steps.length ? Math.round(steps.reduce((a,b)=>a+b,0)/steps.length) : null,
+   avgProtein: protein.length ? Math.round(protein.reduce((a,b)=>a+b,0)/protein.length) : null
+ };
+}
 function fitness(){
- let f=day().fitness;
- return `<section class="section"><h2>Fitness</h2><p class="note">Keep it simple: movement, steps and body progress.</p>
+ let f=day().fitness, m=fitnessMetrics();
+ return `<div class="cards">
+ <div class="card"><div class="big">${m.gym}/4</div><div class="sub">🏋️ Gym this week</div></div>
+ <div class="card"><div class="big">${m.avgSteps ? m.avgSteps.toLocaleString() : '—'}</div><div class="sub">👟 Avg steps</div></div>
+ <div class="card"><div class="big">${m.avgProtein ?? '—'}</div><div class="sub">🥩 Avg protein (g)</div></div>
+ </div>
+ <section class="section"><h2>💪 Fitness check-in</h2><p class="note">Keep it simple: movement, steps and body progress.</p>
  <div class="formgrid">
  ${inputField('Workout',`<select id="f_workout"><option>No workout</option><option>Upper A</option><option>Lower A</option><option>Upper B</option><option>Lower B</option><option>Full body</option><option>Cardio / Walk</option></select>`)}
  ${inputField('Steps',`<input id="f_steps" type="number" min="0" placeholder="e.g. 9000" value="${f.steps||''}">`)}
@@ -92,52 +120,162 @@ function fitness(){
  ${inputField('Waist (in)',`<input id="f_waist" type="number" step="0.1" value="${f.waist||''}">`)}
  ${inputField('Main lift / best set',`<input id="f_lift" value="${f.lift||''}" placeholder="e.g. Bench 50kg × 8">`)}
  </div><div class="actions"><button class="primary" onclick="saveFitness()">Save fitness</button></div></section>
- <div class="grid2"><section class="section"><h2>Today score</h2>${scoreRow('Fitness',score().fitness,2,'fitness')}</section><section class="section"><h2>Recent body notes</h2><p class="note">Weight and waist are stored by date so you can review trends later.</p></section></div>`;
+ <div class="grid2"><section class="section"><h2>Today score</h2>${scoreRow('Fitness',score().fitness,2,'fitness')}</section><section class="section"><h2>📏 Recent body notes</h2><p class="note">Weight and waist are stored by date so you can review trends later.</p></section></div>`;
 }
 function saveFitness(){let x=day().fitness;x.workout=document.getElementById('f_workout').value;x.steps=document.getElementById('f_steps').value;x.weight=document.getElementById('f_weight').value;x.waist=document.getElementById('f_waist').value;x.lift=document.getElementById('f_lift').value;save();notify('Fitness saved');render()}
 function nutrition(){
  let n=day().nutrition;
- return `<section class="section"><h2>Nutrition</h2><p class="note">Only protein and water affect the score. Other food notes are for tracking.</p>
+ return `<section class="section"><h2>🥗 Nutrition</h2><p class="note">Only protein and water affect the score. Other food notes are for tracking.</p>
  <div class="formgrid">${inputField('Protein (g)',`<input id="n_protein" type="number" value="${n.protein||''}" placeholder="110">`)}${inputField('Water (L)',`<input id="n_water" type="number" step="0.1" value="${n.water||''}" placeholder="2.5">`)}${inputField('Fruit / vegetables',`<input id="n_fruit" value="${n.fruit||''}" placeholder="e.g. 2 servings">`)}${inputField('Food note',`<textarea id="n_note">${n.note||''}</textarea>`)}</div><div class="actions"><button class="primary" onclick="saveNutrition()">Save nutrition</button></div></section>
  <section class="section"><h2>Today score</h2>${scoreRow('Nutrition',score().nutrition,2,'nutrition')}</section>`;
 }
 function saveNutrition(){let x=day().nutrition;x.protein=document.getElementById('n_protein').value;x.water=document.getElementById('n_water').value;x.fruit=document.getElementById('n_fruit').value;x.note=document.getElementById('n_note').value;save();notify('Nutrition saved');render()}
 function career(){
  let c=day().career;
- return `<section class="section"><h2>Career</h2><p class="note">Cloud can include AWS, Azure, GCP, Databricks, Synapse, ADF, Glue, etc.</p>
- <div class="formgrid">${inputField('Today’s topic',`<select id="c_topic"><option>SQL</option><option>PySpark</option><option>Python</option><option>Cloud</option><option>Data Warehousing</option><option>ETL / System Design</option><option>Interview Prep</option></select>`)}${inputField('Study minutes',`<input id="c_minutes" type="number" value="${c.minutes||''}" placeholder="60">`)}${inputField('What I learned / practised',`<textarea id="c_learn">${c.learn||''}</textarea>`)}${inputField('Applications / referrals / interview note',`<textarea id="c_note">${c.note||''}</textarea>`)}</div><div class="actions"><button class="primary" onclick="saveCareer()">Save career</button></div></section>
+ const studyHours=((Number(c.minutes)||0)/60).toFixed(1);
+ const appCount=applications.length;
+ const interviewCount=applications.filter(a=>a.status==='Interview'||a.status==='Offer').length;
+ return `<div class="cards">
+ <div class="card"><div class="label">Study hours</div><div class="big">${studyHours}</div><div class="sub">Selected day</div></div>
+ <div class="card"><div class="label">Applications</div><div class="big">${appCount}</div><div class="sub">All logged applications</div></div>
+ <div class="card"><div class="label">Interviews / offers</div><div class="big">${interviewCount}</div><div class="sub">Current status</div></div></div>
+ <section class="section"><h2>💼 Career check-in</h2><p class="note">Track learning here. Cloud can include AWS, Azure, GCP, Databricks, Synapse, ADF, Glue, etc.</p>
+ <div class="formgrid">${inputField('Today’s topic',`<select id="c_topic"><option>SQL</option><option>PySpark</option><option>Python</option><option>Cloud</option><option>Data Warehousing</option><option>ETL / System Design</option><option>Interview Prep</option><option>Reading Book for Refreshment</option></select>`)}${inputField('Study minutes',`<input id="c_minutes" type="number" value="${c.minutes||''}" placeholder="60">`)}${inputField('What I learned / practised',`<textarea id="c_learn">${c.learn||''}</textarea>`)}${inputField('Career note',`<textarea id="c_note">${c.note||''}</textarea>`)}</div><div class="actions"><button class="primary" onclick="saveCareer()">Save career</button></div></section>
+ <section class="section"><h2>📨 Applications & Referrals</h2><p class="note">Log applications once; update their status as they progress. This is separate from the daily Career score.</p>
+ <div class="formgrid"><div class="field"><label>Company & role</label><input id="app_name" placeholder="e.g. Company · Senior Data Engineer"></div><div class="field"><label>Status</label><select id="app_status"><option>Applied</option><option>Referral</option><option>Interview</option><option>Offer</option><option>Rejected</option><option>Closed</option></select></div><div class="field"><label>Link / contact</label><input id="app_link" placeholder="Optional"></div><div class="field"><label>Note</label><input id="app_note" placeholder="Optional"></div></div>
+ <div class="actions"><button class="primary" onclick="addApplication()">Add application</button></div><div id="applicationsList" style="margin-top:14px"></div></section>
  <section class="section"><h2>Today score</h2>${scoreRow('Career',score().career,1,'career')}</section>`;
 }
 function saveCareer(){let x=day().career;x.topic=document.getElementById('c_topic').value;x.minutes=document.getElementById('c_minutes').value;x.learn=document.getElementById('c_learn').value;x.note=document.getElementById('c_note').value;save();notify('Career saved');render()}
+function addApplication(){let name=document.getElementById('app_name').value.trim();if(!name){notify('Add a company and role');return}applications.push({id:Date.now(),date:key(selected),name,status:document.getElementById('app_status').value,link:document.getElementById('app_link').value.trim(),note:document.getElementById('app_note').value.trim()});save();notify('Application added');render()}
+function updateApplication(id,status){let a=applications.find(x=>x.id===id);if(a){a.status=status;save();render()}}
+function removeApplication(id){applications=applications.filter(x=>x.id!==id);save();render()}
+function renderApplications(){
+ let list=applications.slice().sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+ if(!list.length)return '<div class="empty">No applications logged yet.</div>';
+ return `<div class="rows">${list.map(a=>`<div class="row" style="align-items:flex-start"><div style="flex:1"><div class="name">${a.name}</div><div class="status">${a.date}${a.note?' · '+a.note:''}</div>${a.link?`<div class="status">${a.link}</div>`:''}</div><div style="display:flex;gap:7px;align-items:center"><select onchange="updateApplication(${a.id},this.value)" style="background:#08192b;color:#eef5fb;border:1px solid #29415b;border-radius:8px;padding:7px">${['Applied','Referral','Interview','Offer','Rejected','Closed'].map(x=>`<option ${a.status===x?'selected':''}>${x}</option>`).join('')}</select><button class="secondary" onclick="removeApplication(${a.id})">Delete</button></div></div>`).join('')}</div>`;
+}
 function wellness(){
  let w=day().wellness;
- const items=[['morningSkin','Morning skincare'],['eveningSkin','Evening skincare'],['oralMorning','Morning oral care'],['oralNight','Night oral care'],['grooming','Grooming / personal care'],['meds','Medication / inhaler check'],['winddown','Wind-down routine'],['noPhone','No phone in bed'],['sleep8','Sleep 8+ hours'],['nofap','No-fap day']];
- return `<section class="section"><h2>Wellness</h2><p class="note">Your wellness score comes entirely from this tab. 10 checks = 10 points.</p><div class="checklist">${items.map(([k,n])=>`<label class="check"><input type="checkbox" ${w[k]?'checked':''} onchange="toggleWellness('${k}',this.checked)"><span>${n}</span></label>`).join('')}</div><div class="actions"><button class="secondary" onclick="clearWellness()">Clear wellness for this day</button></div></section><section class="section"><h2>Today score</h2>${scoreRow('Wellness',score().wellness,10,'wellness')}</section>`;
+ const items=[['morningSkin','🧴 Morning skincare'],['nightSkin','🌙 Night skincare'],['oralMorning','🪥 Morning oral care'],['oralNight','🪥 Night oral care'],['meds','💊 Medication / inhaler check'],['noPhone','📵 No phone in bed'],['sleep8','😴 Sleep 8+ hours'],['nofap','🚫 No-fap day']];
+ let ws=new Date(selected); let dow=ws.getDay(); ws.setDate(ws.getDate()-dow);
+ let week=Array.from({length:7},(_,i)=>{let d=new Date(ws);d.setDate(ws.getDate()+i);return d});
+ let yes=week.filter(d=>!!db[key(d)]?.wellness?.noSugar).length;
+ let pctNoSugar=Math.round(yes/7*100);
+ let selectedNoSugar=!!w.noSugar;
+ let buttonLabel=selectedNoSugar?'Remove no-sugar mark':(key(selected)===key(new Date())?'Mark today no-sugar':'Mark selected day no-sugar');
+ return `<section class="section"><h2>✨ Wellness</h2><p class="note">8 checks count toward the daily score. No Sugar is tracked separately and does not affect your streak score.</p><div class="checklist">${items.map(([k,n])=>`<label class="check"><input type="checkbox" ${w[k]?'checked':''} onchange="toggleWellness('${k}',this.checked)"><span>${n}</span></label>`).join('')}</div><div class="actions"><button class="secondary" onclick="clearWellness()">🧹 Clear wellness for this day</button></div></section>
+ <section class="nosugar-card">
+   <div class="nosugar-head"><div><h2 class="nosugar-title">🍬 No-sugar challenge</h2><div class="nosugar-target">Target: 5 days / week</div></div><div class="nosugar-count">${yes}/5</div></div>
+   <div class="nosugar-progress"><i style="width:${Math.min(yes/5,1)*100}%"></i></div>
+   <div class="nosugar-days">${week.map(d=>`<button type="button" class="nosugar-day ${db[key(d)]?.wellness?.noSugar?'done ':''}${key(d)===key(selected)?'selected':''}" onclick="selectDateAndWellness('${key(d)}')" title="${fmt(d)}"><div class="nosugar-day-label">${d.toLocaleDateString('en-IN',{weekday:'short'})}</div><div class="nosugar-day-num">${d.getDate()}</div></button>`).join('')}</div>
+   <div class="nosugar-action"><button onclick="toggleNoSugar()">${buttonLabel}</button></div>
+   <div class="nosugar-rule">Define your own rule consistently—for example, avoiding added/free sugars. The tracker is for consistency, not perfection.</div>
+ </section>
+ <section class="section"><h2>🎯 Today score</h2>${scoreRow('✨ Wellness',score().wellness,8,'wellness')}</section>`;
 }
 function toggleWellness(k,v){day().wellness[k]=v;save();render()}
 function clearWellness(){day().wellness={};save();render()}
-function finance(){
- let f=day().finance;
- return `<section class="section"><h2>Finance</h2><p class="note">Lightweight tracking — enough to keep the Winter Arc financially intentional.</p><div class="formgrid">${inputField('Investment / SIP',`<input id="fi_sip" value="${f.sip||''}" placeholder="₹">`)}${inputField('Spend today',`<input id="fi_spend" value="${f.spend||''}" placeholder="₹">`)}${inputField('Unplanned spend',`<input id="fi_unplanned" value="${f.unplanned||''}" placeholder="₹0">`)}${inputField('Note',`<textarea id="fi_note">${f.note||''}</textarea>`)}</div><div class="actions"><button class="primary" onclick="saveFinance()">Save finance</button></div></section>`;
+function toggleNoSugar(){let w=day().wellness;w.noSugar=!w.noSugar;save();render()}
+function selectDateAndWellness(k){let d=new Date(k+'T00:00:00');selected=d;render()}
+
+function journal(){
+ let j=day().journal||{};
+ const text=j.thoughts||'';
+ const count=text.trim()?text.trim().split(/\s+/).length:0;
+ return `<section class="section"><h2>📓 Journal</h2><p class="note">Capture your thoughts, wins, frustrations, ideas, or anything you want to remember from ${fmt(selected)}. Journal entries do not affect your daily score or streak.</p>
+ <div class="field"><label>Today's thoughts</label><textarea id="journal_thoughts" style="min-height:300px" placeholder="How was your day? What went well? What are you thinking about?">${text}</textarea></div>
+ <div class="actions"><button class="primary" onclick="saveJournal()">💾 Save journal</button><button class="secondary" onclick="clearJournal()">🗑️ Clear journal</button></div>
+ <div class="status" style="margin-top:10px">${count} words · Saved for ${fmt(selected)}</div></section>
+ <section class="section"><h2>💭 Journal prompt</h2><p class="note">What is one thing you want to carry forward into tomorrow?</p></section>`;
 }
-function saveFinance(){let x=day().finance;x.sip=document.getElementById('fi_sip').value;x.spend=document.getElementById('fi_spend').value;x.unplanned=document.getElementById('fi_unplanned').value;x.note=document.getElementById('fi_note').value;save();notify('Finance saved');render()}
+function saveJournal(){let x=day();x.journal={thoughts:document.getElementById('journal_thoughts').value};save();notify('Journal saved');render()}
+function clearJournal(){if(!day().journal)return;day().journal={};save();notify('Journal cleared');render()}
+function finance(){
+ let f=day().finance||{}, ex=f.expenses||[];
+ let mk=selected.getFullYear()+'-'+String(selected.getMonth()+1).padStart(2,'0');
+ let mf=monthlyFinance[mk]||{sipPlanned:'',sipInvested:''};
+ let total=ex.reduce((a,e)=>a+Number(e.amount||0),0);
+ let unplanned=ex.filter(e=>e.type==='Unexpected').reduce((a,e)=>a+Number(e.amount||0),0);
+ let monthTotal=0, monthUnplanned=0, monthCats={};
+ let ms=new Date(selected.getFullYear(),selected.getMonth(),1), me=new Date(selected.getFullYear(),selected.getMonth()+1,0);
+ rangeDays(ms,me).forEach(d=>{let es=readDay(d).finance?.expenses||[];es.forEach(e=>{let a=Number(e.amount||0);monthTotal+=a;if(e.type==='Unexpected')monthUnplanned+=a;let c=e.category||'Other';monthCats[c]=(monthCats[c]||0)+a})});
+ let catEntries=Object.entries(monthCats).sort((a,b)=>b[1]-a[1]);
+ let topCat=catEntries[0];
+ let topCatName=topCat?topCat[0]:'No spending yet';
+ let topCatAmt=topCat?topCat[1]:0;
+ let sipPlanned=Number(mf.sipPlanned||0), sipInvested=Number(mf.sipInvested||0);
+ let sipRemaining=Math.max(sipPlanned-sipInvested,0), sipPct=sipPlanned?Math.min(Math.round(sipInvested/sipPlanned*100),100):0;
+ let rows=ex.map((e,i)=>`<tr><td>${i+1}</td><td>${e.description||'—'}</td><td>${e.category||'—'}</td><td>${e.payment||'—'}</td><td>₹${Number(e.amount||0).toLocaleString('en-IN')}</td><td>${e.type||'Needs'}</td><td>${e.notes||''}</td><td><button class="secondary" style="padding:5px 8px" onclick="deleteExpense(${i})">Delete</button></td></tr>`).join('')||`<tr><td colspan="8" class="empty">No expenses logged for ${fmt(selected)}.</td></tr>`;
+ return `<section class="section"><h2>💰 Finance overview</h2><p class="note">Automatic summary from your expense tracker · ${selected.toLocaleDateString('en-IN',{month:'long',year:'numeric'})}</p>
+ <div class="cards">
+  <div class="card"><div class="label">💳 Today's spend</div><div class="big">₹${total.toLocaleString('en-IN')}</div><div class="sub">${ex.length} expense${ex.length===1?'':'s'}</div></div>
+  <div class="card"><div class="label">📅 Monthly total spend</div><div class="big">₹${monthTotal.toLocaleString('en-IN')}</div><div class="sub">All logged expenses</div></div>
+  <div class="card"><div class="label">⚠️ Monthly unplanned spend</div><div class="big">₹${monthUnplanned.toLocaleString('en-IN')}</div><div class="sub">Unexpected expenses</div></div>
+  <div class="card"><div class="label">🏷️ Highest category</div><div class="big" style="font-size:20px">${topCatName}</div><div class="sub">₹${topCatAmt.toLocaleString('en-IN')} this month</div></div>
+ </div></section>
+ <section class="section"><h2>📈 SIP & Investments</h2><p class="note">Track your monthly SIP plan and the amount actually invested. This block is separate from daily expenses.</p>
+ <div class="cards sip-cards">
+  <div class="card"><div class="label">🎯 Monthly SIP planned</div><div class="big">₹${sipPlanned.toLocaleString('en-IN')}</div><div class="sub">Target amount</div></div>
+  <div class="card"><div class="label">💸 SIP invested this month</div><div class="big">₹${sipInvested.toLocaleString('en-IN')}</div><div class="sub">Actual invested</div></div>
+  <div class="card"><div class="label">⏳ SIP remaining</div><div class="big">₹${sipRemaining.toLocaleString('en-IN')}</div><div class="sub">To reach monthly plan</div></div>
+  <div class="card"><div class="label">📈 SIP progress</div><div class="big">${sipPct}%</div><div class="progress" style="margin-top:8px"><i style="width:${sipPct}%"></i></div></div>
+ </div>
+ <div class="formgrid">
+ ${inputField('🎯 Monthly SIP planned (₹)',`<input id="sip_planned" type="number" min="0" step="1" value="${mf.sipPlanned||''}" placeholder="40000">`)}
+ ${inputField('💸 SIP invested this month (₹)',`<input id="sip_invested" type="number" min="0" step="1" value="${mf.sipInvested||''}" placeholder="40000">`)}
+ </div><div class="actions"><button class="primary" onclick="saveMonthlyFinance()">Save SIP</button></div></section>
+ <section class="section"><h2>🧾 Daily Expense Tracker</h2><p class="note">One row = one expense. Add expenses here and the summary above updates automatically.</p>
+ <div class="formgrid">
+ ${inputField('Description',`<input id="fi_desc" placeholder="e.g. Lunch">`)}
+ ${inputField('Category',`<select id="fi_cat"><option>Food & Dining</option><option>Groceries</option><option>Q-Commerce</option><option>Fuel & Transport</option><option>Travel</option><option>Miscellaneous</option><option>Home</option><option>Shopping</option><option>Health</option><option>Entertainment</option><option>Finance</option></select>`)}
+ ${inputField('Payment mode',`<select id="fi_payment"><option>UPI</option><option>Credit Card</option><option>Debit Card</option><option>Cash</option><option>Bank Transfer</option><option>Other</option></select>`)}
+ ${inputField('Amount (₹)',`<input id="fi_amount" type="number" min="0" step="0.01" placeholder="0">`)}
+ ${inputField('Type',`<select id="fi_type"><option>Needs</option><option>Wants</option><option>Experiences</option><option>Unexpected</option></select>`)}
+ ${inputField('Notes',`<input id="fi_notes" placeholder="Optional">`)}
+ </div><div class="actions"><button class="primary" onclick="addExpense()">Add expense</button></div></section>
+ <section class="section"><h2>🧾 ${fmt(selected)} Expenses</h2><div class="tablewrap"><table class="table"><thead><tr><th>#</th><th>Description</th><th>Category</th><th>Payment</th><th>Amount</th><th>Type</th><th>Notes</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+}
+function saveMonthlyFinance(){let mk=selected.getFullYear()+'-'+String(selected.getMonth()+1).padStart(2,'0');monthlyFinance[mk]={sipPlanned:document.getElementById('sip_planned').value,sipInvested:document.getElementById('sip_invested').value};save();notify('SIP saved');render()}
+function addExpense(){
+ let amount=Number(document.getElementById('fi_amount').value||0), desc=document.getElementById('fi_desc').value.trim();
+ if(!amount||amount<0){notify('Enter an amount');return}
+ if(!desc){notify('Enter a description');return}
+ let f=day().finance||(day().finance={}); f.expenses=f.expenses||[];
+ f.expenses.push({description:desc,category:document.getElementById('fi_cat').value,payment:document.getElementById('fi_payment').value,amount,type:document.getElementById('fi_type').value,notes:document.getElementById('fi_notes').value.trim()});
+ save();notify('Expense added');render();
+}
+function deleteExpense(i){
+ let f=day().finance; if(!f?.expenses)return;
+ f.expenses.splice(i,1); save(); notify('Expense deleted'); render();
+}
+function saveFinance(){notify('Use Add expense above');}
 function rangeDays(a,b){let out=[];let d=new Date(a);d.setHours(0,0,0,0);while(d<=b){out.push(new Date(d));d.setDate(d.getDate()+1)}return out}
+function noSugarStats(days){let total=days.length, yes=days.filter(d=>!!readDay(d).wellness?.noSugar).length;return {yes,total,ok:total?yes/total>=5/7:false,pct:total?Math.round(yes/total*100):0}}
+function noSugarBadge(stats,label){return `<div class="row"><span class="name">🍬 No Sugar</span><b>${stats.yes}/${stats.total} · ${stats.pct}% <span class="pill ${stats.ok?'win':'flag'}">${stats.ok?'GREEN':'FLAG'}</span></b></div>`}
 function summary(){
  let s=score(selected), weekStart=new Date(selected);let wd=(weekStart.getDay()+6)%7;weekStart.setDate(weekStart.getDate()-wd);let weekEnd=new Date(weekStart);weekEnd.setDate(weekEnd.getDate()+6);
  let monthStart=new Date(selected.getFullYear(),selected.getMonth(),1), monthEnd=new Date(selected.getFullYear(),selected.getMonth()+1,0);
- const aggregate=(days)=>{let t={fitness:0,nutrition:0,career:0,wellness:0,total:0,max:0,wins:0};days.forEach(d=>{let q=score(d);t.fitness+=q.fitness;t.nutrition+=q.nutrition;t.career+=q.career;t.wellness+=q.wellness;t.total+=q.total;t.max+=15;if(q.win)t.wins++});return t};
- let w=aggregate(rangeDays(weekStart,weekEnd)),m=aggregate(rangeDays(monthStart,monthEnd));
- return `<div class="grid2"><section class="section"><h2>Daily Summary</h2><p class="note">${fmt(selected)}</p>${summaryRows(s,15)}<div class="pill ${s.win?'win':''}">${s.win?'WIN DAY':'Below 75%'}</div></section>
- <section class="section"><h2>Weekly Summary</h2><p class="note">${fmt(weekStart)} – ${fmt(weekEnd)}</p>${summaryRows(w,w.max)}<p class="note">${w.wins} Win Days · ${pct(w.total,w.max)}%</p></section></div>
- <section class="section"><h2>Monthly Summary</h2><p class="note">${selected.toLocaleDateString('en-IN',{month:'long',year:'numeric'})}</p>${summaryRows(m,m.max)}<p class="note">${m.wins} Win Days · ${pct(m.total,m.max)}%</p></section>`;
+ const aggregate=(days)=>{let t={fitness:0,nutrition:0,career:0,wellness:0,total:0,max:0,wins:0};days.forEach(d=>{let q=score(d);t.fitness+=q.fitness;t.nutrition+=q.nutrition;t.career+=q.career;t.wellness+=q.wellness;t.total+=q.total;t.max+=q.max;if(q.win)t.wins++});return t};
+ let wdays=rangeDays(weekStart,weekEnd), mdays=rangeDays(monthStart,monthEnd);
+ let w=aggregate(wdays),m=aggregate(mdays),ws=noSugarStats(wdays),ms=noSugarStats(mdays);
+ return `<div class="grid2"><section class="section"><h2>📅 Daily Summary</h2><p class="note">${fmt(selected)}</p>${summaryRows(s,s.max)}<div class="pill ${s.win?'win':''}">${s.win?'WIN DAY':'Below 75%'}</div></section>
+ <section class="section"><h2>📊 Weekly Summary</h2><p class="note">${fmt(weekStart)} – ${fmt(weekEnd)} · No Sugar target: 5/7</p>${summaryRows(w,w.max)}${noSugarBadge(ws,'Weekly')}<p class="note">${w.wins} Win Days · ${pct(w.total,w.max)}%</p></section></div>
+ <section class="section"><h2>📆 Monthly Summary</h2><p class="note">${selected.toLocaleDateString('en-IN',{month:'long',year:'numeric'})} · No Sugar target: 5/7 (≥71%)</p>${summaryRows(m,m.max)}${noSugarBadge(ms,'Monthly')}<p class="note">${m.wins} Win Days · ${pct(m.total,m.max)}%</p></section>${journalArchive()}`;
 }
-function summaryRows(s,max){return `<div class="rows"><div class="row"><span class="name">Fitness</span><b>${s.fitness}</b></div><div class="row"><span class="name">Nutrition</span><b>${s.nutrition}</b></div><div class="row"><span class="name">Career</span><b>${s.career}</b></div><div class="row"><span class="name">Wellness</span><b>${s.wellness}</b></div><div class="row"><span class="name">Total</span><b>${s.total}/${max} · ${pct(s.total,max)}%</b></div></div>`}
+function journalArchive(){
+ let days=rangeDays(START,END);
+ return `<section class="section"><h2>📓 92-Day Journal</h2><p class="note">Your thoughts are kept against each day. Empty days stay blank. Click any day to open its journal entry.</p><div class="journal-grid">${days.map((d,i)=>{let t=(readDay(d).journal?.thoughts||'').trim();return `<button class="journal-day ${t?'has-entry':'empty'}" onclick="openJournalDate('${key(d)}')"><div class="journal-day-head"><span>Day ${i+1}</span><span>${d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})}</span></div><div class="journal-day-text">${t?escapeHtml(t):''}</div></button>`}).join('')}</div></section>`;
+}
+function escapeHtml(v){return String(v).replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));}
+function openJournalDate(k){selected=new Date(k+'T00:00:00');active='journal';render()}
+function summaryRows(s,max){return `<div class="rows"><div class="row"><span class="name">💪 Fitness</span><b>${s.fitness}</b></div><div class="row"><span class="name">🥗 Nutrition</span><b>${s.nutrition}</b></div><div class="row"><span class="name">💼 Career</span><b>${s.career}</b></div><div class="row"><span class="name">✨ Wellness</span><b>${s.wellness}</b></div><div class="row"><span class="name">🏆 Total</span><b>${s.total}/${max} · ${pct(s.total,max)}%</b></div></div>`}
 function review(){
  let days=rangeDays(START,END), wins=days.filter(d=>score(d).win).length, total=days.reduce((a,d)=>a+score(d).total,0);
- let weeks=[];for(let i=0;i<13;i++){let a=new Date(START);a.setDate(a.getDate()+i*7);let b=new Date(a);b.setDate(b.getDate()+6);if(b>END)b=new Date(END);let q=days.filter(d=>d>=a&&d<=b).map(score);let st=q.reduce((x,z)=>x+z.total,0),mx=q.length*15;weeks.push(`<tr><td>Week ${i+1}</td><td>${st}/${mx}</td><td>${pct(st,mx)}%</td><td>${q.filter(z=>z.win).length}</td></tr>`)};
- return `<section class="section"><h2>92-Day Review</h2><p class="note">One place to reflect on the journey. Scoring is pulled from the individual tabs.</p><div class="cards"><div class="card"><div class="label">Overall</div><div class="big">${total}/1380</div></div><div class="card"><div class="label">Overall %</div><div class="big">${pct(total,1380)}%</div></div><div class="card"><div class="label">Win days</div><div class="big">${wins}</div></div><div class="card"><div class="label">Current streak</div><div class="big">${streak()}</div></div></div><div class="calendar">${days.map((d,i)=>{let q=score(d);return `<div class="day ${q.win?'win':q.total?'partial':''} ${d>new Date()?'future':''}" title="${fmt(d)} · ${q.total}/15">${i+1}</div>`}).join('')}</div></section>
- <section class="section"><h2>Weekly performance</h2><div class="tablewrap"><table class="table"><thead><tr><th>Week</th><th>Score</th><th>%</th><th>Win Days</th></tr></thead><tbody>${weeks.join('')}</tbody></table></div></section>
- <section class="section"><h2>Weekly reflection</h2><div class="formgrid">${inputField('What went well',`<textarea id="r_good" placeholder="Write your reflection..."></textarea>`)}${inputField('What went wrong',`<textarea id="r_bad" placeholder="Be honest, keep it useful..."></textarea>`)}${inputField('One improvement',`<textarea id="r_next" placeholder="One change for next week..."></textarea>`)}${inputField('Selected date',`<input disabled value="${fmt()}">`)}</div><div class="actions"><button class="primary" onclick="saveReflection()">Save reflection</button></div></section>`;
+ let weeks=[];for(let i=0;i<13;i++){let a=new Date(START);a.setDate(a.getDate()+i*7);let b=new Date(a);b.setDate(b.getDate()+6);if(b>END)b=new Date(END);let q=days.filter(d=>d>=a&&d<=b).map(score);let st=q.reduce((x,z)=>x+z.total,0),mx=q.reduce((x,z)=>x+z.max,0);weeks.push(`<tr><td>Week ${i+1}</td><td>${st}/${mx}</td><td>${pct(st,mx)}%</td><td>${q.filter(z=>z.win).length}</td></tr>`)};
+ return `<section class="section"><h2>📝 92-Day Review</h2><p class="note">One place to reflect on the journey. Scoring is pulled from the individual tabs.</p><div class="cards"><div class="card"><div class="label">Overall</div><div class="big">${total}/1196</div></div><div class="card"><div class="label">Overall %</div><div class="big">${pct(total,1196)}%</div></div><div class="card"><div class="label">Win days</div><div class="big">${wins}</div></div><div class="card"><div class="label">🔥 Current streak</div><div class="big">${streak()}</div></div></div><div class="calendar">${days.map((d,i)=>{let q=score(d);return `<div class="day ${q.win?'win':q.total?'partial':''} ${d>new Date()?'future':''}" title="${fmt(d)} · ${q.total}/${q.max}">${i+1}</div>`}).join('')}</div></section>
+ <section class="section"><h2>📊 Weekly performance</h2><div class="tablewrap"><table class="table"><thead><tr><th>Week</th><th>Score</th><th>%</th><th>Win Days</th></tr></thead><tbody>${weeks.join('')}</tbody></table></div></section>
+ <section class="section"><h2>🧠 Weekly reflection</h2><div class="formgrid">${inputField('What went well',`<textarea id="r_good" placeholder="Write your reflection..."></textarea>`)}${inputField('What went wrong',`<textarea id="r_bad" placeholder="Be honest, keep it useful..."></textarea>`)}${inputField('One improvement',`<textarea id="r_next" placeholder="One change for next week..."></textarea>`)}${inputField('Selected date',`<input disabled value="${fmt()}">`)}</div><div class="actions"><button class="primary" onclick="saveReflection()">Save reflection</button></div></section>`;
 }
 function saveReflection(){let x=day();x.reflection={good:document.getElementById('r_good').value,bad:document.getElementById('r_bad').value,next:document.getElementById('r_next').value};save();notify('Reflection saved')}
 function streak(){
@@ -147,8 +285,9 @@ function streak(){
 function render(){
  initNav();document.getElementById('dateLabel').textContent=fmt();document.getElementById('pageTitle').textContent=tabs.find(x=>x[0]===active)[1];
  document.getElementById('pageSub').textContent=inArc(selected)?`Arc Day ${arcDay(selected)} · ${selected.toLocaleDateString('en-IN',{weekday:'long'})}`:`Outside the 92-day arc`;
- let html=active==='dashboard'?dashboard():active==='fitness'?fitness():active==='nutrition'?nutrition():active==='career'?career():active==='wellness'?wellness():active==='finance'?finance():active==='summary'?summary():review();
+ let html=active==='dashboard'?dashboard():active==='fitness'?fitness():active==='nutrition'?nutrition():active==='career'?career():active==='wellness'?wellness():active==='finance'?finance():active==='summary'?summary():active==='journal'?journal():review();
  document.getElementById('view').innerHTML=html;
+ if(active==='career'){document.getElementById('c_topic').value=day().career.topic||'SQL';let el=document.getElementById('applicationsList');if(el)el.innerHTML=renderApplications()}
  if(active==='fitness')document.getElementById('f_workout').value=day().fitness.workout||'No workout';
  if(active==='career')document.getElementById('c_topic').value=day().career.topic||'SQL';
  dateControls();
